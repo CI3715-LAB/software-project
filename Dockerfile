@@ -1,4 +1,4 @@
-FROM python:3.10
+FROM python:3.10.9-bullseye
 
 COPY ./requirements.txt /app/requirements.txt
 
@@ -10,4 +10,4 @@ COPY . /app
 
 ENTRYPOINT [ "python" ]
 
-CMD ["view.py"]
+CMD ["app.py"]
