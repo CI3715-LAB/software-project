@@ -1,8 +1,8 @@
 from flask import Flask, render_template, session
 from flask_assets import Environment, Bundle
-import secrets
+from os import environ
 
-from config.setup import db
+from config.setup import db, SECRET_KEY
 from user.endpoint import user_blueprint
 
 # Flask initialization
@@ -11,7 +11,7 @@ app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.secret_key = secrets.token_hex(16)
+app.secret_key = SECRET_KEY
 
 # Assets Bundle initialization
 assets = Environment(app)
@@ -40,4 +40,4 @@ app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints
 
 # Runner
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run()

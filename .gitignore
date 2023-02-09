@@ -1,7 +1,7 @@
 instance/
 __pycache__
 sqlite.db
-
 .webassets-cache/
-
 venv
+.env
+.flaskenv
