@@ -1,0 +1,2 @@
+-- SQLite
+Insert into app_user (username, email, password, admin) values('admin', 'admin@example.com', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', true)
