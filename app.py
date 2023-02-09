@@ -1,5 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_assets import Environment, Bundle
+import secrets
 
 from config.setup import db
 from user.endpoint import user_blueprint
@@ -9,6 +10,7 @@ app = Flask(__name__)
 app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = secrets.token_hex(16)
 
 # Assets Bundle initialization
 assets = Environment(app)
@@ -25,7 +27,8 @@ def create_table():
 # Home route
 @app.route('/')
 def home():
-    return render_template('index.html')
+    loggedIn = 'user' in session
+    return render_template('index.html', loggedIn = loggedIn)
 
 # Blueprints Registration (Endpoints)
 app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints

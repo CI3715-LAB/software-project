@@ -17,7 +17,11 @@
                 alt="Flask"
             />
         </a>
-        <h1>Flask App</h1>
+        <div>
+            {% if loggedIn %}
+                <a href="/user/logout">Logout</a>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

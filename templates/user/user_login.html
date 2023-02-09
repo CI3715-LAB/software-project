@@ -1,0 +1,19 @@
+<h1>User Login</h1>
+<hr>
+<hr>
+
+<form action='' method = "POST">
+    <p>username <input type = "text" name ="username" /></p>
+    <p>password <input type = "password" name = "password" /></p>
+
+    {% if error %}
+        <h4>{{error}}</h4>
+    {% endif %}
+
+    <p><input type = "submit" value = "Submit" /></p>
+</form>
+
+<a href="/user/register">Or register</a>
+
+<hr>
+<hr>
