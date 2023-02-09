@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Flask App</title>
+
+    {% assets "scss_all" %} <link rel=stylesheet type=text/css href="{{
+    ASSET_URL }}"> {% endassets %}
+  </head>
+  <body>
+    <header class="welcome-header">
+      <nav class="navbar">
+        {% block navbar %}
+
+		{% if loggedIn %}
+			{% if user.admin %}
+				<a class="link" href="/user">List of users</a>
+				<a class="link" href="/user/register">Register New User</a>
+			{% endif %}
+        	<a class="link" href="/user/logout">Logout</a>
+        {% else %}
+        	<a class="link" href="/user/login">Log In</a>
+        {% endif %}
+
+		{% endblock %}
+      </nav>
+      {% if loggedIn %}
+      	<h1 class="welcome">Welcome "{{user.username}}"</h1>
+      {% endif %}
+    </header>
+
+    {% block body %}
+	{% endblock %}
+  </body>
+</html>

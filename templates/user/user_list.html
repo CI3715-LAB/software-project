@@ -1,13 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block navbar %}
+    <a class="link" href="/">Home</a>
+{% endblock %}
+
+{% block body %}
 <h1>Users</h1>
 <hr>
 <hr>
 
 {% for user in users %}
 <b>id</b> -> {{ user.id }}<br>
-<b>username<b> -> {{ user.username }}<br>
-<b>email<b> -> {{ user.email }}<br>
-<b>password<b> -> {{ user.password }}
+<b>username</b> -> {{ user.username }}<br>
+<b>email</b> -> {{ user.email }}<br>
+<b>password</b> -> {{ user.password }}<br>
+<b>administrator</b> -> {{ user.admin }}
 <hr>
 {% endfor %}
 
 <hr>
+{% endblock %}

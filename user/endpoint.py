@@ -7,22 +7,36 @@ user_blueprint = Blueprint('user', __name__)
 
 @user_blueprint.route('/')
 def retrieve_users():
-    if not 'user' in session: return redirect('/user/login')
+    # Only administrators can see user list
+    if not 'user' in session or not session['user']['admin']:
+        return redirect('/')
+    
     users = User.query.all()
-    return render_template('/user/user_list.html', users = users)
+    return render_template('/user/user_list.html', users=users)
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
 def user_register():
     if request.method == 'GET':
-        if 'user' in session: return redirect('/user')
-        return render_template('/user/user_register.html')
+        # only administrators can create users
+        if 'user' in session and session['user']['admin']:
+            return render_template('/user/user_register.html')
+        
+        return redirect('/')
     
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+        admin = request.form.get('admin') == 'on'
+
+        print(username, email, password, admin)
         
-        user = User(username = username, email=email, password=password)
+        user = User(username, email, password, admin)
+
+        if user:
+            print('user created')
+        else:
+            print('not created SAEREIAHFRUAEHK')
 
         db.session.add(user)
         db.session.commit()
@@ -31,8 +45,10 @@ def user_register():
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def user_login():
     if request.method == 'GET':
-        if 'user' in session: return redirect('/user')
-        return render_template('/user/user_login.html')
+        if 'user' in session and session['user']['admin']:
+            return redirect('/user')
+        
+        return render_template('/user/user_login.html', user=session.get('user'))
     
     if request.method == 'POST':
         username = request.form['username']
@@ -40,13 +56,13 @@ def user_login():
 
         # User exists
         user = User.query.filter_by(username = username).first()
-        if (user):
-            check = User.check_password(user, password)
-            if (not check):
+        if user:
+            check = user.check_password(password)
+            if not check:
                 return render_template(
                     '/user/user_login.html', error = "Credentials do not match")
             else:
-                session['user'] = user.id
+                session['user'] = {'id': user.id, 'username': user.username, 'admin': user.admin}
                     
         else:
             return render_template(

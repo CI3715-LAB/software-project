@@ -1,27 +1,10 @@
-<!DOCTYPE html>
+{% extends 'layout.html' %} 
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Flask App</title>
-
-    {% assets "scss_all" %}
-        <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
-    {% endassets %}
-</head>
-<body>
-    <div>
-        <a href="https://flask.palletsprojects.com/en/2.2.x/" target="_blank">
-            <img 
-                src={{ url_for('static', filename='img/flask-icon.webp') }} 
-                alt="Flask"
-            />
-        </a>
-        <div>
-            {% if loggedIn %}
-                <a href="/user/logout">Logout</a>
-            {% endif %}
-        </div>
-    </div>
-</body>
-</html>
+{% block body %}
+<div>
+  <a href="https://flask.palletsprojects.com/en/2.2.x/" target="_blank">
+    <img src={{ url_for('static', filename='img/flask-icon.webp') }} alt="Flask"
+    />
+  </a>
+</div>
+{% endblock %}

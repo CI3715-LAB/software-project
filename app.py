@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.app_context().push()
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.secret_key = secrets.token_hex(16)
 
 # Assets Bundle initialization
@@ -27,8 +28,12 @@ def create_table():
 # Home route
 @app.route('/')
 def home():
-    loggedIn = 'user' in session
-    return render_template('index.html', loggedIn = loggedIn)
+    loggedIn = False
+    user = None
+    if 'user' in session:
+        loggedIn = True
+        user = session['user']
+    return render_template('index.html', loggedIn=loggedIn, user=user)
 
 # Blueprints Registration (Endpoints)
 app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints
