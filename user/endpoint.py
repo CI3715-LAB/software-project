@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session
+from flask import Blueprint, request, render_template, redirect, url_for
 
 from config.setup import db
 from .model import User
@@ -21,9 +21,13 @@ def user_register():
         if 'user' in session and session['user']['admin']:
             return render_template('/user/user_register.html')
         
-        return redirect('/')
+        return redirect(url_for('home'))
     
     if request.method == 'POST':
+        # redirect non-admin
+        if not 'user' in session or not session['user']['admin']:
+            return redirect(url_for('home'))
+
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
@@ -33,20 +37,15 @@ def user_register():
         
         user = User(username, email, password, admin)
 
-        if user:
-            print('user created')
-        else:
-            print('not created SAEREIAHFRUAEHK')
-
         db.session.add(user)
         db.session.commit()
-        return redirect('/user')
+        return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def user_login():
     if request.method == 'GET':
         if 'user' in session and session['user']['admin']:
-            return redirect('/user')
+            return redirect(url_for('user.retrieve_users'))
         
         return render_template('/user/user_login.html', user=session.get('user'))
     
@@ -68,11 +67,11 @@ def user_login():
             return render_template(
                 '/user/user_login.html', error = "User does not exists")
                
-        return redirect('/')
+        return redirect(url_for('home'))
 
 @user_blueprint.route('/logout')
 def user_logout():
     if 'user' in session: 
         session.pop('user')
     
-    return redirect('/')
+    return redirect(url_for('home'))
