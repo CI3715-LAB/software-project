@@ -10,8 +10,8 @@
 <hr>
 
 <form action='' method = "POST">
-    <p>username <input type = "text" name ="username" /></p>
-    <p>password <input type = "password" name = "password" /></p>
+    <p>username <input type = "text" name ="username" required/></p>
+    <p>password <input type = "password" name = "password" required/></p>
 
     {% if error %}
         <h4>{{error}}</h4>

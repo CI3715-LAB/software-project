@@ -33,8 +33,6 @@ def user_register():
         password = request.form['password']
         admin = request.form.get('admin') == 'on'
 
-        print(username, email, password, admin)
-        
         user = User(username, email, password, admin)
 
         db.session.add(user)
