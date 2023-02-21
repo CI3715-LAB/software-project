@@ -9,28 +9,33 @@
     ASSET_URL }}"> {% endassets %}
   </head>
   <body>
-    <header class="welcome-header">
-      <nav class="navbar">
-        {% block navbar %}
-
-		{% if loggedIn %}
-			{% if user.admin %}
-				<a class="link" href="/user">List of users</a>
-				<a class="link" href="/user/register">Register New User</a>
-			{% endif %}
-        	<a class="link" href="/user/logout">Logout</a>
-        {% else %}
-        	<a class="link" href="/user/login">Log In</a>
+    <div class="layout">
+      <section class="sidebar">
+        <nav>
+          {% block navbar %}
+  
+          {% if loggedIn %}
+            {% if user.admin %}
+              <a class="link" href="/user">List of users</a>
+              <a class="link" href="/user/register">Register New User</a>
+            {% endif %}
+                <a class="link" href="/user/logout">Logout</a>
+              {% else %}
+                <a class="link" href="/user/login">Log In</a>
+              {% endif %}
+  
+          {% endblock %}
+        </nav>
+        {% if loggedIn %}
+          <h1 class="welcome">Welcome "{{user.username}}"</h1>
         {% endif %}
-
-		{% endblock %}
-      </nav>
-      {% if loggedIn %}
-      	<h1 class="welcome">Welcome "{{user.username}}"</h1>
-      {% endif %}
-    </header>
-
-    {% block body %}
+      </section>
+      <section class="main">
+        <div class="content">
+          {% block body %}
+        </div>
+      </section>
+    </div>
 	{% endblock %}
   </body>
 </html>

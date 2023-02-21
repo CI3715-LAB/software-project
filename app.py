@@ -16,7 +16,7 @@ app.secret_key = SECRET_KEY
 # Assets Bundle initialization
 assets = Environment(app)
 assets.url = app.static_url_path
-scss = Bundle('scss/main.scss', filters='pyscss', output='css/all.css')
+scss = Bundle('scss/*.scss', filters='pyscss, cssmin', output='css/all.css')
 assets.register('scss_all', scss)
 
 # DB initialization
