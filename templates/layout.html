@@ -5,8 +5,9 @@
     <meta charset="UTF-8" />
     <title>Flask App</title>
 
-    {% assets "scss_all" %} <link rel=stylesheet type=text/css href="{{
-    ASSET_URL }}"> {% endassets %}
+    {% assets "scss_all" %}
+      <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+    {% endassets %}
   </head>
   <body>
     <div class="layout">
@@ -37,5 +38,8 @@
       </section>
     </div>
 	{% endblock %}
+
+  {% block scripts %} {% endblock scripts %}
+
   </body>
 </html>
