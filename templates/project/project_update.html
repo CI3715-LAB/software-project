@@ -1,0 +1,42 @@
+{% extends 'layout.html' %} 
+
+{% block body %}
+<h1>Update project</h1>
+<hr>
+<hr>
+
+<form action='' method = "POST">
+	{% if not error %}
+		<p>Description <textarea name="description" rows="4" cols="50" required>{{ project.description }}</textarea></p>
+		<p>Open Date <input type = "date" name ="open_date" value="{{ project.open_date }}" required/></p>
+		<p>Close Date <input type = "date" name ="close_date" value="{{ project.close_date }}" required/></p>
+		<p>
+			{% if project.enabled %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox" checked>
+			{% else %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox">
+			{% endif %}
+			<label for="enabledCheckbox">Enabled</label>
+		</p>
+	{% else %}
+		<p>Description <textarea name="description" rows="4" cols="50" required>{{ description }}</textarea></p>
+		<p>Open Date <input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
+		<p>Close Date <input type = "date" name ="close_date" value="{{ close_date }}" required/></p>
+		<p>
+			{% if enabled %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox" checked>
+			{% else %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox">
+			{% endif %}
+			<label for="enabledCheckbox">Enabled</label>
+		</p>
+	{% endif %}
+    <p><input type = "submit" value = "Save" /></p>
+	{% if error %}
+		<b>{{ error }}</b>
+	{% endif %}
+</form>
+
+<hr>
+<hr>
+{% endblock %}

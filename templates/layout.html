@@ -5,13 +5,15 @@
     <meta charset="UTF-8" />
     <title>Flask App</title>
 
-    {% assets "scss_all" %} <link rel=stylesheet type=text/css href="{{
-    ASSET_URL }}"> {% endassets %}
+    {% assets "scss_all" %}
+      <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
+    {% endassets %}
   </head>
   <body>
     <div class="layout">
       <section class="sidebar">
-        <nav>
+        <nav id="navbar">
+          <a class="link" href="/"><h3>Menu</h3></a>
           {% block navbar %}
   
           {% if loggedIn %}
@@ -19,6 +21,7 @@
               <a class="link" href="/user">List of users</a>
               <a class="link" href="/user/register">Register New User</a>
             {% endif %}
+                <a class="link" href="/project">Projects</a>
                 <a class="link" href="/user/logout">Logout</a>
               {% else %}
                 <a class="link" href="/user/login">Log In</a>
@@ -26,9 +29,16 @@
   
           {% endblock %}
         </nav>
+
         {% if loggedIn %}
           <h1 class="welcome">Welcome "{{user.username}}"</h1>
         {% endif %}
+
+        <ul>
+          <a href=""><li>Usuarios</li></a>
+          <a href=""><li>Usuarios</li></a>
+        </ul>
+
       </section>
       <section class="main">
         <div class="content">
@@ -37,5 +47,8 @@
       </section>
     </div>
 	{% endblock %}
+
+  {% block scripts %} {% endblock scripts %}
+
   </body>
 </html>

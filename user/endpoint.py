@@ -62,7 +62,7 @@ def user_login():
                 return render_template(
                     '/user/user_login.html', error = "Credentials do not match")
             else:
-                session['user'] = {'id': user.id, 'username': user.username, 'admin': user.admin}
+                session['user'] = {'id': user.id, 'username': user.username, 'role': user.role.name, 'admin': user.role.name == 'admin'}
                     
         else:
             return render_template(

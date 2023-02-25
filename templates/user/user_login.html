@@ -6,20 +6,29 @@
 
 {% block body %}
 
+<div class="box centered">
+    <div class="card">
+        <h1>User Login</h1>
+        <form id="user_login" action="" method = "POST">
+            <div class="content centered">
+                <div>
+                    <p> Username: <input type="text" name="username" /> </p>
+                    <p> Password: <input type="password" name="password" /> </p>
 
-<h1>User Login</h1>
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
 
-<div class="">
-    <form action='' method = "POST">
-        <p>username <input type = "text" name ="username" /></p>
-        <p>password <input type = "password" name = "password" /></p>
+                    <a href="">Cambio de contraseña</a>
 
-        {% if error %}
-            <h4>{{error}}</h4>
-        {% endif %}
-
-        <p><input type = "submit" value = "Submit" /></p>
-    </form>
+                    <div class="actions centered">
+                        <button type="submit">Enviar</button>
+                        <button type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
 
 {% endblock %}

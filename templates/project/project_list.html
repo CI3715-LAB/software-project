@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<h1>Projects</h1>
+<a class="link" href="/project/add">Add</a>
+<hr>
+<hr>
+
+{% for project in projects %}
+	<h2>{{ project.description }}</h2>
+	<p>Open Date: {{ project.open_date }}</p>
+	<p>Close Date: {{ project.close_date }}</p>
+	<p>Enabled: {{ project.enabled }}</p>
+	<a class="link" href="/project/update/{{ project.id }}">Update</a>
+	<a class="link" href="/project/delete/{{ project.id }}">Delete</a>
+	<a class="link" href="/project/toggle/{{ project.id }}">Toggle</a>
+	<hr>
+{% endfor %}
+
+<hr>
+{% endblock %}
