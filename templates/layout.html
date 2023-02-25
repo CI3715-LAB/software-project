@@ -14,13 +14,11 @@
       <section class="sidebar">
         <nav id="navbar">
           <a class="link" href="/"><h3>Home</h3></a>
-          {% block navbar %}
-            {% if loggedIn %}
-              <a class="link" href="/user/logout">Logout</a>
-            {% else %}
-              <a class="link" href="/user/login">Log In</a>
-            {% endif %}
-          {% endblock %}
+          {% if loggedIn %}
+            <a class="link" href="/user/logout">Logout</a>
+          {% else %}
+            <a class="link" href="/user/login">Log In</a>
+          {% endif %}
         </nav>
 
         {% if loggedIn %}
