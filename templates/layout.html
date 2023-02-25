@@ -12,7 +12,8 @@
   <body>
     <div class="layout">
       <section class="sidebar">
-        <nav>
+        <nav id="navbar">
+          <a class="link" href="/"><h3>Menu</h3></a>
           {% block navbar %}
   
           {% if loggedIn %}
@@ -20,6 +21,7 @@
               <a class="link" href="/user">List of users</a>
               <a class="link" href="/user/register">Register New User</a>
             {% endif %}
+                <a class="link" href="/project">Projects</a>
                 <a class="link" href="/user/logout">Logout</a>
               {% else %}
                 <a class="link" href="/user/login">Log In</a>

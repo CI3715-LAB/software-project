@@ -4,6 +4,8 @@ from os import environ
 
 from config.setup import db, SECRET_KEY
 from user.endpoint import user_blueprint
+from project.endpoint import project_blueprint
+from log.endpoint import log_blueprint
 
 # Flask initialization
 app = Flask(__name__)
@@ -37,6 +39,8 @@ def home():
 
 # Blueprints Registration (Endpoints)
 app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints
+app.register_blueprint(project_blueprint, url_prefix='/project') # Project endpoints
+app.register_blueprint(log_blueprint, url_prefix='/log') # Log endpoints
 
 # Runner
 if __name__ == '__main__':
