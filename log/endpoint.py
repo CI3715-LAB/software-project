@@ -31,11 +31,9 @@ def retrieve_logs():
 	
 
 # get log details
-@log_blueprint.route('/detail', methods=['POST'])
-def retrieve_log():
-	id = request.form['id']
-
-	log = Log.query.filter_by(id = id).first()
+@log_blueprint.route('/detail/<int:id>', methods=['GET'])
+def retrieve_log(id):
+	log = Log.query.get(id)
 
 	return render_template('/log/log_details.html',
 		log=log,

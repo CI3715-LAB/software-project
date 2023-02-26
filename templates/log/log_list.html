@@ -10,8 +10,9 @@
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/log/search' method="GET">
-                        <input type="text" name="phrase" form="form-search" />
-                        <button id="search">
+                        <input type="text" name="phrase" form="form-search"
+                            placeholder="..." />
+                        <button class="normal" id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
@@ -24,7 +25,7 @@
                 <div>{{ error }}</div>
                 <div>
                     <form id="form-retry" action='/log' method="GET">
-                        <button id="retry" form="form-retry">
+                        <button class="normal" id="retry" form="form-retry">
                             Volver
                         </button>
                     </form>
@@ -36,7 +37,7 @@
                     <div>No hay eventos</div>
                     <div>
                         <form id="form-retry" action='/log' method="GET">
-                            <button id="retry" form="form-retry">
+                            <button class="normal" id="retry" form="form-retry">
                                 Volver
                             </button>
                         </form>
@@ -80,11 +81,13 @@
                     </div>
 
                     <div class="callbacks">
-                        <button id="info" form="form-info-{{ log.id }}">
-                            <i class="fa-solid fa-circle-info"></i>
-                        </button>
+                        <a href="/log/detail/{{ log.id }}">
+                            <button class="safe" id="info" form="form-info-{{ log.id }}">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                        </a>
     
-                        <button id="delete" form="form-delete-{{ log.id }}">
+                        <button class="danger" id="delete" form="form-delete-{{ log.id }}">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>
@@ -94,11 +97,6 @@
             <form class="hidden" id="form-delete-{{ log.id }}" 
 				action='/log/delete' method="POST">
                 <input type="text" name="id" value="{{ log.id }}"/>
-            </form>
-			<form class="hidden" id="form-info-{{ log.id }}" 
-				action='/log/detail' method="POST">
-                <input type="text" name="id" value="{{ log.id }}"/>
-				<input type="text" name="description" value="{{ log.description }}"/>
             </form>
             
             {% endfor %}

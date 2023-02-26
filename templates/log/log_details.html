@@ -4,37 +4,36 @@
 
 <div class="box centered">
     <div class="card">
-        <h1>Evento</h1>
-        <form id="log" action="/log" method = "PET">
-            <div class="card-content centered">
+        <h1>Evento  #{{ log.id }}</h1>
+            <div class="card-content centered log">
                 <div>
-                    
-					<div class="log-info">
-						<b>Id:</b>
-						<span class="cell">{{ log.id }}</span>
-						
-						<b>Modulo:</b>
-						<span class="cell">{{ log.type }}</span>
-						
-						<b>Fecha:</b>
-						<span class="cell">{{ log.date }}</span>
-						
-						<b>Hora:</b>
-						<span class="cell">{{ log.time }}</span>
-						
-						<span class="cellbtn">
-							<a class="button" href="/log/delete/{{ log.id }}">
-								<i class="fa-solid fa-xmark"></i>
-							</a>
-						</span>
-					</div>
+                    <div class="desc">
+                        <pre>
+                            <h3>Modulo: {{ log.type }}</h3>
+                            {{ log.description }}
+                            <br/ >
+                            <br/ >
+                            <span>
+                                Generado el <b>{{ log.date }}</b> a las <b>{{ log.time }}</b> horas
+                            </span>
+                        </pre>
+                    </div>
 
                     {% if error %}
                         <h4>{{error}}</h4>
                     {% endif %}
 
                     <div class="actions centered">
-                        <button type="submit">Volver</button>
+                        <a href="/log"><button class="normal">Volver</button></a>
+                        <button class="danger" 
+                            id="delete" form="form-delete-{{ log.id }}">
+                            Eliminar
+                        </button>
+    
+                        <form class="hidden" id="form-delete-{{ log.id }}" 
+                            action='/log/delete' method="POST">
+                            <input class="hidden" type="text" name="id" value="{{ log.id }}"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -43,3 +42,11 @@
 </div>
 
 {% endblock %}
+
+{% block scripts %}
+    <script>
+        let data = document.getElementById("logdesc")
+        let format = JSON.stringify(data.innerHTML, null, 4)
+        data.innerHTML = format
+    </script>
+{% endblock scripts %}
