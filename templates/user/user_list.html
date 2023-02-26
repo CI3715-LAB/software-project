@@ -5,18 +5,95 @@
 {% endblock %}
 
 {% block body %}
-<h1>Users</h1>
-<hr>
-<hr>
+<div class="box centered">
+    <div class="card">
+        <h1>Users</h1>
 
-{% for user in users %}
-<b>id</b> -> {{ user.id }}<br>
-<b>username</b> -> {{ user.username }}<br>
-<b>email</b> -> {{ user.email }}<br>
-<b>password</b> -> {{ user.password }}<br>
-<b>administrator</b> -> {{ user.admin }}
-<hr>
-{% endfor %}
+        <div class="card-content users">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/user/search' method="GET">
+                        <input type="text" name="phrase" form="form-search" />
+                        <button id="search">S</button>
+                    </form>
+            
+                    <form id="form-register" action='/user/register' method="GET">
+                        <button id="register" form="form-register">+</button>
+                    </form>
+                </div>
+            </div>
 
-<hr>
+            <div class="fields">
+                <div>Id</div>
+                <div>Usuario</div>
+                <div>Nombre</div> 
+                <div>Apellido</div>
+                <div>Rol</div>
+                <div>Proyecto</div>
+            </div>
+
+            {% for user in users %}
+            <form id="form-edit-{{ user.id }}" action='/user/update' method="POST">
+                <div class="values">
+                    
+                    <div><input type="text" name="id"
+                        value="{{ user.id }}" 
+                        form="form-edit-{{ user.id }}" readonly/>
+                    </div>
+
+                    <div><input type="text" name="username"
+                        value="{{ user.username }}" 
+                        form="form-edit-{{ user.id }}" readonly />
+                    </div>
+
+                    <div><input type="text" name="name" 
+                        value="{{ user.name }}"
+                        form="form-edit-{{ user.id }}" />
+                    </div>
+
+                    <div><input type="text" name="lastname" 
+                        value="{{ user.lastname }}"
+                        form="form-edit-{{ user.id }}" />
+                    </div>
+
+                    <select name="role" 
+                        id="role" form="form-edit-{{ user.id }}">
+                    {% for role in roles %}
+                        {% if role == user.role %}
+                            <option selected>{{role}}</option>
+                        {% else %}
+                            <option>{{role}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <select name="project" 
+                        id="project" form="form-edit-{{ user.id }}">
+                    {% for project in projects %}
+                        {% if project == user.project %}
+                            <option selected>{{project}}</option>
+                        {% else %}
+                            <option>{{project}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <button id="edit" form="form-edit-{{ user.id }}">
+                        E
+                    </button>
+
+                    <button id="delete" form="form-delete-{{ user.id }}">
+                        X
+                    </button>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ user.id }}" action='/user/delete' method="POST">
+                <input type="text" name="id" value="{{ user.id }}"/>
+            </form>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 {% endblock %}

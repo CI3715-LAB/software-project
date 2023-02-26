@@ -27,15 +27,21 @@ db.init_app(app)
 def create_table():
     db.create_all()
 
-# Home route
-@app.route('/')
-def home():
+@app.context_processor
+def inject_user_from_session():
     loggedIn = False
     user = None
+        
     if 'user' in session:
         loggedIn = True
         user = session['user']
-    return render_template('index.html', loggedIn=loggedIn, user=user)
+        
+    return dict(user=user, loggedIn=loggedIn)
+
+# Home route
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 # Blueprints Registration (Endpoints)
 app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints

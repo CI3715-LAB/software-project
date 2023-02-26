@@ -9,36 +9,31 @@
     {% assets "scss_all" %}
       <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
     {% endassets %}
+
   </head>
   <body>
     <div class="layout">
       <section class="sidebar">
         <nav id="navbar">
-          <a class="link" href="/"><h3>Menu</h3></a>
-          {% block navbar %}
-  
+          <a class="link" href="/"><h3>Inicio</h3></a>
           {% if loggedIn %}
-            {% if user.admin %}
-              <a class="link" href="/user">List of users</a>
-              <a class="link" href="/user/register">Register New User</a>
-            {% endif %}
-                <a class="link" href="/project">Projects</a>
-                <a class="link" href="/user/logout">Logout</a>
-              {% else %}
-                <a class="link" href="/user/login">Log In</a>
-              {% endif %}
-  
-          {% endblock %}
+            <a class="link" href="/user/logout">Cerrar sesión</a>
+          {% else %}
+            <a class="link" href="/user/login">Iniciar sesión</a>
+          {% endif %}
         </nav>
 
         {% if loggedIn %}
-          <h1 class="welcome">Welcome "{{user.username}}"</h1>
+          <ul>
+            {% if user.admin %}
+              <a href="/user"><li>Usuarios</li></a>
+              <a href="/user/register"><li>Registro de usuario</li></a>
+              <a href="/user/reset"><li>Reinicio de contraseña</li></a>
+              {% endif %}
+              <a href="/project"><li>Proyectos</li></a>
+              <a href="/log"><li>Eventos</li></a>
+            </ul>
         {% endif %}
-
-        <ul>
-          <a href=""><li>Usuarios</li></a>
-          <a href=""><li>Usuarios</li></a>
-        </ul>
 
       </section>
       <section class="main">

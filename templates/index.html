@@ -2,11 +2,16 @@
 
 {% block body %}
 <div class="welcome">
-  <a href="https://flask.palletsprojects.com/en/2.2.x/" target="_blank">
-    <img src={{ url_for('static', filename='img/flask-icon.webp') }} alt="Flask"
-    />
-  </a>
-
-  <h1>Flask App</h1>
+  <div class="cover">
+    <a href="https://flask.palletsprojects.com/en/2.2.x/" target="_blank">
+      <img src={{ url_for('static', filename='img/flask-icon.webp') }} alt="Flask"
+      />
+    </a>
+  
+    <h1>Flask App</h1>
+  </div>
+  {% if loggedIn %}
+    <h1>Bienvenido {{user.username}}</h1>
+  {% endif %}
 </div>
 {% endblock %}
