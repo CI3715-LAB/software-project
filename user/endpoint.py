@@ -147,19 +147,21 @@ def user_update():
 def user_search():
     phrase = request.args.get('phrase')
 
-    search_user = User.query.filter(
+    search = db.session.query(User).select_from(User).join(Role).join(Project).filter(
         or_(
             User.id.like('%' + phrase + '%'),
             User.username.like('%' + phrase + '%'),
             User.name.like('%' + phrase + '%'),
-            User.lastname.like('%' + phrase + '%')
+            User.lastname.like('%' + phrase + '%'),
+            Role.name.like('%' + phrase + '%'),
+            Project.description.like('%' + phrase + '%')
         )
     )
 
     roles = Role.query.all()
     projects = Project.query.all()
 
-    return render_template('/user/user_list.html', users=search_user.all(), roles=roles, projects=projects)
+    return render_template('/user/user_list.html', users=search.all(), roles=roles, projects=projects)
 
 @user_blueprint.route('/reset', methods=['GET','POST'])
 def user_reset():
