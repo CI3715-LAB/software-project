@@ -1,8 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, session, url_for
-from sqlalchemy import or_
+from sqlalchemy import or_, select
 
 from config.setup import db
-from .model import Log
+from .model import Log, Module, Type
 
 log_blueprint = Blueprint('log', __name__)
 
@@ -18,7 +18,7 @@ def retrieve_logs():
 			user=session.get('user')
 		)
 
-    # look for logs with a similar description to the one given
+	# look for logs with a similar description to the one given
 	description = request.args.get('description')
 	logs = Log.query.filter(
 		Log.description.like('%' + description + '%')
@@ -26,21 +26,19 @@ def retrieve_logs():
 	return render_template('/log/log_list.html',
 		logs=logs, description=description,
 		loggedIn= 'user' in session,
-	    user=session.get('user')
+		user=session.get('user')
 	)
-	
+
 
 # get log details
-@log_blueprint.route('/detail', methods=['POST'])
-def retrieve_log():
-	id = request.form['id']
-
+@log_blueprint.route('/detail/<int:id>', methods=['GET'])
+def retrieve_log(id):
 	log = Log.query.filter_by(id = id).first()
 
 	return render_template('/log/log_details.html',
 		log=log,
 		loggedIn= 'user' in session,
-	    user=session.get('user')
+		user=session.get('user')
 	)
 
 # delete log
@@ -58,16 +56,18 @@ def delete_log():
 
 @log_blueprint.route('/search', methods=['GET'])
 def search_log():
-    phrase = request.args.get('phrase')
+	phrase = request.args.get('phrase')
 
-    search = Log.query.filter(
-        or_(
-            Log.id.like('%' + phrase + '%'),
-            Log.description.like('%' + phrase + '%'),
-            Log.type_id.like('%' + phrase + '%'),
-            Log.date.like('%' + phrase + '%'),
-			Log.time.like('%' + phrase + '%')
-        )
-    )
+	logs = db.session.query(Log).select_from(Log).join(Type).join(Module).filter(
+		or_(
+			Log.id.like('%' + phrase + '%'),
+			Log.description.like('%' + phrase + '%'),
+			Log.date.like('%' + phrase + '%'),
+			Log.time.like('%' + phrase + '%'),
+			Type.name.like('%' + phrase + '%'),
+			Module.name.like('%' + phrase + '%')
+		)
+	).all()
 
-    return render_template('/log/log_list.html', logs=search.all())
+
+	return render_template('/log/log_list.html', logs=logs, phrase=phrase)

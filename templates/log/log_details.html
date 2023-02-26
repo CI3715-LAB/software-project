@@ -5,38 +5,47 @@
 <div class="box centered">
     <div class="card">
         <h1>Evento</h1>
-        <form id="log" action="/log" method = "PET">
+        <form id="log" action="/log" method = "GET">
             <div class="card-content centered">
                 <div>
                     
-					<div class="log-info">
-						<b>Id:</b>
-						<span class="cell">{{ log.id }}</span>
-						
-						<b>Modulo:</b>
-						<span class="cell">{{ log.type }}</span>
-						
-						<b>Fecha:</b>
-						<span class="cell">{{ log.date }}</span>
-						
-						<b>Hora:</b>
-						<span class="cell">{{ log.time }}</span>
-						
-						<span class="cellbtn">
-							<a class="button" href="/log/delete/{{ log.id }}">
-								<i class="fa-solid fa-xmark"></i>
-							</a>
-						</span>
-					</div>
+					<b>Id:</b>
+					<span class="cell">{{ log.id }}</span>
+
+					<b>Accion:</b>
+					<span class="cell">{{ log.type }}</span>
+					
+					<b>Modulo:</b>
+					<span class="cell">{{ log.module }}</span>
+					
+					<b>Fecha:</b>
+					<span class="cell">{{ log.date }}</span>
+					
+					<b>Hora:</b>
+					<span class="cell">{{ log.time }}</span>
+					
+					<button id="delete" form="form-delete-{{ log.id }}">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
 
                     {% if error %}
                         <h4>{{error}}</h4>
                     {% endif %}
 
                     <div class="actions centered">
-                        <button type="submit">Volver</button>
+                        <button form="log" type="submit">Volver</button>
                     </div>
+
+					<form class="hidden" id="form-delete-{{ log.id }}" 
+						action='/log/delete' method="POST">
+						<input form="form-delete-{{ log.id }}" type="text" name="id" value="{{ log.id }}" hidden/>
+					</form>
                 </div>
+
+				<h3>Descripción:</h3>
+				<p>
+					<span class="cell">{{ log.description }}</span>
+				</p>
             </div>
         </form>
     </div>

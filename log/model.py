@@ -14,6 +14,18 @@ class Type(db.Model):
 
 	def __repr__(self):
 		return f'{self.name}'
+	
+class Module(db.Model):
+	__tablename__ = "app_module"
+
+	id = db.Column(db.Integer, primary_key=True)
+	name = db.Column(db.String(100), nullable=False, unique=True)
+
+	def __init__(self, name):
+		self.name = name
+
+	def __repr__(self):
+		return f'{self.name}'
 
 class Log(db.Model):
 	__tablename__ = "app_log"
@@ -27,13 +39,18 @@ class Log(db.Model):
 	type_id = db.Column(db.Integer, db.ForeignKey('app_type.id'), nullable=False)
 	# relationship to type
 	type = db.relationship('Type', backref=db.backref('logs', lazy=True))
+	# foreign key to module
+	module_id = db.Column(db.Integer, db.ForeignKey('app_module.id'), nullable=False)
+	# relationship to module
+	module = db.relationship('Module', backref=db.backref('logs', lazy=True))
 
-	def __init__(self, user_id, description, date, time, type_id):
+	def __init__(self, user_id, description, date, time, type_id, module_id):
 		self.user_id = user_id
 		self.description = description
 		self.date = date
 		self.time = time
 		self.type_id = type_id
+		self.module_id = module_id
 
 	def __repr__(self):
-		return f'({self.type_id}): {self.date} {self.time} - {self.description}'
+		return f'({self.type}, {self.module}): {self.date} {self.time} - {self.description}'

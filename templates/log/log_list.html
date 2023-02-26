@@ -10,7 +10,7 @@
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/log/search' method="GET">
-                        <input type="text" name="phrase" form="form-search" />
+                        <input type="text" name="phrase" form="form-search" value="{{ phrase }}"/>
                         <button id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -60,12 +60,12 @@
                     </div>
 
                     <div><input type="text" name="description"
-                        value="{{ log.description }}" 
+                        value="{{ log.type }}" 
                         form="form-edit-{{ log.id }}" readonly />
                     </div>
 
-                    <div><input type="text" name="type" 
-                        value="{{ log.type }}"
+                    <div><input type="text" name="module" 
+                        value="{{ log.module }}"
                         form="form-edit-{{ log.id }}" readonly/>
                     </div>
 
@@ -96,9 +96,7 @@
                 <input type="text" name="id" value="{{ log.id }}"/>
             </form>
 			<form class="hidden" id="form-info-{{ log.id }}" 
-				action='/log/detail' method="POST">
-                <input type="text" name="id" value="{{ log.id }}"/>
-				<input type="text" name="description" value="{{ log.description }}"/>
+				action='/log/detail/{{ log.id }}' method="GET">
             </form>
             
             {% endfor %}
