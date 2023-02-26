@@ -35,7 +35,17 @@
                             <input class="hidden" type="text" name="id" value="{{ log.id }}"/>
                         </form>
                     </div>
+
+					<form class="hidden" id="form-delete-{{ log.id }}" 
+						action='/log/delete' method="POST">
+						<input form="form-delete-{{ log.id }}" type="text" name="id" value="{{ log.id }}" hidden/>
+					</form>
                 </div>
+
+				<h3>Descripción:</h3>
+				<p>
+					<span class="cell">{{ log.description }}</span>
+				</p>
             </div>
         </form>
     </div>
