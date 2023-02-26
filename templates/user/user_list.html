@@ -7,21 +7,51 @@
 {% block body %}
 <div class="box centered">
     <div class="card">
-        <h1>Users</h1>
+        <h1>Usuarios</h1>
 
         <div class="card-content users">
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/user/search' method="GET">
                         <input type="text" name="phrase" form="form-search" />
-                        <button id="search">S</button>
+                        <button id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
                     </form>
             
                     <form id="form-register" action='/user/register' method="GET">
-                        <button id="register" form="form-register">+</button>
+                        <button id="register" form="form-register">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </form>
                 </div>
             </div>
+
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/user' method="GET">
+                        <button id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not users  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay usuarios</div>
+                    <div>
+                        <form id="form-retry" action='/user' method="GET">
+                            <button id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
 
             <div class="fields">
                 <div>Id</div>
@@ -78,13 +108,15 @@
                     {% endfor %}
                     </select>
 
-                    <button id="edit" form="form-edit-{{ user.id }}">
-                        E
-                    </button>
-
-                    <button id="delete" form="form-delete-{{ user.id }}">
-                        X
-                    </button>
+                    <div class="callbacks">
+                        <button id="edit" form="form-edit-{{ user.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete" form="form-delete-{{ user.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
                 </div>
             
             </form>
@@ -92,6 +124,7 @@
                 <input type="text" name="id" value="{{ user.id }}"/>
             </form>
             {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

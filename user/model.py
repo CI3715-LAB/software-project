@@ -41,7 +41,7 @@ class User (db.Model):
 
     def __init__(self, username, password, name, lastname, role_id, project_id):
         self.username = username
-        self.password = generate_password(password)
+        self.password = self.generate_password(password)
         self.name = name
         self.lastname = lastname
         self.role_id = role_id

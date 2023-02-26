@@ -1,3 +1,5 @@
+$card-element-width: 110px;
+
 .card {
     h1 {
         margin-bottom: 0;
@@ -25,7 +27,7 @@
                 display: flex;
                 justify-content: flex-end;
 
-                #form-search, #form-register {
+                form {
                     display: flex;
                     justify-content: center;
                     
@@ -41,6 +43,23 @@
             }
         }
 
+        .warning {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 80px;
+
+            div {
+                margin: 20px;
+                font-size: 1.3rem;
+            }
+
+            button {
+                width: $card-element-width;
+            }
+        }
+
         input { height: 25px; }
 
         input, select {
@@ -48,8 +67,7 @@
             border-radius: 5px;
         }
 
-        button,
-        select {
+        button, select {
             border-radius: 5px;
             background-color: white;
         }
@@ -68,30 +86,71 @@
             }
         }
 
-        &.users .fields, &.users .values {
-            display: grid;
-            grid-template-columns: repeat(8,1fr);
-            grid-template-rows: auto;
+        .fields {
+            div {
+                font-weight: 600;
+            }
         }
 
-        &.users .fields > div {
-            font-weight: 600;
-        }
+        .values {
+            input, select {
+                padding: 5px;
+                margin: 10px 20px 10px 0;
+            }
 
-        &.users .values input, select {
-            padding: 5px;
-            margin: 10px 20px 10px 0;
-        }
+            button {
+                max-width: 50px;
+            }
 
-        &.users .fields > div,
-        &.users .values input,
-        &.users .values button,
-        &.users .values select {
-            width: 85px;
+            .callbacks {
+                display: flex;
+                justify-content: space-evenly;
+                align-items: center;
+            }
         }
 
         .hidden {
             display: none;
+        }
+
+        &.projects {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(5,1fr);
+                grid-template-rows: auto;
+            }
+
+            .fields {
+                div {
+                    width: 150px;
+                }
+            }
+    
+            .values {
+                button, input, select {
+                    width: 150px;
+                }
+            }
+        }
+
+        &.users {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(7,1fr);
+                grid-template-rows: auto;
+            }
+
+            .fields {
+                div {
+                    width: 130px;
+                }
+            }
+    
+            .values {
+                button, input, select {
+                    width: 130px;
+                }
+            }
         }
     }
 
