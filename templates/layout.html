@@ -8,6 +8,7 @@
     {% assets "scss_all" %}
       <link rel=stylesheet type=text/css href="{{ ASSET_URL }}">
     {% endassets %}
+
   </head>
   <body>
     <div class="layout">
@@ -24,10 +25,11 @@
         {% if loggedIn %}
           <ul>
             {% if user.admin %}
-              <a href="/user"><li>List of users</li></a>
-              <a href="/user/register"><li>Register New User</li></a>
+              <a href="/user"><li>Usuarios</li></a>
+              <a href="/user/register"><li>Registro de usuario</li></a>
+              <a href="/user/reset"><li>Reinicio de contraseña</li></a>
               {% endif %}
-              <a href="/project"><li>Projects</li></a>
+              <a href="/project"><li>Proyectos</li></a>
             </ul>
         {% endif %}
 

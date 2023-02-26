@@ -7,21 +7,91 @@
         width: 100%
     }
 
-    .content {
+    &-content {
         min-width: 500px;
-        width: 50%;
-    
         padding: 20px;
-    
         border: solid 2px gray;
         box-shadow: 5px 5px gray;
         background-color: whitesmoke;
         border-radius: 10px;
 
-        input {
-            height: 25px;
+        .command {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 20px;
+
+            .actuator {
+                display: flex;
+                justify-content: flex-end;
+
+                #form-search, #form-register {
+                    display: flex;
+                    justify-content: center;
+                    
+                    input {
+                        height: 35px;
+                    }
+
+                    button {
+                        width: 50px;
+                        margin: 0 10px;
+                    }
+                }
+            }
+        }
+
+        input { height: 25px; }
+
+        input, select {
             border: solid 2px gray;
             border-radius: 5px;
+        }
+
+        &.users .fields, &.users .values {
+            display: grid;
+            grid-template-columns: repeat(8,1fr);
+            grid-template-rows: auto;
+        }
+
+        &.users .fields > div {
+            font-weight: 600;
+        }
+
+        &.users .values input, select {
+            padding: 5px;
+            margin: 10px 20px 10px 0;
+        }
+
+        &.users .fields > div,
+        &.users .values input,
+        &.users .values button,
+        &.users .values select {
+            width: 85px;
+        }
+
+        &.users button,
+        &.users select {
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        &.users button {
+            height: 40px;
+            padding: 5px;
+            margin: 10px 0 10px 0;
+            box-shadow: 5px 5px gray;
+            transition: all 0.25s;
+
+            &:hover {
+                background-color: gray;
+                color: white;
+                box-shadow: 5px 5px black;
+            }
+        }
+
+        &.users .hidden {
+            display: none;
         }
     }
 

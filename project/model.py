@@ -12,7 +12,8 @@ class Project (db.Model):
 	close_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
 	enabled = db.Column(db.Boolean(), default=True)
 	# many to many relationship with user
-	users = db.relationship('User', secondary='app_user_project', backref='projects')
+	# users = db.relationship('User', secondary='app_user_project', backref='projects')
+	users = db.relationship('User', backref='project', lazy=True)
 
 	def __init__(self, description, open_date, close_date, enabled):
 		self.description = description
@@ -21,7 +22,7 @@ class Project (db.Model):
 		self.enabled = enabled
 
 	def __repr__(self):
-		return f'{self.id}: {self.description[:10]}, since {self.open_date}'
+		return f'{self.description[:10]}'
 
 
 class UserProject (db.Model):
