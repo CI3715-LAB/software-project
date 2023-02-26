@@ -8,12 +8,12 @@
 
 <div class="box centered">
     <div class="card">
-        <h1>User Login</h1>
+        <h1>Inicio de sesión</h1>
         <form id="user_login" action="" method = "POST">
             <div class="card-content centered">
                 <div>
-                    <p> Username: <input type="text" name="username" /> </p>
-                    <p> Password: <input type="password" name="password" /> </p>
+                    <p> Usuario: <input type="text" name="username" /> </p>
+                    <p> Contraseña: <input type="password" name="password" /> </p>
 
                     {% if error %}
                         <h4>{{error}}</h4>
@@ -22,8 +22,8 @@
                     <a href="/user/reset">Cambio de contraseña</a>
 
                     <div class="actions centered">
-                        <button type="submit">Send</button>
-                        <button type="reset">Clear</button>
+                        <button type="submit">Enviar</button>
+                        <button type="reset">Limpiar</button>
                     </div>
                 </div>
             </div>

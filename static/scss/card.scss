@@ -48,6 +48,26 @@
             border-radius: 5px;
         }
 
+        button,
+        select {
+            border-radius: 5px;
+            background-color: white;
+        }
+
+        button {
+            height: 40px;
+            padding: 5px;
+            margin: 10px 0 10px 0;
+            box-shadow: 5px 5px gray;
+            transition: all 0.25s;
+
+            &:hover {
+                background-color: gray;
+                color: white;
+                box-shadow: 5px 5px black;
+            }
+        }
+
         &.users .fields, &.users .values {
             display: grid;
             grid-template-columns: repeat(8,1fr);
@@ -70,27 +90,7 @@
             width: 85px;
         }
 
-        &.users button,
-        &.users select {
-            border-radius: 5px;
-            background-color: white;
-        }
-
-        &.users button {
-            height: 40px;
-            padding: 5px;
-            margin: 10px 0 10px 0;
-            box-shadow: 5px 5px gray;
-            transition: all 0.25s;
-
-            &:hover {
-                background-color: gray;
-                color: white;
-                box-shadow: 5px 5px black;
-            }
-        }
-
-        &.users .hidden {
+        .hidden {
             display: none;
         }
     }

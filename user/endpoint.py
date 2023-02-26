@@ -52,7 +52,7 @@ def user_register():
         # User exists
         user = User.query.filter_by(username = username).first()
         if user:
-            error = "User already exists"
+            error = "Este nombre se usuario ya se encuentra registrado"
             return render_template(
                 '/user/user_register.html', error = error)
         
@@ -80,13 +80,13 @@ def user_login():
             check = user.check_password(password)
             if not check:
                 return render_template(
-                    '/user/user_login.html', error = "Credentials do not match")
+                    '/user/user_login.html', error = "Las credenciales suministradas no son validas")
             else:
                 session['user'] = {'id': user.id, 'username': user.username, 'role': user.role.name, 'admin': user.role.name == 'admin'}
                     
         else:
             return render_template(
-                '/user/user_login.html', error = "User does not exists")
+                '/user/user_login.html', error = "El nombre de usuario suministrado no existe")
                
         return redirect('/')
 
@@ -180,7 +180,7 @@ def user_reset():
             check = user.check_password(password_prev)
             if not check:
                 return render_template(
-                    '/user/user_login.html', error = "Credentials do not match")
+                    '/user/user_login.html', error = "Las credenciales suministradas no son validas")
             else:
                 user.password = user.generate_password(password_next)
                 db.session.commit()
@@ -188,6 +188,6 @@ def user_reset():
                     
         else:
             return render_template(
-                '/user/user_login.html', error = "User does not exists")
+                '/user/user_login.html', error ="El nombre de usuario suministrado no existe")
                
         return redirect('/')
