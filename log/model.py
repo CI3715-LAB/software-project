@@ -25,6 +25,8 @@ class Log(db.Model):
 	time = db.Column(db.Time, nullable=False, default=datetime.utcnow)
 	# foreign key to type
 	type_id = db.Column(db.Integer, db.ForeignKey('app_type.id'), nullable=False)
+	# relationship to type
+	type = db.relationship('Type', backref=db.backref('logs', lazy=True))
 
 	def __init__(self, user_id, description, date, time, type_id):
 		self.user_id = user_id

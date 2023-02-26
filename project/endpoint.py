@@ -119,6 +119,9 @@ def enable_project(id):
 @project_blueprint.route('/delete/<int:id>')
 def delete_project(id):
     project = Project.query.get(id)
+
+    for user in project.users:
+        user.project = Project.query.get(0)
     db.session.delete(project)
     db.session.commit()
     return redirect(url_for('project.retrieve_projects'))

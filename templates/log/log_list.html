@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="logger">
+
+	<h1>Logger de Eventos</h1>
+	<form method="get">
+		{% if description %}
+			<input class="search" type="text" name="description" value="{{ description }}" placeholder="Descripcion">
+		{% else %}
+			<input class="search" type="text" name="description" placeholder="Descripcion">
+		{% endif %}
+		<button class="button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+	</form>
+
+	<table class="logs">
+	<thead>
+		<th>Id:</th>
+		<th>Evento:</th>
+		<th>Modulo:</th>
+		<th>Fecha:</th>
+		<th>Hora:</th>
+	</thead>
+
+	{% for log in logs %}
+		<tr class="log">
+			<td class="cell">{{ log.id }}</td>
+			<td class="cell description">{{ log.description|truncate(10, True) }}</td>
+			<td class="cell">{{ log.type }}</td>
+			<td class="cell">{{ log.date }}</td>
+			<td class="cell">{{ log.time }}</td>
+			<td class="cellbtn">
+				<a class="button" href="/log/{{ log.id }}">
+					<i class="fa-solid fa-circle-info"></i>
+				</a>
+			</td>
+			<td class="cellbtn">
+				<a class="button" href="/log/delete/{{ log.id }}">
+					<i class="fa-solid fa-xmark"></i>
+				</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr>
+			<td colspan="5">No hay registros</td>
+		</tr>
+	{% endfor %}
+
+	</table>
+
+
+</div>
+{% endblock %}

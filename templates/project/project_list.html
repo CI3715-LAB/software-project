@@ -24,7 +24,7 @@
 	<th>Cierre:</th>
 </thead>
 
-{% for project in projects %}
+{% for project in projects if project.id != 0 %}
 {% if project.enabled %}
 <tr class="proyecto">
 {% else %}
@@ -53,6 +53,11 @@
 		{% endif %}
 		</a>
 	</td>
+</tr>
+
+{% else %}
+<tr>
+	<td colspan="4">No hay proyectos</td>
 </tr>
 {% endfor %}
 
