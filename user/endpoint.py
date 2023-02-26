@@ -1,4 +1,4 @@
-from flask import Blueprint, request, render_template, redirect, session
+from flask import Blueprint, request, render_template, redirect, session, url_for
 from sqlalchemy import or_
 
 from config.setup import db
@@ -11,7 +11,7 @@ user_blueprint = Blueprint('user', __name__)
 def retrieve_users():
     # Only administrators can see user list
     if not 'user' in session or not session['user']['admin']:
-        return redirect('/')
+        return redirect(url_for('home'))
     
     users = User.query.all()
     roles = Role.query.all()
@@ -27,7 +27,7 @@ def user_register():
             projects = Project.query.all()
             return render_template('/user/user_register.html', roles=roles, projects=projects)
         
-        return redirect('/')
+        return redirect(url_for('home'))
     
     if request.method == 'POST':
         username = request.form['username']
@@ -41,13 +41,13 @@ def user_register():
         role = Role.query.filter_by(name = role_selected).first()
         if role == None:
             error = "El rol suministrado no existe en la base de datos"
-            return redirect('/user')
+            return redirect(url_for('user.retrieve_users'))
 
         # Project exists
         project = Project.query.filter_by(description = project_selected).first()
         if project == None:
             error = "El proyecto suministrado no existe en la base de datos"
-            return redirect('/user')
+            return redirect(url_for('user.retrieve_users'))
 
         # User exists
         user = User.query.filter_by(username = username).first()
@@ -60,13 +60,13 @@ def user_register():
 
         db.session.add(user)
         db.session.commit()
-        return redirect('/user')
+        return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/login', methods=['GET', 'POST'])
 def user_login():
     if request.method == 'GET':
         if 'user' in session and session['user']['admin']:
-            return redirect('/user')
+            return redirect(url_for('user.retrieve_users'))
         
         return render_template('/user/user_login.html', user=session.get('user'))
     
@@ -88,14 +88,14 @@ def user_login():
             return render_template(
                 '/user/user_login.html', error = "El nombre de usuario suministrado no existe")
                
-        return redirect('/')
+        return redirect(url_for('home'))
 
 @user_blueprint.route('/logout')
 def user_logout():
     if 'user' in session: 
         session.pop('user')
     
-    return redirect('/')
+    return redirect(url_for('home'))
 
 @user_blueprint.route('/delete', methods=['POST'])
 def user_delete():
@@ -107,7 +107,7 @@ def user_delete():
         db.session.delete(user)
         db.session.commit()
 
-    return redirect('/user')
+    return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/update', methods=['POST'])
 def user_update():
@@ -121,19 +121,19 @@ def user_update():
     role = Role.query.filter_by(name = role_selected).first()
     if role == None:
         error = "El rol suministrado no existe en la base de datos"
-        return redirect('/user')
+        return redirect(url_for('user.retrieve_users'))
 
     # Project exists
     project = Project.query.filter_by(description = project_selected).first()
     if project == None:
         error = "El proyecto suministrado no existe en la base de datos"
-        return redirect('/user')
+        return redirect(url_for('user.retrieve_users'))
 
     # User exists
     user = User.query.filter_by(id = id).first()
     if not user:
         error = "El usuario suministrado no existe en la base de datos"
-        return redirect('/user')
+        return redirect(url_for('user.retrieve_users'))
     
     user.name = name
     user.lastname = lastname
@@ -141,7 +141,7 @@ def user_update():
     user.project_id = project.id
 
     db.session.commit()
-    return redirect('/user')
+    return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/search', methods=['GET'])
 def user_search():
@@ -169,7 +169,7 @@ def user_reset():
         if 'user' in session and session['user']['admin']:
             return render_template('/user/user_password_reset.html', user=session.get('user'))
         
-        return redirect('/')
+        return redirect(url_for('home'))
         
     if request.method == 'POST':
         username = request.form['username']
@@ -182,14 +182,12 @@ def user_reset():
             check = user.check_password(password_prev)
             if not check:
                 return render_template(
-                    '/user/user_login.html', error = "Las credenciales suministradas no son validas")
+                    '/user/user_password_reset.html', error = "Las credenciales suministradas no son validas")
             else:
                 user.password = user.generate_password(password_next)
                 db.session.commit()
-                return redirect("/user/login")
+                return redirect(url_for('user.user_login'))
                     
         else:
             return render_template(
-                '/user/user_login.html', error ="El nombre de usuario suministrado no existe")
-               
-        return redirect('/')
+                '/user/user_password_reset.html', error ="El nombre de usuario suministrado no existe")
