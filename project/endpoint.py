@@ -11,6 +11,7 @@ def retrieve_projects():
     # if no parameters are given return all projects
 	if not request.args:
 		projects = Project.query.all()
+        #projects = Project.query.filter_by(id != 0).all()
 		return render_template('/project/project_list.html',
 			projects=projects, loggedIn= 'user' in session,
 	        user=session.get('user')

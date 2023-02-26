@@ -13,14 +13,15 @@
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/user/search' method="GET">
-                        <input type="text" name="phrase" form="form-search" />
-                        <button id="search">
+                        <input type="text" name="phrase" form="form-search"
+                            placeholder="..." />
+                        <button class="normal" id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
             
                     <form id="form-register" action='/user/register' method="GET">
-                        <button id="register" form="form-register">
+                        <button class="safe" id="register" form="form-register">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </form>
@@ -33,7 +34,7 @@
                 <div>{{ error }}</div>
                 <div>
                     <form id="form-retry" action='/user' method="GET">
-                        <button id="retry" form="form-retry">
+                        <button class="normal" id="retry" form="form-retry">
                             Volver
                         </button>
                     </form>
@@ -45,7 +46,7 @@
                     <div>No hay usuarios</div>
                     <div>
                         <form id="form-retry" action='/user' method="GET">
-                            <button id="retry" form="form-retry">
+                            <button class="normal" id="retry" form="form-retry">
                                 Volver
                             </button>
                         </form>
@@ -109,11 +110,11 @@
                     </select>
 
                     <div class="callbacks">
-                        <button id="edit" form="form-edit-{{ user.id }}">
+                        <button class="warn" id="edit" form="form-edit-{{ user.id }}">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
     
-                        <button id="delete" form="form-delete-{{ user.id }}">
+                        <button class="danger" id="delete" form="form-delete-{{ user.id }}">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>

@@ -31,7 +31,7 @@ class User (db.Model):
     # foreign key to role
     role_id = db.Column(db.Integer, db.ForeignKey('app_role.id'), nullable=False)
     # foreign key to project
-    project_id = db.Column(db.Integer, db.ForeignKey('app_project.id'), nullable=False)
+    project_id = db.Column(db.Integer, db.ForeignKey('app_project.id'), nullable=False, default=0)
 
     def generate_password(self, password):
         return generate_password_hash(password)

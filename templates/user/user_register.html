@@ -9,36 +9,50 @@
     <div class="card">
         <h1>Registro de usuario</h1>
         <form id="user_login" action="" method = "POST">
-            <div class="card-content centered">
+            <div class="card-content centered base">
                 <div>
-                    <p>Usuario <input type="text" name="username" required /></p>
-                    <p>Contraseña <input type="password" name="password" required /></p>
-                    <p>Nombre <input type="text" name="name" required /></p>
-                    <p>Apellido <input type="text" name="lastname" required /></p>
+                    <div>Usuario <br/>
+                        <input type="text" name="username" 
+                            placeholder="..." required />
+                    </div>
+                    <div>Contraseña <br/>
+                        <input type="password" name="password"
+                            placeholder="..." required />
+                    </div>
+                    <div>Nombre <br/>
+                        <input type="text" name="name"
+                            placeholder="..." required />
+                    </div>
+                    <div>Apellido <br/>
+                        <input type="text" name="lastname" 
+                            placeholder="..." required />
+                    </div>
 
-                    <label for="role">Rol</label>
-                    <select name="role" id="role" required>
-                    {% for role in roles %}
-                        <option>{{role}}</option>
-                    {% endfor %}
-                    </select>
+                    <div>
+                        <label for="role">Rol</label><br/>
+                        <select name="role" id="role" required>
+                        {% for role in roles %}
+                            <option>{{role}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
 
-                    <br/>
-
-                    <label for="project">Proyecto</label>
-                    <select name="project" id="project" required>
-                    {% for project in projects %}
-                        <option>{{project.description}}</option>
-                    {% endfor %}
-                    </select>
+                    <div>
+                        <label for="project">Proyecto</label><br/>
+                        <select name="project" id="project" required>
+                        {% for project in projects %}
+                            <option>{{project.description}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
 
                     {% if error %}
                         <h4>{{error}}</h4>
                     {% endif %}
 
                     <div class="actions centered">
-                        <button type="submit">Enviar</button>
-                        <button type="reset">Limpiar</button>
+                        <button class="safe" type="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,48 @@ $card-element-width: 110px;
         width: 100%
     }
 
+    button {
+        padding: 5px;
+        margin: 10px 0 10px 0;
+        border: solid 2px gray;
+        height: 40px;
+        border-radius: 5px;
+        transition: all 0.25s;
+        box-shadow: 5px 5px gray;
+        width: 100px;
+
+        &:hover {
+            background-color: gray;
+            border-color: gray;
+            color: white;
+            box-shadow: 5px 5px black;
+        }
+
+        &.danger:hover {
+            border-color: lightcoral;
+            color: white;
+            background-color: lightcoral;
+        }
+
+        &.safe:hover {
+            border-color: lightseagreen;
+            color: white;
+            background-color: lightseagreen;
+        }
+
+        &.warn:hover {
+            border-color: wheat;
+            color: white;
+            background-color: wheat;
+        }
+
+        &.normal:hover {
+            border-color: lightskyblue;
+            color: white;
+            background-color: lightskyblue;
+        }
+    }
+
     &-content {
         min-width: 500px;
         padding: 20px;
@@ -70,30 +112,36 @@ $card-element-width: 110px;
                 width: $card-element-width;
             }
         }
-
-        input { height: 25px; }
-
-        input, select {
+        
+        input, select, button {
             border: solid 2px gray;
-            border-radius: 5px;
-        }
-
-        button, select {
             border-radius: 5px;
             background-color: white;
         }
+        
+        input{ height: 25px; }
 
-        button {
-            height: 40px;
-            padding: 5px;
-            margin: 10px 0 10px 0;
-            box-shadow: 5px 5px gray;
-            transition: all 0.25s;
+        &.base {
+            & > div {
+                width: 50%;
 
-            &:hover {
-                background-color: gray;
-                color: white;
-                box-shadow: 5px 5px black;
+                div {
+                    margin-bottom: 10px;
+                }
+            }
+
+            input {
+                width: 97%;
+
+                &[type="checkbox"], &[type="radio"] {
+                    width: auto;
+                }
+            }
+
+            select {
+                height: 35px;
+                margin: 0 0 10px 0;
+                width: 100%;
             }
         }
 
@@ -120,8 +168,30 @@ $card-element-width: 110px;
             }
         }
 
+        .side {
+            display: flex;
+        }
+
         .hidden {
             display: none;
+        }
+
+        &.log {
+            .desc {
+                width: 400px;
+
+                pre {
+                    display: block;
+                    font-family: monospace;
+                    word-wrap: break-word;
+                    white-space: normal;
+                    margin: 0;
+                    border: solid 2px gray;
+                    border-radius: 10px;
+                    padding: 20px;
+                    background-color: white;
+                }
+            }
         }
 
         &.logs {
@@ -177,13 +247,13 @@ $card-element-width: 110px;
 
             .fields {
                 div {
-                    width: 130px;
+                    width: 120px;
                 }
             }
     
             .values {
                 button, input, select {
-                    width: 130px;
+                    width: 120px;
                 }
             }
         }
@@ -197,17 +267,5 @@ $card-element-width: 110px;
             margin-right: 10px;
         }
 
-        button {
-            padding: 10px 20px;
-            border: solid 2px gray;
-            border-radius: 5px;
-            transition: all 0.25s;
-        }
-
-        button:hover {
-            background-color: gray;
-            border-color: gray;
-            color: white;
-        }
     }
 }

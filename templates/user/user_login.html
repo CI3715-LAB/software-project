@@ -10,10 +10,16 @@
     <div class="card">
         <h1>Inicio de sesión</h1>
         <form id="user_login" action="" method = "POST">
-            <div class="card-content centered">
+            <div class="card-content centered base">
                 <div>
-                    <p> Usuario: <input type="text" name="username" /> </p>
-                    <p> Contraseña: <input type="password" name="password" /> </p>
+                    <div> Usuario 
+                        <br/><input type="text" name="username"
+                        placeholder="..." required />
+                    </div>
+                    <div> Contraseña
+                        <input type="password" name="password"
+                        placeholder="..." required />
+                    </div>
 
                     {% if error %}
                         <h4>{{error}}</h4>
@@ -22,8 +28,8 @@
                     <a href="/user/reset">Cambio de contraseña</a>
 
                     <div class="actions centered">
-                        <button type="submit">Enviar</button>
-                        <button type="reset">Limpiar</button>
+                        <button class="safe" type="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
                     </div>
                 </div>
             </div>

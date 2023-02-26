@@ -7,17 +7,17 @@
     <div class="card">
         <h1>Agregar un nuevo proyecto</h1>
         <form id="project_add" action="" method = "POST">
-            <div class="card-content centered">
+            <div class="card-content centered base">
                 <div>
                     {% if not error %}
-						<p>Descripción <br/><textarea name="description" rows="2" cols="30" required></textarea></p>
-						<p>Fecha Inicio <input type = "date" name ="open_date" value="{{ today }}" required/></p>
-						<p>Fecha Cierre <input type = "date" name ="close_date" value="{{ today }}" required/></p>
+						<p>Descripción <br/><textarea name="description" rows="4" cols="32" required></textarea></p>
+						<p>Fecha Inicio <br/><input type = "date" name ="open_date" value="{{ today }}" required/></p>
+						<p>Fecha Cierre <br/><input type = "date" name ="close_date" value="{{ today }}" required/></p>
 						<p class="check"><input type="checkbox" name="enabled" id="enabledCheckbox" checked><label for="enabledCheckbox">Habilitado?</label></p>    
 					{% else %}
-						<p>Descripción <textarea name="description" rows="2" cols="30" required>{{ description }}</textarea></p>
-						<p>Fecha Inicio <input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
-						<p>Fecha Cierre <input type = "date" name ="close_date" value="{{ close_date }}" required/></p>
+						<p>Descripción <br/><textarea name="description" rows="4" cols="32" required>{{ description }}</textarea></p>
+						<p>Fecha Inicio <br/><input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
+						<p>Fecha Cierre <br/><input type = "date" name ="close_date" value="{{ close_date }}" required/></p>
 						<p class="check">
 							{% if enabled %}
 								<input type="checkbox" name="enabled" id="enabledCheckbox" checked>
@@ -33,8 +33,8 @@
                     {% endif %}
 
                     <div class="actions centered">
-                        <button type="submit">Enviar</button>
-                        <button type="reset">Limpiar</button>
+                        <button class="safe" type="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
                     </div>
                 </div>
             </div>
