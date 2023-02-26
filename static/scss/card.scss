@@ -70,17 +70,33 @@ $card-element-width: 110px;
                 width: $card-element-width;
             }
         }
-
-        input { height: 25px; }
-
-        input, select {
+        
+        input, select, button {
             border: solid 2px gray;
             border-radius: 5px;
-        }
-
-        button, select {
-            border-radius: 5px;
             background-color: white;
+        }
+        
+        input{ height: 25px; }
+
+        &.base {
+            & > div {
+                width: 50%;
+
+                div {
+                    margin-bottom: 10px;
+                }
+            }
+
+            input {
+                width: 97%;
+            }
+
+            select {
+                height: 35px;
+                margin: 0 0 10px 0;
+                width: 100%;
+            }
         }
 
         button {
