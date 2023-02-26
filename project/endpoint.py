@@ -22,7 +22,7 @@ def retrieve_projects():
     ).all()
 	return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
-        user=session.get('user')
+        user=session.get('user'), description=description
     )
     
 	

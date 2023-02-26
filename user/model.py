@@ -28,6 +28,8 @@ class User (db.Model):
     date_joined = db.Column(db.Date, default=datetime.utcnow)
     # foreign key to role
     role_id = db.Column(db.Integer, db.ForeignKey('app_role.id'), nullable=False)
+    # foreign key to project
+    project_id = db.Column(db.Integer, db.ForeignKey('app_project.id'), nullable=False)
 
     def set_password(self, password):
         self.password = generate_password_hash(password)

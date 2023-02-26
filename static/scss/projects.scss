@@ -1,0 +1,78 @@
+// variable of colors
+$main_blue: rgb(33, 89, 104);
+$highlight_blue: rgb(47, 138, 163);
+$light_blue: rgb(219, 238, 244);
+$dark_blue: rgb(11, 54, 66);
+$beige: rgb(235, 241, 222);
+
+.button {
+	-webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: white;
+
+	background-color: $main_blue;
+	border: 1px solid $main_blue;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.button:focus {
+	background-color: $highlight_blue!important;
+	border: 1px solid $dark_blue;
+}
+
+.button:hover {
+	background-color: $dark_blue;
+	cursor: pointer;
+}
+
+.search {
+	border: 1px solid gray;
+	border-radius: 10px;
+	padding: 10px;
+}
+
+.portafolio {
+	background-color: $beige;
+	height: 100%;
+	padding: 5px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	h1 {
+		background-color: $light_blue;
+		border: 1px solid $main_blue;
+		padding: 10px;
+	}
+}
+
+.proyectos {
+	background-color: $light_blue;
+	border: 2px solid $main_blue;
+	padding: 10px 5px;
+	border-radius: 10px;
+	margin-top: 5px;
+
+	td, th {
+		padding: 5px 15px;
+	}
+	
+	.cell {
+		border: 2px solid $main_blue;
+		border-radius: 10px;
+		background-color: white;
+	}
+
+	.cellbtn {
+		padding: 0;
+	}
+
+	.button {
+		width: 40px;
+		text-align: center;
+	}
+}
