@@ -12,7 +12,7 @@
                 <div class="actuator">
                     <form id="form-search" action='/project/search' method="GET">
                         <input type="text" name="phrase" form="form-search"
-                            placeholder="..." />
+                            value="{{ phrase }}" />
                         <button class="normal" id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -94,7 +94,7 @@
                             <i class="fa-solid fa-xmark"></i>
                         </button>
     
-                        {% if project.enabled %}
+                        {% if not project.enabled %}
                             <button id="toggle" class="normal" form="form-toggle-{{ project.id }}">
                                 <i class="fa-solid fa-ban"></i>
                             </button>
@@ -115,6 +115,19 @@
 				action='/project/toggle' method="POST">
                 <input type="text" name="id" value="{{ project.id }}"/>
             </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay proyectos</div>
+                <div>
+                    <form id="form-retry" action='/project' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
             
             {% endfor %}
             {% endif %}

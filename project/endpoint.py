@@ -1,30 +1,19 @@
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from sqlalchemy import or_
+from sqlalchemy import or_, select
 from datetime import datetime
 from config.setup import db
 from .model import Project
+from user.model import User
 
 project_blueprint = Blueprint('project', __name__)
 
 @project_blueprint.route('/')
 def retrieve_projects():
-    # if no parameters are given return all projects
-	if not request.args:
-		projects = Project.query.all()
-        #projects = Project.query.filter_by(id != 0).all()
-		return render_template('/project/project_list.html',
-			projects=projects, loggedIn= 'user' in session,
-	        user=session.get('user')
-	    )
-
-    # look for projects with a similar description to the one given
-	description = request.args.get('description')
-	projects = Project.query.filter(
-        Project.description.like('%' + description + '%')
-    ).all()
-	return render_template('/project/project_list.html',
+    # return all projects with an id different than 0
+    projects = Project.query.filter(Project.id != 0).all()
+    return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
-        user=session.get('user'), description=description
+        user=session.get('user')
     )
     
 	
@@ -133,14 +122,14 @@ def delete_project():
 @project_blueprint.route('/search', methods=['GET'])
 def search_project():
     phrase = request.args.get('phrase')
-
-    search = Project.query.filter(
+    projects = db.session.query(Project).select_from(Project).join(User).filter(
         or_(
             Project.id.like('%' + phrase + '%'),
             Project.description.like('%' + phrase + '%'),
             Project.open_date.like('%' + phrase + '%'),
-            Project.close_date.like('%' + phrase + '%')
+            Project.close_date.like('%' + phrase + '%'),
+            User.name.like('%' + phrase + '%')
         )
-    )
+    ).filter(id != 0)
 
-    return render_template('/project/project_list.html', projects=search.all())
+    return render_template('/project/project_list.html', projects=projects, phrase=phrase)
