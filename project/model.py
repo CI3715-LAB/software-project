@@ -13,6 +13,7 @@ class Project (db.Model):
 	enabled = db.Column(db.Boolean(), default=True)
 	# many to many relationship with user
 	# users = db.relationship('User', secondary='app_user_project', backref='projects')
+	# one to many relationship with user
 	users = db.relationship('User', backref='project', lazy=True)
 
 	def __init__(self, description, open_date, close_date, enabled):

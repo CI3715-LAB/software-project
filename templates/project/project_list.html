@@ -2,21 +2,67 @@
 
 
 {% block body %}
-<h1>Projects</h1>
-<a class="link" href="/project/add">Add</a>
-<hr>
-<hr>
+<div class="portafolio">
 
-{% for project in projects %}
-	<h2>{{ project.description }}</h2>
-	<p>Open Date: {{ project.open_date }}</p>
-	<p>Close Date: {{ project.close_date }}</p>
-	<p>Enabled: {{ project.enabled }}</p>
-	<a class="link" href="/project/update/{{ project.id }}">Update</a>
-	<a class="link" href="/project/delete/{{ project.id }}">Delete</a>
-	<a class="link" href="/project/toggle/{{ project.id }}">Toggle</a>
-	<hr>
+
+<h1>Portafolio de Proyectos</h1>
+<form method="get">
+	{% if description %}
+		<input class="search" type="text" name="description" value="{{ description }}" placeholder="Descripcion">
+	{% else %}
+		<input class="search" type="text" name="description" placeholder="Descripcion">
+	{% endif %}
+	<button class="button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+	<a class="button" href="/project/add"><i class="fa-solid fa-plus"></i></a>
+</form>
+
+<table class="proyectos">
+<thead>
+	<th>Id:</th>
+	<th>Descripción:</th>
+	<th>Inicio:</th>
+	<th>Cierre:</th>
+</thead>
+
+{% for project in projects if project.id != 0 %}
+{% if project.enabled %}
+<tr class="proyecto">
+{% else %}
+<tr class="proyecto disabled">
+{% endif %}
+	<td class="cell">{{ project.id }}</td>
+	<td class="cell description">{{ project.description|truncate(30, True) }}</td>
+	<td class="cell">{{ project.open_date }}</td>
+	<td class="cell">{{ project.close_date }}</td>
+	<td class="cellbtn">
+		<a class="button" href="/project/update/{{ project.id }}">
+			<i class="fa-solid fa-pencil"></i>
+		</a>
+	</td>
+	<td class="cellbtn">
+		<a class="button" href="/project/delete/{{ project.id }}">
+			<i class="fa-solid fa-xmark"></i>
+		</a>
+	</td>
+	<td class="cellbtn">
+		<a class="button" href="/project/toggle/{{ project.id }}">
+		{% if project.enabled %}
+			<i class="fa-solid fa-ban"></i>
+		{% else %}
+			<i class="fa-solid fa-play"></i>
+		{% endif %}
+		</a>
+	</td>
+</tr>
+
+{% else %}
+<tr>
+	<td colspan="4">No hay proyectos</td>
+</tr>
 {% endfor %}
 
-<hr>
+</table>
+
+
+</div>
 {% endblock %}
