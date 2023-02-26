@@ -1,53 +1,110 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div class="logger">
 
-	<h1>Logger de Eventos</h1>
-	<form method="get">
-		{% if description %}
-			<input class="search" type="text" name="description" value="{{ description }}" placeholder="Descripcion">
-		{% else %}
-			<input class="search" type="text" name="description" placeholder="Descripcion">
-		{% endif %}
-		<button class="button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-	</form>
+<div class="box centered">
+    <div class="card">
+        <h1>Logger de Eventos</h1>
 
-	<table class="logs">
-	<thead>
-		<th>Id:</th>
-		<th>Evento:</th>
-		<th>Modulo:</th>
-		<th>Fecha:</th>
-		<th>Hora:</th>
-	</thead>
+        <div class="card-content logs">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/log/search' method="GET">
+                        <input type="text" name="phrase" form="form-search" />
+                        <button id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/log' method="GET">
+                        <button id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not logs  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay eventos</div>
+                    <div>
+                        <form id="form-retry" action='/log' method="GET">
+                            <button id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Evento</div>
+				<div>Modulo</div>
+                <div>Fecha</div> 
+                <div>Hora</div>
+            </div>
+            {% for log in logs %}
+            <form id="form-edit-{{ log.id }}" action='/log/update' method="POST">
+                <div class="values">
+                    
+                    <div><input type="text" name="id"
+                        value="{{ log.id }}" 
+                        form="form-edit-{{ log.id }}" readonly/>
+                    </div>
 
-	{% for log in logs %}
-		<tr class="log">
-			<td class="cell">{{ log.id }}</td>
-			<td class="cell description">{{ log.description|truncate(10, True) }}</td>
-			<td class="cell">{{ log.type }}</td>
-			<td class="cell">{{ log.date }}</td>
-			<td class="cell">{{ log.time }}</td>
-			<td class="cellbtn">
-				<a class="button" href="/log/{{ log.id }}">
-					<i class="fa-solid fa-circle-info"></i>
-				</a>
-			</td>
-			<td class="cellbtn">
-				<a class="button" href="/log/delete/{{ log.id }}">
-					<i class="fa-solid fa-xmark"></i>
-				</a>
-			</td>
-		</tr>
-	{% else %}
-		<tr>
-			<td colspan="5">No hay registros</td>
-		</tr>
-	{% endfor %}
+                    <div><input type="text" name="description"
+                        value="{{ log.description }}" 
+                        form="form-edit-{{ log.id }}" readonly />
+                    </div>
 
-	</table>
+                    <div><input type="text" name="type" 
+                        value="{{ log.type }}"
+                        form="form-edit-{{ log.id }}" readonly/>
+                    </div>
 
+                    <div><input type="date" name="date" 
+                        value="{{ log.date }}"
+                        form="form-edit-{{ log.id }}" readonly/>
+                    </div>
 
+					<div><input type="time" name="time" 
+                        value="{{ log.time }}"
+                        form="form-edit-{{ log.id }}" readonly/>
+                    </div>
+
+                    <div class="callbacks">
+                        <button id="info" form="form-info-{{ log.id }}">
+                            <i class="fa-solid fa-circle-info"></i>
+                        </button>
+    
+                        <button id="delete" form="form-delete-{{ log.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ log.id }}" 
+				action='/log/delete' method="POST">
+                <input type="text" name="id" value="{{ log.id }}"/>
+            </form>
+			<form class="hidden" id="form-info-{{ log.id }}" 
+				action='/log/detail' method="POST">
+                <input type="text" name="id" value="{{ log.id }}"/>
+				<input type="text" name="description" value="{{ log.description }}"/>
+            </form>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 {% endblock %}

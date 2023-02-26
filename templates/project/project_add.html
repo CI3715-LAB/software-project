@@ -2,7 +2,48 @@
 
 
 {% block body %}
-<h1>Add a new project</h1>
+
+<div class="box centered">
+    <div class="card">
+        <h1>Agregar un nuevo proyecto</h1>
+        <form id="project_add" action="" method = "POST">
+            <div class="card-content centered">
+                <div>
+                    {% if not error %}
+						<p>Descripción <br/><textarea name="description" rows="2" cols="30" required></textarea></p>
+						<p>Fecha Inicio <input type = "date" name ="open_date" value="{{ today }}" required/></p>
+						<p>Fecha Cierre <input type = "date" name ="close_date" value="{{ today }}" required/></p>
+						<p class="check"><input type="checkbox" name="enabled" id="enabledCheckbox" checked><label for="enabledCheckbox">Habilitado?</label></p>    
+					{% else %}
+						<p>Descripción <textarea name="description" rows="2" cols="30" required>{{ description }}</textarea></p>
+						<p>Fecha Inicio <input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
+						<p>Fecha Cierre <input type = "date" name ="close_date" value="{{ close_date }}" required/></p>
+						<p class="check">
+							{% if enabled %}
+								<input type="checkbox" name="enabled" id="enabledCheckbox" checked>
+							{% else %}
+								<input type="checkbox" name="enabled" id="enabledCheckbox">
+							{% endif %}
+							<label for="enabledCheckbox">Habilitado?</label>
+						</p>
+					{% endif %}
+
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
+
+                    <div class="actions centered">
+                        <button type="submit">Enviar</button>
+                        <button type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--h1>Add a new project</h1>
 <hr>
 <hr>
 
@@ -34,5 +75,5 @@
 </form>
 
 <hr>
-<hr>
+<hr-->
 {% endblock %}

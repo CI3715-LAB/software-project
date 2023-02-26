@@ -2,67 +2,117 @@
 
 
 {% block body %}
-<div class="portafolio">
 
+<div class="box centered">
+    <div class="card">
+        <h1>Proyectos</h1>
 
-<h1>Portafolio de Proyectos</h1>
-<form method="get">
-	{% if description %}
-		<input class="search" type="text" name="description" value="{{ description }}" placeholder="Descripcion">
-	{% else %}
-		<input class="search" type="text" name="description" placeholder="Descripcion">
-	{% endif %}
-	<button class="button" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-	<a class="button" href="/project/add"><i class="fa-solid fa-plus"></i></a>
-</form>
+        <div class="card-content projects">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/project/search' method="GET">
+                        <input type="text" name="phrase" form="form-search" />
+                        <button id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+            
+                    <form id="form-add" action='/project/add' method="GET">
+                        <button id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/project' method="GET">
+                        <button id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not projects  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay proyectos</div>
+                    <div>
+                        <form id="form-retry" action='/project' method="GET">
+                            <button id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Descripción</div>
+                <div>Inicio</div> 
+                <div>Cierre</div>
+            </div>
+            {% for project in projects %}
+            <form id="form-edit-{{ project.id }}" action='/project/update' method="POST">
+                <div class="values">
+                    
+                    <div><input type="text" name="id"
+                        value="{{ project.id }}" 
+                        form="form-edit-{{ project.id }}" readonly/>
+                    </div>
 
-<table class="proyectos">
-<thead>
-	<th>Id:</th>
-	<th>Descripción:</th>
-	<th>Inicio:</th>
-	<th>Cierre:</th>
-</thead>
+                    <div><input type="text" name="description"
+                        value="{{ project.description }}" 
+                        form="form-edit-{{ project.id }}" />
+                    </div>
 
-{% for project in projects if project.id != 0 %}
-{% if project.enabled %}
-<tr class="proyecto">
-{% else %}
-<tr class="proyecto disabled">
-{% endif %}
-	<td class="cell">{{ project.id }}</td>
-	<td class="cell description">{{ project.description|truncate(30, True) }}</td>
-	<td class="cell">{{ project.open_date }}</td>
-	<td class="cell">{{ project.close_date }}</td>
-	<td class="cellbtn">
-		<a class="button" href="/project/update/{{ project.id }}">
-			<i class="fa-solid fa-pencil"></i>
-		</a>
-	</td>
-	<td class="cellbtn">
-		<a class="button" href="/project/delete/{{ project.id }}">
-			<i class="fa-solid fa-xmark"></i>
-		</a>
-	</td>
-	<td class="cellbtn">
-		<a class="button" href="/project/toggle/{{ project.id }}">
-		{% if project.enabled %}
-			<i class="fa-solid fa-ban"></i>
-		{% else %}
-			<i class="fa-solid fa-play"></i>
-		{% endif %}
-		</a>
-	</td>
-</tr>
+                    <div><input type="date" name="open_date" 
+                        value="{{ project.open_date }}"
+                        form="form-edit-{{ project.id }}" />
+                    </div>
 
-{% else %}
-<tr>
-	<td colspan="4">No hay proyectos</td>
-</tr>
-{% endfor %}
+                    <div><input type="date" name="close_date" 
+                        value="{{ project.close_date }}"
+                        form="form-edit-{{ project.id }}" />
+                    </div>
 
-</table>
-
-
+                    <div class="callbacks">
+                        <button id="edit" form="form-edit-{{ project.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete" form="form-delete-{{ project.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+    
+                        <button id="toggle" form="form-toggle-{{ project.id }}">
+                            {% if project.enabled %}
+                                <i class="fa-solid fa-ban"></i>
+                            {% else %}
+                                <i class="fa-solid fa-play"></i>
+                            {% endif %}
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ project.id }}" 
+				action='/project/delete' method="POST">
+                <input type="text" name="id" value="{{ project.id }}"/>
+            </form>
+			<form class="hidden" id="form-toggle-{{ project.id }}" 
+				action='/project/toggle' method="POST">
+                <input type="text" name="id" value="{{ project.id }}"/>
+            </form>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
 </div>
+
 {% endblock %}
