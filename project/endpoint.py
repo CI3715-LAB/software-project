@@ -4,6 +4,7 @@ from datetime import datetime
 from config.setup import db
 from .model import Project
 from user.model import User
+from werkzeug.exceptions import BadRequest
 
 project_blueprint = Blueprint('project', __name__)
 
@@ -109,11 +110,16 @@ def enable_project():
 def delete_project():
     id = request.form['id']
 
+    if id == '0':
+        raise BadRequest("Undefined project cannot be deleted")
+
     # Project exists
     project = Project.query.filter_by(id = id).first()
     if project:
         for user in project.users:
+            user.project_id = 0
             user.project = Project.query.get(0)
+            db.session.commit()
         db.session.delete(project)
         db.session.commit()
 

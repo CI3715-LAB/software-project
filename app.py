@@ -10,10 +10,7 @@ from log.endpoint import log_blueprint
 # Flask initialization
 app = Flask(__name__)
 app.app_context().push()
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sqlite.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config["TEMPLATES_AUTO_RELOAD"] = True
-app.secret_key = SECRET_KEY
+app.config.from_object('config.setup.DevelopmentConfig')
 
 # Assets Bundle initialization
 assets = Environment(app)
