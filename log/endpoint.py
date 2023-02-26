@@ -1,4 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, session, url_for
+from sqlalchemy import or_
 
 from config.setup import db
 from .model import Log
@@ -30,9 +31,12 @@ def retrieve_logs():
 	
 
 # get log details
-@log_blueprint.route('/<int:id>')
-def retrieve_log(id):
-	log = Log.query.get(id)
+@log_blueprint.route('/detail', methods=['POST'])
+def retrieve_log():
+	id = request.form['id']
+
+	log = Log.query.filter_by(id = id).first()
+
 	return render_template('/log/log_details.html',
 		log=log,
 		loggedIn= 'user' in session,
@@ -40,9 +44,30 @@ def retrieve_log(id):
 	)
 
 # delete log
-@log_blueprint.route('/delete/<int:id>')
-def delete_log(id):
-	log = Log.query.get(id)
-	db.session.delete(log)
-	db.session.commit()
+@log_blueprint.route('/delete', methods=['POST'])
+def delete_log():
+	id = request.form['id']
+
+	# Log exists
+	log = Log.query.filter_by(id = id).first()
+	if log:
+		db.session.delete(log)
+		db.session.commit()
+
 	return redirect(url_for('log.retrieve_logs'))
+
+@log_blueprint.route('/search', methods=['GET'])
+def search_log():
+    phrase = request.args.get('phrase')
+
+    search = Log.query.filter(
+        or_(
+            Log.id.like('%' + phrase + '%'),
+            Log.description.like('%' + phrase + '%'),
+            Log.type_id.like('%' + phrase + '%'),
+            Log.date.like('%' + phrase + '%'),
+			Log.time.like('%' + phrase + '%')
+        )
+    )
+
+    return render_template('/log/log_list.html', logs=search.all())

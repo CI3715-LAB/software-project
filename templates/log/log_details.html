@@ -1,42 +1,45 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-<div class="logger">
 
-	<h1>Logger de Eventos</h1>
+<div class="box centered">
+    <div class="card">
+        <h1>Evento</h1>
+        <form id="log" action="/log" method = "PET">
+            <div class="card-content centered">
+                <div>
+                    
+					<div class="log-info">
+						<b>Id:</b>
+						<span class="cell">{{ log.id }}</span>
+						
+						<b>Modulo:</b>
+						<span class="cell">{{ log.type }}</span>
+						
+						<b>Fecha:</b>
+						<span class="cell">{{ log.date }}</span>
+						
+						<b>Hora:</b>
+						<span class="cell">{{ log.time }}</span>
+						
+						<span class="cellbtn">
+							<a class="button" href="/log/delete/{{ log.id }}">
+								<i class="fa-solid fa-xmark"></i>
+							</a>
+						</span>
+					</div>
 
-	<table class="logs">
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
 
-	<div class="log">
-		<h2>Evento</h2>
-		<span class="cell description">{{ log.description }}</span>
-	</div>
-
-	<br>
-	
-	<div class="log-info">
-		<b>Id:</b>
-		<span class="cell">{{ log.id }}</span>
-		
-		<b>Modulo:</b>
-		<span class="cell">{{ log.type }}</span>
-		
-		<b>Fecha:</b>
-		<span class="cell">{{ log.date }}</span>
-		
-		<b>Hora:</b>
-		<span class="cell">{{ log.time }}</span>
-		
-		<span class="cellbtn">
-			<a class="button" href="/log/delete/{{ log.id }}">
-				<i class="fa-solid fa-xmark"></i>
-			</a>
-		</span>
-	</div>
-
-
-	</table>
-
-
+                    <div class="actions centered">
+                        <button type="submit">Volver</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
 {% endblock %}

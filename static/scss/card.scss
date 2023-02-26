@@ -124,6 +124,28 @@ $card-element-width: 110px;
             display: none;
         }
 
+        &.logs {
+            max-width: 900px;
+
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(6,1fr);
+                grid-template-rows: auto;
+            }
+
+            .fields {
+                div {
+                    width: 110px;
+                }
+            }
+    
+            .values {
+                button, input, select {
+                    width: 110px;
+                }
+            }
+        }
+
         &.projects {
             .fields, .values {
                 display: grid;
