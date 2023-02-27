@@ -1,32 +1,5 @@
 import unittest
-from flask_testing import TestCase
-from app import app, db
-from project.model import Project
-from user.model import User, Role
-from werkzeug.security import generate_password_hash
-from datetime import datetime
-
-
-class BaseTestCase(TestCase):
-	def create_app(self):
-		app.config.from_object('config.setup.TestConfig')
-		return app
-
-	def setUp(self):
-		db.drop_all()
-		db.create_all()
-		project_undefined = Project('Undefined', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True)
-		project_undefined.id = 0;
-		db.session.add(project_undefined)
-		db.session.add(Project('Test Project', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True))
-		db.session.add(Role('testRole'))
-		db.session.add(User('test', generate_password_hash('test'), 'testName', 'testLastName', 1, 1))
-		db.session.commit()
-
-	def tearDown(self):
-		db.session.remove()
-		db.session.close()
-		db.drop_all()
+from BaseTestCase import BaseTestCase, db, Project
 
 class TestProjectEndpoints(BaseTestCase):
 	def test_project_list(self):
@@ -52,6 +25,7 @@ class TestProjectEndpoints(BaseTestCase):
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Test Project 2', response.data)
+		self.assertIsNotNone(Project.query.filter_by(description='Test Project 2').first())
 
 	def test_project_create_invalid(self):
 		response = self.client.post('/project/add', data=dict(
@@ -62,6 +36,7 @@ class TestProjectEndpoints(BaseTestCase):
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Open date must be before close date', response.data)
+		self.assertIsNone(Project.query.filter_by(description='Test Project 2').first())
 
 	def test_project_edit(self):
 		response = self.client.post('/project/update', data=dict(
@@ -99,6 +74,7 @@ class TestProjectEndpoints(BaseTestCase):
 		)
 		self.assert200(response)
 		self.assertNotIn(b'Test Project', response.data)
+		self.assertIsNone(Project.query.filter_by(description='Test Project').first())
 
 	def test_project_delete_invalid(self):
 		response = self.client.post('/project/delete', data=dict(id=0),
