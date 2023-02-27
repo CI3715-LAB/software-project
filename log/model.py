@@ -32,6 +32,8 @@ class Log(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
+	# relationship to user
+	user = db.relationship('User', backref=db.backref('logs', lazy=True))
 	description = db.Column(db.String(100), nullable=False)
 	date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
 	time = db.Column(db.String(100), nullable=False)

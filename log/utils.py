@@ -27,4 +27,4 @@ class LogType(Enum):
 
 class LogModule(Enum):
     USERS = "Usuarios"
-    PROJECTS = "Projectos"
+    PROJECTS = "Proyectos"

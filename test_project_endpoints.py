@@ -1,12 +1,24 @@
 import unittest
 from BaseTestCase import BaseTestCase, db, Project
 
+import functools
+def login_user(fun):
+	@functools.wraps(fun)
+	def wrapper(*args, **kwargs):
+		with args[0].client.session_transaction() as sess:
+			sess['user_id'] = 1
+			sess['user'] = {'id': 1, 'username': 'testUser', 'admin': True}
+		return fun(*args, **kwargs)
+	return wrapper
+
 class TestProjectEndpoints(BaseTestCase):
+	@login_user
 	def test_project_list(self):
 		response = self.client.get('/project/')
 		self.assert200(response)
 		self.assertIn(b'Test Project', response.data)
 
+	@login_user
 	def test_project_list_empty(self):
 		# delete all projects
 		db.session.query(Project).filter(id != 0).delete()
@@ -16,6 +28,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assert200(response)
 		self.assertIn(b'No hay proyectos', response.data)
 
+	@login_user
 	def test_project_create(self):
 		response = self.client.post('/project/add', data=dict(
 			description='Test Project 2',
@@ -27,6 +40,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assertIn(b'Test Project 2', response.data)
 		self.assertIsNotNone(Project.query.filter_by(description='Test Project 2').first())
 
+	@login_user
 	def test_project_create_invalid(self):
 		response = self.client.post('/project/add', data=dict(
 			description='Test Project 2',
@@ -38,6 +52,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assertIn(b'Open date must be before close date', response.data)
 		self.assertIsNone(Project.query.filter_by(description='Test Project 2').first())
 
+	@login_user
 	def test_project_edit(self):
 		response = self.client.post('/project/update', data=dict(
 			id=1,
@@ -49,6 +64,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assert200(response)
 		self.assertIn(b'Test Project Modified', response.data)
 
+	@login_user
 	def test_project_edit_invalid(self):
 		response = self.client.post('/project/update', data=dict(
 			id=1,
@@ -60,6 +76,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assert200(response)
 		self.assertIn(b'Open date must be before close date', response.data)
 
+	@login_user
 	def test_project_toggle(self):
 		response = self.client.post('/project/toggle', data=dict(id=1),
 			follow_redirects=True
@@ -68,6 +85,7 @@ class TestProjectEndpoints(BaseTestCase):
 		project = db.session.query(Project).get(1)
 		self.assertFalse(project.enabled)
 
+	@login_user
 	def test_project_delete(self):
 		response = self.client.post('/project/delete', data=dict(id=1),
 			follow_redirects=True
@@ -76,6 +94,7 @@ class TestProjectEndpoints(BaseTestCase):
 		self.assertNotIn(b'Test Project', response.data)
 		self.assertIsNone(Project.query.filter_by(description='Test Project').first())
 
+	@login_user
 	def test_project_delete_invalid(self):
 		response = self.client.post('/project/delete', data=dict(id=0),
 			follow_redirects=True
