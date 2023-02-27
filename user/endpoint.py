@@ -100,6 +100,7 @@ def user_login():
 def user_logout():
     if 'user' in session: 
         session.pop('user')
+        session.pop('user_id')
     
     return redirect(url_for('home'))
 
