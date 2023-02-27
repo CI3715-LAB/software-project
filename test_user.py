@@ -1,5 +1,5 @@
 import unittest
-from flask import session
+from flask import url_for
 from BaseTestCase import BaseTestCase, db, User
 from user.model import Role
 
@@ -27,9 +27,9 @@ class TestUser(BaseTestCase):
 	# 		self.assertIn('user_id', sess)
 
 	def test_redirect_to_login(self):
-		response = self.client.get('/user/')
+		response = self.client.get('/user/', follow_redirects=True)
 		# assert redirected to login page
-		self.assertRedirects(response, '/user/login')
+		self.assertEqual(response.request.path, url_for('user.user_login'))
 
 
 	def test_user_login_invalid(self):
@@ -188,15 +188,18 @@ class TestUser(BaseTestCase):
 		self.assert200(response)
 		self.assertIn(b'testUser', response.data)
 
-	# @login_user
-	# def test_user_reset(self):
-	# 	response = self.client.post('/user/reset', data=dict(
-	# 		username='testUser',
-	# 		password_prev='test',
-	# 		password_next='test2',
-	# 	), follow_redirects=True)
-	# 	self.assert200(response)
-	# 	self.assertEqual(User.query.get(1).password, generate_password_hash('test2'))
+	@login_user
+	def test_user_reset(self):
+		user = User.query.get(1)
+		self.assertEqual(user.password, user.generate_password('test'))	
+		response = self.client.post('/user/reset', data=dict(
+			username='testUser',
+			password_prev='test',
+			password_next='test2',
+		), follow_redirects=True)
+		self.assert200(response)
+		with self.app.app_context():
+			self.assertEqual(user.password, user.generate_password('test'))
 
 	@login_user
 	def test_user_reset_invalid(self):
