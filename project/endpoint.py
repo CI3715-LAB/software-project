@@ -1,7 +1,8 @@
 from flask import Blueprint, request, render_template, redirect, url_for, session
 from sqlalchemy import or_, select
 from datetime import datetime
-from config.setup import db
+from config.setup import db, logger
+from log.utils import LogType, LogModule
 from .model import Project
 from user.model import User
 from werkzeug.exceptions import BadRequest
@@ -15,12 +16,15 @@ project_blueprint = Blueprint('project', __name__)
 def retrieve_projects():
     # return all projects with an id different than 0
     projects = Project.query.filter(Project.id != 0).all()
+
+    description = "Busqueda de proyectos"
+    logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
+
     return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
         user=session.get('user')
     )
     
-	
 
 @project_blueprint.route('/add', methods=['GET', 'POST'])
 @login_required
@@ -59,6 +63,10 @@ def add_project():
         project = Project(description, open_date, close_date, enabled)
         db.session.add(project)
         db.session.commit()
+
+        description = "Creación de proyecto"
+        logger.catch(session['user']['username'], LogType.ADD.value, LogModule.PROJECTS.value, description)
+
         return redirect(url_for('project.retrieve_projects'))
     
 # update project
@@ -95,6 +103,10 @@ def update_project():
     project.close_date = close_date
     project.enabled = enabled
     db.session.commit()
+
+    description = "Modificación de proyecto"
+    logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.PROJECTS.value, description)
+
     return redirect(url_for('project.retrieve_projects'))
     
 # enable/disable project
@@ -108,6 +120,9 @@ def enable_project():
     if project:
         project.enabled = not project.enabled
         db.session.commit()
+
+    description = "Actualización de estado de proyecto"
+    logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))
 
@@ -130,6 +145,9 @@ def delete_project():
         db.session.delete(project)
         db.session.commit()
 
+    description = "Eliminado de proyecto"
+    logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.PROJECTS.value, description)
+
     return redirect(url_for('project.retrieve_projects'))
 
 @project_blueprint.route('/search', methods=['GET'])
@@ -145,5 +163,8 @@ def search_project():
             User.name.like('%' + phrase + '%')
         )
     ).filter(id != 0)
+
+    description = "Busqueda de proyectos por frase"
+    logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
 
     return render_template('/project/project_list.html', projects=projects, phrase=phrase)

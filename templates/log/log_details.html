@@ -14,7 +14,8 @@
                             <br/ >
                             <br/ >
                             <span>
-                                Generado el <b>{{ log.date }}</b> a las <b>{{ log.time }}</b> horas
+                                Generado el <b>{{ log.date }}</b> a las <b>{{ log.time }}</b> 
+                                horas por <b>{{ log.user.username }}</b>.
                             </span>
                         </pre>
                     </div>
@@ -41,11 +42,6 @@
 						<input form="form-delete-{{ log.id }}" type="text" name="id" value="{{ log.id }}" hidden/>
 					</form>
                 </div>
-
-				<h3>Descripción:</h3>
-				<p>
-					<span class="cell">{{ log.description }}</span>
-				</p>
             </div>
         </form>
     </div>
