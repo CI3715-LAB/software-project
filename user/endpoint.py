@@ -87,6 +87,7 @@ def user_login():
                     '/user/user_login.html', error = "Las credenciales suministradas no son validas")
             else:
                 session['user'] = {'id': user.id, 'username': user.username, 'role': user.role.name, 'admin': user.role.name == 'admin'}
+                session['user_id'] = user.id
                     
         else:
             return render_template(
