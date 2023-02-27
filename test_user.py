@@ -190,16 +190,14 @@ class TestUser(BaseTestCase):
 
 	@login_user
 	def test_user_reset(self):
-		user = User.query.get(1)
-		self.assertEqual(user.password, user.generate_password('test'))	
 		response = self.client.post('/user/reset', data=dict(
 			username='testUser',
 			password_prev='test',
-			password_next='test2',
+			password_next='testModified',
 		), follow_redirects=True)
 		self.assert200(response)
-		with self.app.app_context():
-			self.assertEqual(user.password, user.generate_password('test'))
+		user = User.query.filter_by(username='testUser').first()
+		self.assertTrue(user.check_password('testModified'))
 
 	@login_user
 	def test_user_reset_invalid(self):

@@ -136,7 +136,7 @@ def delete_project():
         raise BadRequest("Undefined project cannot be deleted")
 
     # Project exists
-    project = Project.query.filter_by(id = id).first()
+    project = db.session.get(Project, id)
     if project:
         for user in project.users:
             user.project_id = 0

@@ -17,7 +17,7 @@ class BaseTestCase(TestCase):
 		db.session.add(project_undefined)
 		db.session.add(Project('Test Project', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True))
 		db.session.add(Role('admin'))
-		db.session.add(User('testUser', generate_password_hash('test'), 'testName', 'testLastName', 1, 1))
+		db.session.add(User('testUser', 'test', 'testName', 'testLastName', 1, 1))
 		db.session.commit()
 
 	def tearDown(self):
