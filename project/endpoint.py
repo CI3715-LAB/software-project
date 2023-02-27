@@ -17,8 +17,8 @@ def retrieve_projects():
     # return all projects with an id different than 0
     projects = Project.query.filter(Project.id != 0).all()
 
-    description = "Busqueda de proyectos"
-    logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
+    # description = "Busqueda de proyectos"
+    # logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
 
     return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
@@ -64,7 +64,7 @@ def add_project():
         db.session.add(project)
         db.session.commit()
 
-        description = "Creación de proyecto"
+        description = f"Creación de proyecto \"{project.description}\""
         logger.catch(session['user']['username'], LogType.ADD.value, LogModule.PROJECTS.value, description)
 
         return redirect(url_for('project.retrieve_projects'))
@@ -104,7 +104,7 @@ def update_project():
     project.enabled = enabled
     db.session.commit()
 
-    description = "Modificación de proyecto"
+    description = f"Modificación de proyecto \"{project.description}\""
     logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))
@@ -121,7 +121,7 @@ def enable_project():
         project.enabled = not project.enabled
         db.session.commit()
 
-    description = "Actualización de estado de proyecto"
+    description = f"Actualización de estado de proyecto \"{project.description}\""
     logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))
@@ -145,7 +145,7 @@ def delete_project():
         db.session.delete(project)
         db.session.commit()
 
-    description = "Eliminado de proyecto"
+    description = f"Eliminado de proyecto \"{project.description}\""
     logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))
@@ -164,7 +164,7 @@ def search_project():
         )
     ).filter(id != 0)
 
-    description = "Busqueda de proyectos por frase"
+    description = f"Busqueda de proyectos por frase \"{phrase}\""
     logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
 
     return render_template('/project/project_list.html', projects=projects, phrase=phrase)

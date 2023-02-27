@@ -22,8 +22,8 @@ def retrieve_users():
 	roles = Role.query.all()
 	projects = Project.query.all()
 
-	description = "Busqueda de usuarios"
-	logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.USERS.value, description)
+	# description = "Busqueda de usuarios"
+	# logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.USERS.value, description)
 
 	return render_template('/user/user_list.html', users=users, roles=roles, projects=projects)
 
@@ -76,7 +76,7 @@ def user_register():
 		db.session.add(user)
 		db.session.commit()
 
-		description = "Registro de usuario"
+		description = f"Registro de usuario \"{user.username}\""
 		logger.catch(session['user']['username'], LogType.ADD.value, LogModule.USERS.value, description)
 
 		return redirect(url_for('user.retrieve_users'))
@@ -108,8 +108,8 @@ def user_login():
 			return render_template(
 				'/user/user_login.html', error = "El nombre de usuario suministrado no existe")
 			   
-		description = "Acceso de usuario"
-		logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.USERS.value, description)
+		# description = "Acceso de usuario"
+		# logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.USERS.value, description)
 
 		return redirect(url_for('home'))
 
@@ -122,8 +122,8 @@ def user_logout():
 		session.pop('user')
 		session.pop('user_id')
 	
-	description = "Salida de usuario"
-	logger.catch(username, LogType.SEARCH.value, LogModule.USERS.value, description)
+	# description = "Salida de usuario"
+	# logger.catch(username, LogType.SEARCH.value, LogModule.USERS.value, description)
 
 	return redirect(url_for('home'))
 
@@ -138,7 +138,7 @@ def user_delete():
 		db.session.delete(user)
 		db.session.commit()
 
-	description = "Eliminado de usuario"
+	description = f"Eliminado usuario \"{user.username}\""
 	logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.USERS.value, description)
 
 	return redirect(url_for('user.retrieve_users'))
@@ -177,7 +177,7 @@ def user_update():
 
 	db.session.commit()
 
-	description = "Modificación de usuario"
+	description = f"Modificación de usuario \"{user.username}\""
 	logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.USERS.value, description)
 
 	return redirect(url_for('user.retrieve_users'))
@@ -201,7 +201,7 @@ def user_search():
 	roles = Role.query.all()
 	projects = Project.query.all()
 
-	description = "Busqueda de usuarios por frase"
+	description = f"Busqueda de usuarios por frase \"{phrase}\""
 	logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.USERS.value, description)
 
 	return render_template('/user/user_list.html', users=search.all(), roles=roles, projects=projects)
@@ -231,7 +231,7 @@ def user_reset():
 				user.password = user.generate_password(password_next)
 				db.session.commit()
 
-				description = "Cambio de contraseña de usuario"
+				description = f"Cambio de contraseña de usuario \"{user.username}\""
 				logger.catch(session['user']['username'], LogType.MODIFY.value, LogModule.USERS.value, description)
 
 				return redirect(url_for('user.user_login'))

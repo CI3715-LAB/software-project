@@ -11,7 +11,7 @@ def login_user(fun):
 		return fun(*args, **kwargs)
 	return wrapper
 
-class TestProjectEndpoints(BaseTestCase):
+class TestProject(BaseTestCase):
 	@login_user
 	def test_project_list(self):
 		response = self.client.get('/project/')

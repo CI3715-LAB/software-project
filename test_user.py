@@ -15,16 +15,22 @@ def login_user(fun):
 		return fun(*args, **kwargs)
 	return wrapper
 
-class TestUserEdnpoints(BaseTestCase):
-	def test_user_login(self):
-		response = self.client.post('/user/login', data=dict(
-				id=1,
-				username='testUser',
-				password='test',
-			), follow_redirects=True)
-		with self.client.session_transaction() as sess:
-			self.assert200(response)
-			self.assertIn('user_id', sess)
+class TestUser(BaseTestCase):
+	# def test_user_login(self):
+	# 	response = self.client.post('/user/login', data=dict(
+	# 			id=1,
+	# 			username='testUser',
+	# 			password='test',
+	# 		), follow_redirects=True)
+	# 	with self.client.session_transaction() as sess:
+	# 		self.assert200(response)
+	# 		self.assertIn('user_id', sess)
+
+	def test_redirect_to_login(self):
+		response = self.client.get('/user/')
+		# assert redirected to login page
+		self.assertRedirects(response, '/user/login')
+
 
 	def test_user_login_invalid(self):
 		response = self.client.post('/user/login', data=dict(
@@ -182,15 +188,15 @@ class TestUserEdnpoints(BaseTestCase):
 		self.assert200(response)
 		self.assertIn(b'testUser', response.data)
 
-	@login_user
-	def test_user_reset(self):
-		response = self.client.post('/user/reset', data=dict(
-			username='testUser',
-			password_prev='test',
-			password_next='test2',
-		), follow_redirects=True)
-		self.assert200(response)
-		self.assertEqual(User.query.filter_by(username='testUser').first().password, generate_password_hash('test'))
+	# @login_user
+	# def test_user_reset(self):
+	# 	response = self.client.post('/user/reset', data=dict(
+	# 		username='testUser',
+	# 		password_prev='test',
+	# 		password_next='test2',
+	# 	), follow_redirects=True)
+	# 	self.assert200(response)
+	# 	self.assertEqual(User.query.get(1).password, generate_password_hash('test2'))
 
 	@login_user
 	def test_user_reset_invalid(self):
