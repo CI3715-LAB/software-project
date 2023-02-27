@@ -140,7 +140,7 @@ def delete_project():
     if project:
         for user in project.users:
             user.project_id = 0
-            user.project = Project.query.get(0)
+            user.project = Project.query.filter_by(id = 0).first()
             db.session.commit()
         db.session.delete(project)
         db.session.commit()

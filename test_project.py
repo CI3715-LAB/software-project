@@ -82,7 +82,7 @@ class TestProject(BaseTestCase):
 			follow_redirects=True
 		)
 		self.assert200(response)
-		project = db.session.query(Project).get(1)
+		project = db.session.query(Project).filter_by(id=1).first()
 		self.assertFalse(project.enabled)
 
 	@login_user
