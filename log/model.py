@@ -33,8 +33,8 @@ class Log(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('app_user.id'), nullable=False)
 	description = db.Column(db.String(100), nullable=False)
-	date = db.Column(db.Date, default=datetime.utcnow)
-	time = db.Column(db.Time, nullable=False, default=datetime.utcnow)
+	date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
+	time = db.Column(db.String(100), nullable=False)
 	# foreign key to type
 	type_id = db.Column(db.Integer, db.ForeignKey('app_type.id'), nullable=False)
 	# relationship to type
@@ -44,13 +44,12 @@ class Log(db.Model):
 	# relationship to module
 	module = db.relationship('Module', backref=db.backref('logs', lazy=True))
 
-	def __init__(self, user_id, description, date, time, type_id, module_id):
+	def __init__(self, user_id, description, type_id, module_id, time):
 		self.user_id = user_id
 		self.description = description
-		self.date = date
-		self.time = time
 		self.type_id = type_id
 		self.module_id = module_id
+		self.time = time
 
 	def __repr__(self):
 		return f'({self.type}, {self.module}): {self.date} {self.time} - {self.description}'

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, session
+from flask import Flask, render_template, session, request
 from flask_assets import Environment, Bundle
 from os import environ
 
@@ -6,6 +6,7 @@ from config.setup import db, SECRET_KEY
 from user.endpoint import user_blueprint
 from project.endpoint import project_blueprint
 from log.endpoint import log_blueprint
+from log.model import Log
 
 # Flask initialization
 app = Flask(__name__)

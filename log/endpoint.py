@@ -9,22 +9,10 @@ log_blueprint = Blueprint('log', __name__)
 # get all logs
 @log_blueprint.route('/')
 def retrieve_logs():
-	# if no parameters are given return all logs
-	if not request.args:
-		logs = Log.query.all()
-		return render_template('/log/log_list.html',
-			logs=logs,
-			loggedIn= 'user' in session,
-			user=session.get('user')
-		)
+	logs = Log.query.all()
 
-	# look for logs with a similar description to the one given
-	description = request.args.get('description')
-	logs = Log.query.filter(
-		Log.description.like('%' + description + '%')
-	).all()
 	return render_template('/log/log_list.html',
-		logs=logs, description=description,
+		logs=logs,
 		loggedIn= 'user' in session,
 		user=session.get('user')
 	)

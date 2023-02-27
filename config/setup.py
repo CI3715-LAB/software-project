@@ -21,3 +21,8 @@ class TestConfig(object):
 	WTF_CSRF_ENABLED = False
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 	SECRET_KEY = SECRET_KEY
+
+# Logger
+from log.utils import Logger
+
+logger = Logger()
