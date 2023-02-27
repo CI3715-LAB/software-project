@@ -5,10 +5,6 @@ from user.model import User, Role
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 
-from flask_assets import Environment, Bundle
-from flask import Flask
-
-
 class BaseTestCase(TestCase):
 	def create_app(self):
 		return create_app('config.setup.TestConfig')

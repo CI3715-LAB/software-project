@@ -1,4 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, session, url_for
+from werkzeug.exceptions import BadRequest
 from sqlalchemy import or_
 
 from config.setup import db
@@ -45,13 +46,15 @@ def user_register():
         role = Role.query.filter_by(name = role_selected).first()
         if role == None:
             error = "El rol suministrado no existe en la base de datos"
-            return redirect(url_for('user.retrieve_users'))
+            return render_template(
+                '/user/user_register.html', error = error)
 
         # Project exists
         project = Project.query.filter_by(description = project_selected).first()
         if project == None:
             error = "El proyecto suministrado no existe en la base de datos"
-            return redirect(url_for('user.retrieve_users'))
+            return render_template(
+                '/user/user_register.html', error = error)
 
         # User exists
         user = User.query.filter_by(username = username).first()
@@ -130,19 +133,19 @@ def user_update():
     role = Role.query.filter_by(name = role_selected).first()
     if role == None:
         error = "El rol suministrado no existe en la base de datos"
-        return redirect(url_for('user.retrieve_users'))
+        raise BadRequest(error)
 
     # Project exists
     project = Project.query.filter_by(description = project_selected).first()
     if project == None:
         error = "El proyecto suministrado no existe en la base de datos"
-        return redirect(url_for('user.retrieve_users'))
+        raise BadRequest(error)
 
     # User exists
     user = User.query.filter_by(id = id).first()
     if not user:
         error = "El usuario suministrado no existe en la base de datos"
-        return redirect(url_for('user.retrieve_users'))
+        raise BadRequest(error)
     
     user.name = name
     user.lastname = lastname
