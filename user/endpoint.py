@@ -5,9 +5,12 @@ from config.setup import db
 from .model import User, Role
 from project.model import Project
 
+from .utils import login_required
+
 user_blueprint = Blueprint('user', __name__)
 
 @user_blueprint.route('/')
+@login_required
 def retrieve_users():
     # Only administrators can see user list
     if not 'user' in session or not session['user']['admin']:
@@ -19,6 +22,7 @@ def retrieve_users():
     return render_template('/user/user_list.html', users=users, roles=roles, projects=projects)
 
 @user_blueprint.route('/register', methods=['GET', 'POST'])
+@login_required
 def user_register():
     if request.method == 'GET':
         # only administrators can create users
@@ -91,6 +95,7 @@ def user_login():
         return redirect(url_for('home'))
 
 @user_blueprint.route('/logout')
+@login_required
 def user_logout():
     if 'user' in session: 
         session.pop('user')
@@ -98,6 +103,7 @@ def user_logout():
     return redirect(url_for('home'))
 
 @user_blueprint.route('/delete', methods=['POST'])
+@login_required
 def user_delete():
     id = request.form['id']
 
@@ -110,6 +116,7 @@ def user_delete():
     return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/update', methods=['POST'])
+@login_required
 def user_update():
     id = request.form['id']
     name = request.form['name']
@@ -144,6 +151,7 @@ def user_update():
     return redirect(url_for('user.retrieve_users'))
 
 @user_blueprint.route('/search', methods=['GET'])
+@login_required
 def user_search():
     phrase = request.args.get('phrase')
 
@@ -164,6 +172,7 @@ def user_search():
     return render_template('/user/user_list.html', users=search.all(), roles=roles, projects=projects)
 
 @user_blueprint.route('/reset', methods=['GET','POST'])
+@login_required
 def user_reset():
     if request.method == 'GET':
         if 'user' in session and session['user']['admin']:

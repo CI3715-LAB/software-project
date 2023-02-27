@@ -6,9 +6,12 @@ from .model import Project
 from user.model import User
 from werkzeug.exceptions import BadRequest
 
+from user.utils import login_required
+
 project_blueprint = Blueprint('project', __name__)
 
 @project_blueprint.route('/')
+@login_required
 def retrieve_projects():
     # return all projects with an id different than 0
     projects = Project.query.filter(Project.id != 0).all()
@@ -20,6 +23,7 @@ def retrieve_projects():
 	
 
 @project_blueprint.route('/add', methods=['GET', 'POST'])
+@login_required
 def add_project():
     # get today's date
     today = datetime.today().strftime('%Y-%m-%d')
@@ -59,6 +63,7 @@ def add_project():
     
 # update project
 @project_blueprint.route('/update', methods=['POST'])
+@login_required
 def update_project():
     # get description, open date and close date
     id = request.form['id']
@@ -94,6 +99,7 @@ def update_project():
     
 # enable/disable project
 @project_blueprint.route('/toggle', methods=['POST'])
+@login_required
 def enable_project():
     id = request.form['id']
 
@@ -107,6 +113,7 @@ def enable_project():
 
 # delete project
 @project_blueprint.route('/delete', methods=['POST'])
+@login_required
 def delete_project():
     id = request.form['id']
 
@@ -126,6 +133,7 @@ def delete_project():
     return redirect(url_for('project.retrieve_projects'))
 
 @project_blueprint.route('/search', methods=['GET'])
+@login_required
 def search_project():
     phrase = request.args.get('phrase')
     projects = db.session.query(Project).select_from(Project).join(User).filter(

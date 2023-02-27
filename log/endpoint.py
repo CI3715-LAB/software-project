@@ -4,10 +4,13 @@ from sqlalchemy import or_, select
 from config.setup import db
 from .model import Log, Module, Type
 
+from user.utils import login_required
+
 log_blueprint = Blueprint('log', __name__)
 
 # get all logs
 @log_blueprint.route('/')
+@login_required
 def retrieve_logs():
 	# if no parameters are given return all logs
 	if not request.args:
@@ -32,6 +35,7 @@ def retrieve_logs():
 
 # get log details
 @log_blueprint.route('/detail/<int:id>', methods=['GET'])
+@login_required
 def retrieve_log(id):
 	log = Log.query.get(id)
 
@@ -43,6 +47,7 @@ def retrieve_log(id):
 
 # delete log
 @log_blueprint.route('/delete', methods=['POST'])
+@login_required
 def delete_log():
 	id = request.form['id']
 
@@ -55,6 +60,7 @@ def delete_log():
 	return redirect(url_for('log.retrieve_logs'))
 
 @log_blueprint.route('/search', methods=['GET'])
+@login_required
 def search_log():
 	phrase = request.args.get('phrase')
 
