@@ -1,0 +1,160 @@
+{% extends 'layout.html' %} 
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Agregar un nuevo vehiculo</h1>
+        <form id="vehicle_add" action="" method = "POST">
+            <div class="card-content centered base">
+                <div>
+                    {% if not error %}
+
+						<div>Placa<br /><input type = "text" name ="plate" required/></div>
+						<div>
+							<label for="brand">Marca</label><br/>
+							<select name="brand" id="brand" required>
+							{% for brand in brands %}
+								<option value={{brand.id}}>{{brand.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>
+							<label for="model">Modelo</label><br/>
+							<select name="model" id="model" required>
+							{% for model in models %}
+								<option value={{model.id}}>{{model.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>Año<br /><input type = "number" name ="year" required/></div>
+						<div>Serial Chasis <br /><input type = "text" name ="chasis_serial" required/></div>
+						<div>Serieal Motor <br /><input type = "text" name ="motor_serial" required/></div>
+
+						<div>
+							<label for="color">Color</label><br/>
+							<select name="color" id="color" required>
+							{% for color in colors %}
+								<option value={{color.id}}>{{color.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>Problema <br /><textarea name="problem" rows="4" cols="32" required></textarea></div>
+
+						{% if fixed_client %}
+							<input type="hidden" name="client" value="{{id}}" required/>
+						{% else %}
+						<div>
+							<label for="client">Cliente</label><br/>
+							<select name="client" id="client" required>
+							{% for client in clients %}
+								<option value={{client.id}}>{{client.name}} {{client.lastname}}</option>
+							{% endfor %}
+							</select>
+						</div>
+						{% endif %}
+
+
+					{% else %}
+						<div>Placa<br /><input type = "text" name ="plate" required/></div>
+						<div>
+							<label for="brand">Marca</label><br/>
+							<select name="brand" id="brand" required>
+							{% for brand in brands %}
+								<option value={{brand.id}}>{{brand.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>
+							<label for="model">Modelo</label><br/>
+							<select name="model" id="model" required>
+							{% for model in models %}
+								<option value={{model.id}}>{{model.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>Año<br /><input type = "number" name ="year" required/></div>
+						<div>Serial Chasis <br /><input type = "text" name ="chasis_serial" required/></div>
+						<div>Serieal Motor <br /><input type = "text" name ="motor_serial" required/></div>
+
+						<div>
+							<label for="color">Color</label><br/>
+							<select name="color" id="color" required>
+							{% for color in colors %}
+								<option value={{color.id}}>{{color.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+						<div>Problema <br /><textarea name="problem" rows="4" cols="32" required></textarea></div>
+
+						{% if fixed_client %}
+							<input type="hidden" name="client" value="{{id}}" required/>
+						{% else %}
+						<div>
+							<label for="client">Cliente</label><br/>
+							<select name="client" id="client" required>
+							{% for client in clients %}
+								<option value={{client.id}}>{{client.name}} {{client.lastname}}</option>
+							{% endfor %}
+							</select>
+						</div>
+						{% endif %}
+
+					{% endif %}
+
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
+
+                    <div class="actions centered">
+                        <button class="safe" type="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!--h1>Add a new project</h1>
+<hr>
+<hr>
+
+<form action='' method = "POST">
+	{% if not error %}
+		<p>Description <textarea name="description" rows="4" cols="50" required></textarea></p>
+		<p>Open Date <input type = "date" name ="open_date" value="{{ today }}" required/></p>
+		<p>Close Date <input type = "date" name ="close_date" value="{{ today }}" required/></p>
+		<p><input type="checkbox" name="enabled" id="enabledCheckbox" checked><label for="enabledCheckbox">Enabled</label></p>    
+	{% else %}
+		<p>Description <textarea name="description" rows="4" cols="50" required>{{ description }}</textarea></p>
+		<p>Open Date <input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
+		<p>Close Date <input type = "date" name ="close_date" value="{{ close_date }}" required/></p>
+		<p>
+			{% if enabled %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox" checked>
+			{% else %}
+				<input type="checkbox" name="enabled" id="enabledCheckbox">
+			{% endif %}
+			<label for="enabledCheckbox">Enabled</label>
+		</p>
+	{% endif %}
+
+	<p><input type = "submit" value = "Submit" /></p>
+
+	{% if error %}
+		<b>{{ error }}</b>
+	{% endif %}
+</form>
+
+<hr>
+<hr-->
+{% endblock %}

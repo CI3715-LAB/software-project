@@ -28,3 +28,5 @@ class LogType(Enum):
 class LogModule(Enum):
     USERS = "Usuarios"
     PROJECTS = "Proyectos"
+    CLIENTS = "Clientes"
+    VEHICLES = "Vehiculos"

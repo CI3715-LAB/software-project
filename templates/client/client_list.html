@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Clientes</h1>
+
+        <div class="card-content clients">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/client/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+            
+                    <form id="form-add" action='/client/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/client' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not clients  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay Clientes</div>
+                    <div>
+                        <form id="form-retry" action='/client' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Cedula</div>
+                <div>Nombre</div>
+                <div>Apellido</div>
+                <div>Fecha Nac</div>
+                <div>Tlf</div>
+                <div>Correo</div>
+                <div>Dirección</div>
+            </div>
+            {% for client in clients %}
+            <form id="form-edit-{{ client.id }}" action='/client/update' method="POST">
+                <div class="values">                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ client.id }}" 
+                            form="form-edit-{{ client.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="ci"
+                            value="{{ client.ci }}" 
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="name"
+                            value="{{ client.name }}" 
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="lastname"
+                            value="{{ client.lastname }}" 
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="date" name="birth_date" 
+                            value="{{ client.birth_date }}"
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="contact_number" 
+                            value="{{ client.contact_number }}"
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="email" 
+                            value="{{ client.email }}"
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="address" 
+                            value="{{ client.address }}"
+                            form="form-edit-{{ client.id }}" />
+                    </div>
+
+                    <div class="callbacks">
+                        <a href="/vehicle/client/{{ client.id }}">
+                            <button class="safe" id="info" form="form-info-{{ client.id }}">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </button>
+                        </a>
+                        <button id="edit" class="warn" form="form-edit-{{ client.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete" class="danger" form="form-delete-{{ client.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ client.id }}" 
+				action='/client/delete' method="POST">
+                <input type="text" name="id" value="{{ client.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay clientes</div>
+                <div>
+                    <form id="form-retry" action='/client' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

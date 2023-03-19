@@ -5,6 +5,8 @@ import os
 from config.setup import db, SECRET_KEY
 from user.endpoint import user_blueprint
 from project.endpoint import project_blueprint
+from client.endpoint import client_blueprint
+from vehicle.endpoint import vehicle_blueprint
 from log.endpoint import log_blueprint
 from log.model import Log
 
@@ -38,6 +40,8 @@ def create_app(test_config=None):
 
     app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints
     app.register_blueprint(project_blueprint, url_prefix='/project') # Project endpoints
+    app.register_blueprint(client_blueprint, url_prefix='/client') # Client endpoints
+    app.register_blueprint(vehicle_blueprint, url_prefix='/vehicle') # Vehicle endpoints
     app.register_blueprint(log_blueprint, url_prefix='/log') # Log endpoints
 
     @app.context_processor

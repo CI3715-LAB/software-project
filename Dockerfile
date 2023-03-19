@@ -21,3 +21,5 @@ ENV SECRET_KEY=cdc1db14963d4ba7684fa7fd4b74c417
 EXPOSE 5000:5000
 
 CMD ["flask", "run"]
+
+#RUN sqlite3 ./instance/sqlite.db < init.sql

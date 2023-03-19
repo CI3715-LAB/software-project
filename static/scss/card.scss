@@ -154,7 +154,7 @@ $card-element-width: 110px;
         .values {
             input, select {
                 padding: 5px;
-                margin: 10px 20px 10px 0;
+                margin: 10px 0px 10px 0;
             }
 
             button {
@@ -232,6 +232,36 @@ $card-element-width: 110px;
             .values {
                 button, input, select {
                     width: 150px;
+                }
+            }
+        }
+
+        &.clients {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(9,130px);
+                gap: 0.5rem 0.5rem;
+                grid-template-rows: auto;
+            }
+    
+            .values {
+                button, input, select {
+                    width: 6.5rem;
+                }
+            }
+        }
+
+        &.vehicles {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(10,130px);
+                gap: 0.5rem 0.5rem;
+                grid-template-rows: auto;
+            }
+    
+            .values {
+                button, input, select {
+                    width: 6.5rem;
                 }
             }
         }

@@ -1,0 +1,183 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Vehiculos</h1>
+
+        <div class="card-content vehicles">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/vehicle/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                    
+                    {% if fixed_client %}
+                    <form id="form-add" action='/vehicle/add/{{fixed_client}}' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                    {% else %}
+                    <form id="form-add" action='/vehicle/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/vehicle' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not vehicles  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay vehiculos</div>
+                    <div>
+                        <form id="form-retry" action='/vehicle' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Placa</div>
+                <div>Marca</div>
+                <div>Modelo</div>
+                <div>Año</div>
+                <div>S-Carrocería</div>
+                <div>S-Motor</div>
+                <div>color</div>
+                <div>Problema</div>
+            </div>
+            {% for vehicle in vehicles %}
+            <form id="form-edit-{{ vehicle.id }}" action='/vehicle/update' method="POST">
+                <div class="values">
+                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ vehicle.id }}" 
+                            form="form-edit-{{ vehicle.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="plate"
+                            value="{{ vehicle.plate }}" 
+                            form="form-edit-{{ vehicle.id }}" />
+                    </div>
+
+                    <select name="brand" 
+                        id="brand" form="form-edit-{{ vehicle.id }}">
+                    {% for brand in brands %}
+                        {% if brand == vehicle.brand %}
+                            <option selected>{{brand}}</option>
+                        {% else %}
+                            <option>{{brand}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <select name="model" 
+                        id="model" form="form-edit-{{ vehicle.id }}">
+                    {% for model in models %}
+                        {% if model == vehicle.model %}
+                            <option selected>{{model}}</option>
+                        {% else %}
+                            <option>{{model}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <div>
+                        <input type="text" name="year" 
+                            value="{{ vehicle.year }}"
+                            form="form-edit-{{ vehicle.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="chasis_serial" 
+                            value="{{ vehicle.chasis_serial }}"
+                            form="form-edit-{{ vehicle.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="motor_serial" 
+                            value="{{ vehicle.motor_serial }}"
+                            form="form-edit-{{ vehicle.id }}" />
+                    </div>
+
+                    <select name="color" 
+                        id="color" form="form-edit-{{ vehicle.id }}">
+                    {% for color in colors %}
+                        {% if color == vehicle.color %}
+                            <option selected>{{color}}</option>
+                        {% else %}
+                            <option>{{color}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <div>
+                        <input type="text" name="problem" 
+                            value="{{ vehicle.problem }}"
+                            form="form-edit-{{ vehicle.id }}" />
+                    </div>
+
+                    <div class="callbacks">
+                        <button id="edit" class="warn" form="form-edit-{{ vehicle.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete" class="danger" form="form-delete-{{ vehicle.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ vehicle.id }}" 
+				action='/vehicle/delete' method="POST">
+                <input type="text" name="id" value="{{ vehicle.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay vehiculos</div>
+                <div>
+                    <form id="form-retry" action='/vehicle' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
