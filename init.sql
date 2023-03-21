@@ -5,6 +5,11 @@ DELETE FROM app_module;
 DELETE FROM app_role;
 DELETE FROM app_log;
 DELETE FROM app_user;
+DELETE FROM app_vehicle_brand;
+DELETE FROM app_vehicle_model;
+DELETE FROM app_vehicle_color;
+DELETE FROM app_client;
+DELETE FROM app_vehicle;
 
 -- Default roles
 Insert into app_role (name) values('admin');

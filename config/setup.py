@@ -22,6 +22,14 @@ class TestConfig(object):
 	SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 	SECRET_KEY = 'test'
 
+class SeleniumTestConfig(object):
+	DEBUG = True
+	TESTING = True
+	WTF_CSRF_ENABLED = False
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+	SECRET_KEY = 'test'
+	LIVESERVER_PORT = 8000
+
 # Logger
 from log.utils import Logger
 

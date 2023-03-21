@@ -32,7 +32,7 @@
                         <label for="role">Rol</label><br/>
                         <select name="role" id="role" required>
                         {% for role in roles %}
-                            <option>{{role}}</option>
+                            <option value="{{role}}">{{role}}</option>
                         {% endfor %}
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                         <label for="project">Proyecto</label><br/>
                         <select name="project" id="project" required>
                         {% for project in projects %}
-                            <option>{{project.description}}</option>
+                            <option value="{{project.description}}">{{project.description}}</option>
                         {% endfor %}
                         </select>
                     </div>
@@ -51,7 +51,7 @@
                     {% endif %}
 
                     <div class="actions centered">
-                        <button class="safe" type="submit">Enviar</button>
+                        <button class="safe" type="submit" id="submit">Enviar</button>
                         <button class="normal" type="reset">Limpiar</button>
                     </div>
                 </div>

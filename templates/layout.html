@@ -15,25 +15,25 @@
     <div class="layout">
       <section class="sidebar">
         <nav id="navbar">
-          <a class="link" href="/"><h3>Inicio</h3></a>
+          <a class="link" href="/" id="home-link"><h3>Inicio</h3></a>
           {% if loggedIn %}
-            <a class="link" href="/user/logout">Cerrar sesión</a>
+            <a class="link" href="/user/logout" id="logout-link">Cerrar sesión</a>
           {% else %}
-            <a class="link" href="/user/login">Iniciar sesión</a>
+            <a class="link" href="/user/login" id="login-link">Iniciar sesión</a>
           {% endif %}
         </nav>
 
         {% if loggedIn %}
           <ul>
             {% if user.admin %}
-              <a href="/user"><li>Usuarios</li></a>
-              <a href="/user/register"><li>Registro de usuario</li></a>
-              <a href="/user/reset"><li>Reinicio de contraseña</li></a>
+              <a href="/user" id="user-link"><li>Usuarios</li></a>
+              <a href="/user/register" id="userRegister-link"><li>Registro de usuario</li></a>
+              <a href="/user/reset" id="userReset-link"><li>Reinicio de contraseña</li></a>
               {% endif %}
-              <a href="/project"><li>Proyectos</li></a>
-              <a href="/client"><li>Clientes</li></a>
-              <a href="/vehicle"><li>Vehiculos</li></a>
-              <a href="/log"><li>Eventos</li></a>
+              <a href="/project" id="project-link"><li>Proyectos</li></a>
+              <a href="/client" id="client-link"><li>Clientes</li></a>
+              <a href="/vehicle" id="vehicle-link"><li>Vehiculos</li></a>
+              <a href="/log" id="log-link"><li>Eventos</li></a>
             </ul>
         {% endif %}
 

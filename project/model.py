@@ -23,7 +23,7 @@ class Project (db.Model):
 		self.enabled = enabled
 
 	def __repr__(self):
-		return f'{self.description[:10]}'
+		return self.description
 
 
 class UserProject (db.Model):

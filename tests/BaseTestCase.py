@@ -1,3 +1,5 @@
+import sys
+sys.path.append("../")
 from flask_testing import TestCase
 from app import db, create_app
 from project.model import Project

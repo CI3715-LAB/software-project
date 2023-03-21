@@ -88,33 +88,33 @@
                     </div>
 
                     <select name="role" 
-                        id="role" form="form-edit-{{ user.id }}">
+                        id="role-for-{{user.id}}" form="form-edit-{{ user.id }}">
                     {% for role in roles %}
                         {% if role == user.role %}
-                            <option selected>{{role}}</option>
+                            <option selected value="{{role}}">{{role}}</option>
                         {% else %}
-                            <option>{{role}}</option>
+                            <option value="{{role}}">{{role}}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
 
                     <select name="project" 
-                        id="project" form="form-edit-{{ user.id }}">
+                        id="project-for-{{user.id}}" form="form-edit-{{ user.id }}">
                     {% for project in projects %}
                         {% if project == user.project %}
-                            <option selected>{{project}}</option>
+                            <option selected value="{{project}}">{{project}}</option>
                         {% else %}
-                            <option>{{project}}</option>
+                            <option value="{{project}}">{{project}}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
 
                     <div class="callbacks">
-                        <button class="warn" id="edit" form="form-edit-{{ user.id }}">
+                        <button class="warn" id="edit-for-{{user.id}}" form="form-edit-{{ user.id }}">
                             <i class="fa-solid fa-pencil"></i>
                         </button>
     
-                        <button class="danger" id="delete" form="form-delete-{{ user.id }}">
+                        <button class="danger" id="delete-for-{{user.id}}" form="form-delete-{{ user.id }}">
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </div>

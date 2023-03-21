@@ -29,9 +29,8 @@ def create_app(test_config=None):
 
     # DB initialization
     db.init_app(app)
-    if test_config is None:
-        with app.app_context():
-            db.create_all()
+    with app.app_context():
+        db.create_all()
 
     # Blueprints Registration (Endpoints)
     from user.endpoint import user_blueprint

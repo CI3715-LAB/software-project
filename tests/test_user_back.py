@@ -3,29 +3,9 @@ from flask import url_for
 from BaseTestCase import BaseTestCase, db, User
 from user.model import Role
 
-from werkzeug.security import generate_password_hash
-
-import functools
-def login_user(fun):
-	@functools.wraps(fun)
-	def wrapper(*args, **kwargs):
-		with args[0].client.session_transaction() as sess:
-			sess['user_id'] = 1
-			sess['user'] = {'id': 1, 'username': 'testUser', 'admin': True}
-		return fun(*args, **kwargs)
-	return wrapper
+from helpers.login_user_back import login_user
 
 class TestUser(BaseTestCase):
-	# def test_user_login(self):
-	# 	response = self.client.post('/user/login', data=dict(
-	# 			id=1,
-	# 			username='testUser',
-	# 			password='test',
-	# 		), follow_redirects=True)
-	# 	with self.client.session_transaction() as sess:
-	# 		self.assert200(response)
-	# 		self.assertIn('user_id', sess)
-
 	def test_redirect_to_login(self):
 		response = self.client.get('/user/', follow_redirects=True)
 		# assert redirected to login page
@@ -66,13 +46,11 @@ class TestUser(BaseTestCase):
 	def test_user_list_empty(self):
 		# delete all users
 		db.session.query(User).delete()
-		# db.session.commit()
 
 		# show empty list
 		response = self.client.get('/user/')
 		self.assert200(response)
 		self.assertIn(b'No hay usuarios', response.data)
-		# self.assertIsNone(User.query.first())
 
 	@login_user
 	def test_user_register(self):
@@ -85,7 +63,6 @@ class TestUser(BaseTestCase):
 			project='Test Project',
 		), follow_redirects=True)
 		self.assert200(response)
-		# self.assertIn(b'testUser2', response.data)
 		self.assertIsNotNone(User.query.filter_by(username='testUser2').first())
 
 	@login_user
