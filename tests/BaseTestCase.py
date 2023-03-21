@@ -4,6 +4,7 @@ from flask_testing import TestCase
 from app import db, create_app
 from project.model import Project
 from user.model import User, Role
+from log.model import Log, Type, Module
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 
@@ -12,14 +13,22 @@ class BaseTestCase(TestCase):
 		return create_app('config.setup.TestConfig')
 
 	def setUp(self):
-		# db.drop_all()
 		db.create_all()
 		project_undefined = Project('Undefined', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True)
-		project_undefined.id = 0;
+		project_undefined.id = 0
 		db.session.add(project_undefined)
 		db.session.add(Project('Test Project', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True))
 		db.session.add(Role('admin'))
 		db.session.add(User('testUser', 'test', 'testName', 'testLastName', 1, 1))
+		db.session.add(User('testUser2', 'test', 'testName2', 'testLastName2', 1, 1))
+		db.session.add(Module('Usuarios'))
+		db.session.add(Module('Proyectos'))
+		db.session.add(Module('Vehiculos'))
+		db.session.add(Module('Clientes'))
+		db.session.add(Type('Agregar'))
+		db.session.add(Type('Buscar'))
+		db.session.add(Type('Modificar'))
+		db.session.add(Type('Eliminar'))
 		db.session.commit()
 
 	def tearDown(self):

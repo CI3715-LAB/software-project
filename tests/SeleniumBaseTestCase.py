@@ -4,6 +4,7 @@ import urllib.request as urllib2
 from app import db, create_app
 from project.model import Project
 from user.model import User, Role
+from log.model import Log, Type, Module
 from datetime import datetime
 
 # Modules needed for selenium
@@ -30,6 +31,14 @@ class SeleniumBaseTestCase(LiveServerTestCase):
 		db.session.add(Role('admin'))
 		db.session.add(User('testUser', 'test', 'testName', 'testLastName', 1, 1))
 		db.session.add(User('testUser2', 'test', 'testName2', 'testLastName2', 1, 1))
+		db.session.add(Type('Usuarios'))
+		db.session.add(Type('Proyectos'))
+		db.session.add(Type('Vehiculos'))
+		db.session.add(Type('Clientes'))
+		db.session.add(Module('Agregar'))
+		db.session.add(Module('Buscar'))
+		db.session.add(Module('Modificar'))
+		db.session.add(Module('Eliminar'))
 		db.session.commit()
 
 		# Selenium

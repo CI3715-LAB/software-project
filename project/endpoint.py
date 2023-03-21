@@ -145,7 +145,7 @@ def delete_project():
         db.session.delete(project)
         db.session.commit()
 
-    description = f"Eliminado de proyecto \"{project.description}\""
+    description = f"Eliminado proyecto \"{project.description}\""
     logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))

@@ -141,7 +141,7 @@ class TestUser(BaseTestCase):
 		self.assertIn(b'El proyecto suministrado no existe en la base de datos', response.data)
 
 		response = self.client.post('/user/update', data=dict(
-			id=2,
+			id=123,
 			username='testUserNonExistent',
 			name='testName',
 			lastname='testLastName',
@@ -153,9 +153,10 @@ class TestUser(BaseTestCase):
 
 	@login_user
 	def test_user_delete(self):
-		response = self.client.post('/user/delete', data=dict(
-			id=1
-		), follow_redirects=True)
+		for user in db.session.query(User).all():
+			response = self.client.post('/user/delete', data=dict(
+				id=user.id
+			), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'No hay usuarios', response.data)
 
