@@ -30,6 +30,7 @@ class TestLog(BaseTestCase):
 			lastname='Test Lastname',
 			role='admin',
 			project='Test Project',
+			department='Test Department',
 			enabled=True
 		), follow_redirects=True)
 		self.assert200(response)
@@ -48,7 +49,8 @@ class TestLog(BaseTestCase):
 			name='Test User Modified',
 			lastname='Test Lastname Modified',
 			role='admin',
-			project='Test Project'
+			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 
