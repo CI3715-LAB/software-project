@@ -23,6 +23,8 @@ Insert into app_role (name) values('especialista en electricidad');
 -- Default modules
 Insert into app_module (name) values('Usuarios');
 Insert into app_module (name) values('Proyectos');
+Insert into app_module (name) values('Clientes');
+Insert into app_module (name) values('Vehiculos');
 
 -- Default types
 Insert into app_type (name) values('Agregar');

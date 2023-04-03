@@ -281,7 +281,7 @@ def update_vehicle():
             motor_serial = motor_serial,
             color_id = color_id,
             problem = problem,
-            client = client_id,
+            #client = client_id,
             brands=VehicleBrand.query.all(),
             models=VehicleModel.query.all(),
             colors=VehicleColor.query.all(),
@@ -302,7 +302,7 @@ def update_vehicle():
 
     # Check if motor_serial is new and different 
     motor_serial_check = Vehicle.query.filter_by(motor_serial=motor_serial).first()
-    if motor_check != vehicle.motor_serial and motor_serial_check:
+    if motor_serial != vehicle.motor_serial and motor_serial_check:
         return error_response('The given motor serial already exists')
 
     # Validate plate format
@@ -314,15 +314,15 @@ def update_vehicle():
         return error_response('Invalid plate length')
 
     # Validate if given brand exists
-    if not VehicleBrand.query.filter_by(id =  brand_id).first():
+    if not VehicleBrand.query.filter_by(name =  brand_id).first():
         return error_response('Invalid brand Id')
 
     # Validate if given model exists
-    if not VehicleModel.query.filter_by(id =  model_id).first():
+    if not VehicleModel.query.filter_by(name =  model_id).first():
         return error_response('Invalid model Id')
 
     # Validate if given color exists
-    if not VehicleColor.query.filter_by(id =  color_id).first():
+    if not VehicleColor.query.filter_by(name =  color_id).first():
         return error_response('Invalid color Id')
 
     # Validate if year is in range
@@ -339,13 +339,13 @@ def update_vehicle():
     
     # update vehicle
     if vehicle.plate != plate: vehicle.plate = plate
-    if vehicle.brand_id != brand_id: vehicle.plate = plate
-    if vehicle.model_id != model_id: vehicle.plate = plate
-    if vehicle.year != year: vehicle.plate = plate
-    if vehicle.chasis_serial != chasis_serial: vehicle.plate = plate
-    if vehicle.motor_serial != motor_serial: vehicle.plate = plate
-    if vehicle.color_id != color_id: vehicle.plate = plate
-    if vehicle.problem != problem: vehicle.plate = plate
+    if vehicle.brand_id != brand_id: vehicle.brand_id = VehicleBrand.query.filter_by(name=brand_id).first().id
+    if vehicle.model_id != model_id: vehicle.model_id = VehicleModel.query.filter_by(name=model_id).first().id
+    if vehicle.year != year: vehicle.year = year
+    if vehicle.chasis_serial != chasis_serial: vehicle.chasis_serial = chasis_serial
+    if vehicle.motor_serial != motor_serial: vehicle.motor_serial = motor_serial
+    if vehicle.color_id != color_id: vehicle.color_id = VehicleColor.query.filter_by(name=color_id).first().id
+    if vehicle.problem != problem: vehicle.problem = problem
 
     db.session.commit()
 

@@ -14,6 +14,8 @@ class Logger():
         type = Type.query.filter_by(name = type_name).first()
         module = Module.query.filter_by(name = module_name).first()
 
+        print("----------------------------------------------------------------------")
+        print(user, type, module)
         if user and type and module:
             log = Log(user.id, description, type.id, module.id, datetime.utcnow().strftime("%H:%M:%S"))
             db.session.add(log)
