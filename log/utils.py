@@ -30,3 +30,4 @@ class LogModule(Enum):
     PROJECTS = "Proyectos"
     CLIENTS = "Clientes"
     VEHICLES = "Vehiculos"
+    DEPARTMENTS = "Departamentos"

@@ -61,12 +61,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName2',
 			role='admin',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIsNotNone(User.query.filter_by(username='testUser2').first())
 
 	@login_user
-	def test_user_register_invalid(self):
+	def test_user_register_invalid_username(self):
 		response = self.client.post('/user/register', data=dict(
 			username='testUser',
 			name='testName',
@@ -74,10 +75,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='admin',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Este nombre se usuario ya se encuentra registrado', response.data)
 
+	@login_user
+	def test_user_register_invalid_project(self):
 		response = self.client.post('/user/register', data=dict(
 			username='testUser2',
 			name='testName',
@@ -85,10 +89,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='admin',
 			project='Wrong',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'El proyecto suministrado no existe en la base de datos', response.data)
 
+	@login_user
+	def test_user_register_invalid_role(self):
 		response = self.client.post('/user/register', data=dict(
 			username='testUser2',
 			name='testName',
@@ -96,9 +103,24 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='Wrong Role',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'El rol suministrado no existe en la base de datos', response.data)
+
+	@login_user
+	def test_user_register_invalid_department(self):
+		response = self.client.post('/user/register', data=dict(
+			username='testUser2',
+			name='testName',
+			password='test',
+			lastname='testLastName',
+			role='admin',
+			project='Test Project',
+			department='Wrong Department',
+		), follow_redirects=True)
+		self.assert200(response)
+		self.assertIn(b'El departamento suministrado no existe en la base de datos', response.data)
 
 	@login_user
 	def test_user_update(self):
@@ -112,12 +134,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='testRole',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'testRole', response.data)
 
 	@login_user
-	def test_user_update_invalid(self):
+	def test_user_update_invalid_role(self):
 		response = self.client.post('/user/update', data=dict(
 			id=1,
 			username='testUser',
@@ -125,10 +148,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='Wrong',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert400(response)
 		self.assertIn(b'El rol suministrado no existe en la base de datos', response.data)
 
+	@login_user
+	def test_user_update_invalid_project(self):
 		response = self.client.post('/user/update', data=dict(
 			id=1,
 			username='testUser',
@@ -136,10 +162,13 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='admin',
 			project='Wrong',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert400(response)
 		self.assertIn(b'El proyecto suministrado no existe en la base de datos', response.data)
 
+	@login_user
+	def test_user_update_invalid_username(self):
 		response = self.client.post('/user/update', data=dict(
 			id=123,
 			username='testUserNonExistent',
@@ -147,9 +176,24 @@ class TestUser(BaseTestCase):
 			lastname='testLastName',
 			role='admin',
 			project='Test Project',
+			department='Test Department',
 		), follow_redirects=True)
 		self.assert400(response)
 		self.assertIn(b'El usuario suministrado no existe en la base de datos', response.data)
+
+	@login_user
+	def test_user_update_invalid_department(self):
+		response = self.client.post('/user/update', data=dict(
+			id=1,
+			username='testUser',
+			name='testName',
+			lastname='testLastName',
+			role='admin',
+			project='Test Project',
+			department='Wrong Department',
+		), follow_redirects=True)
+		self.assert400(response)
+		self.assertIn(b'El departamento suministrado no existe en la base de datos', response.data)
 
 	@login_user
 	def test_user_delete(self):

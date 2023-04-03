@@ -10,6 +10,7 @@ DELETE FROM app_vehicle_model;
 DELETE FROM app_vehicle_color;
 DELETE FROM app_client;
 DELETE FROM app_vehicle;
+DELETE from app_department;
 
 -- Default roles
 Insert into app_role (name) values('admin');
@@ -20,9 +21,20 @@ Insert into app_role (name) values('especialista en mecanica');
 Insert into app_role (name) values('especialista en electronica');
 Insert into app_role (name) values('especialista en electricidad');
 
+-- Default departments
+Insert into app_department (id, name) values(0, 'Undefined');
+Insert into app_department (name) values('Mecanica');
+Insert into app_department (name) values('Estructura');
+Insert into app_department (name) values ('Revestimiento');
+Insert into app_department (name) values ('Electricidad');
+Insert into app_department (name) values ('Electronica');
+
 -- Default modules
 Insert into app_module (name) values('Usuarios');
 Insert into app_module (name) values('Proyectos');
+Insert into app_module (name) values('Clientes');
+Insert into app_module (name) values('Vehiculos');
+Insert into app_module (name) values('Departamentos');
 
 -- Default types
 Insert into app_type (name) values('Agregar');
@@ -74,7 +86,7 @@ Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_s
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234564', 4, 8, '2007', '123456788', '987654322', 9, 'Mantenimiento', 4);
 
 -- admin user
-Insert into app_user (username, password, name, lastname, role_id, project_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 1);
+Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 1, 0);
 
 -- 4 random projects
 insert into app_project (id, description, open_date, close_date, enabled) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0);
@@ -84,10 +96,10 @@ insert into app_project (description, open_date, close_date, enabled) values ('P
 insert into app_project (description, open_date, close_date, enabled) values ('Proyecto 4', '2023-01-04', '2023-12-31', 0);
 
 -- 4 random users
-insert into app_user (username, password, name, lastname, role_id, project_id) values('alejandra', '123', 'Alejandra', 'Perez', 2, 2);
-insert into app_user (username, password, name, lastname, role_id, project_id) values('pedro', '123', 'Pedro', 'Rodriguez', 3, 3);
-insert into app_user (username, password, name, lastname, role_id, project_id) values('carla', '123', 'Carla', 'Hernandez', 4, 4);
-insert into app_user (username, password, name, lastname, role_id, project_id) values('juan', '123', 'Juan', 'Gonzalez', 5, 4);
+insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('alejandra', '123', 'Alejandra', 'Perez', 2, 2, 2);
+insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('pedro', '123', 'Pedro', 'Rodriguez', 3, 3, 3);
+insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('carla', '123', 'Carla', 'Hernandez', 4, 4, 4);
+insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('juan', '123', 'Juan', 'Gonzalez', 5, 4, 1);
 
 -- -- 10 random logs
 -- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 1, 'Se creo el usuario alejandra', '2023-01-01', '10:05:00');

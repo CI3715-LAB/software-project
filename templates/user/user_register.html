@@ -38,6 +38,15 @@
                     </div>
 
                     <div>
+                        <label for="department">Departamento</label><br/>
+                        <select name="department" id="department" required>
+                        {% for department in departments %}
+                            <option value="{{department}}">{{department}}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
                         <label for="project">Proyecto</label><br/>
                         <select name="project" id="project" required>
                         {% for project in projects %}

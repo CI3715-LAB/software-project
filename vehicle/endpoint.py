@@ -375,6 +375,10 @@ def delete_vehicle():
 @login_required
 def search_vehicle():
     phrase = request.args.get('phrase')
+
+    if not phrase:
+        return redirect(url_for('vehicle.retrieve_vehicles'))
+
     vehicles = db.session.query(Vehicle).select_from(Vehicle).join(VehicleBrand).join(VehicleModel).join(VehicleColor).filter(
         or_(
             Vehicle.plate.like('%' + phrase + '%'),

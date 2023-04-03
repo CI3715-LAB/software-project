@@ -25,6 +25,7 @@ REGISTER_USER = {
     "name": "testName3",
     "lastname": "testLastname3",
     "role": "admin",
+    "department": "Test Department",
     "project": "Test Project"
 }
 

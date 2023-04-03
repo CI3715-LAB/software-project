@@ -13,8 +13,13 @@
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/user/search' method="GET">
-                        <input type="text" name="phrase" form="form-search"
-                            placeholder="..." />
+                        {% if phrase %}
+                            <input type="text" name="phrase" form="form-search"
+                            placeholder="..." value="{{ phrase }}" />
+                        {% else %}
+                            <input type="text" name="phrase" form="form-search"
+                                placeholder="..." />
+                        {% endif %}
                         <button class="normal" id="search">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -60,6 +65,7 @@
                 <div>Nombre</div> 
                 <div>Apellido</div>
                 <div>Rol</div>
+                <div>Departamento</div>
                 <div>Proyecto</div>
             </div>
 
@@ -94,6 +100,16 @@
                             <option selected value="{{role}}">{{role}}</option>
                         {% else %}
                             <option value="{{role}}">{{role}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <select name="department" id="department" form="form-edit-{{ user.id }}">
+                    {% for department in departments %}
+                        {% if department == user.department %}
+                            <option selected value="{{department}}">{{department}}</option>
+                        {% else %}
+                            <option value="{{department}}">{{department}}</option>
                         {% endif %}
                     {% endfor %}
                     </select>
