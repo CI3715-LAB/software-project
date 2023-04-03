@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Departamentos</h1>
+
+        <div class="card-content departments">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/department/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+            
+                    <form id="form-add" action='/department/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/department' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not departments  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay departamentos</div>
+                    <div>
+                        <form id="form-retry" action='/department' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Nombre</div>
+            </div>
+            {% for department in departments %}
+            <form id="form-edit-{{ department.id }}" action='/department/update' method="POST">
+                <div class="values">
+                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ department.id }}" 
+                            form="form-edit-{{ department.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="name"
+                            value="{{ department.name }}" 
+                            form="form-edit-{{ department.id }}" />
+                    </div>
+
+                    <div class="callbacks">
+                        <button id="edit-for-{{department.id}}" class="warn" form="form-edit-{{ department.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete-for-{{department.id}}" class="danger" form="form-delete-{{ department.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ department.id }}" 
+				action='/department/delete' method="POST">
+                <input type="text" name="id" value="{{ department.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay departamentos</div>
+                <div>
+                    <form id="form-retry" action='/department' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

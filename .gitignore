@@ -6,3 +6,4 @@ venv
 .env
 .flaskenv
 settings.json
+all.css

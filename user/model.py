@@ -32,6 +32,8 @@ class User (db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('app_role.id'), nullable=False)
     # foreign key to project
     project_id = db.Column(db.Integer, db.ForeignKey('app_project.id'), nullable=False, default=0)
+    # foreign key to department
+    department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False, default=0)
 
     def generate_password(self, password):
         return generate_password_hash(password)
@@ -39,13 +41,14 @@ class User (db.Model):
     def check_password(self, password):
         return check_password_hash(self.password,password)
 
-    def __init__(self, username, password, name, lastname, role_id, project_id):
+    def __init__(self, username, password, name, lastname, role_id, project_id=0, department_id=0):
         self.username = username
         self.password = self.generate_password(password)
         self.name = name
         self.lastname = lastname
         self.role_id = role_id
         self.project_id = project_id
+        self.department_id = department_id
 
     def __repr__(self):
         return f'{self.username}'

@@ -52,6 +52,9 @@ def delete_log():
 def search_log():
 	phrase = request.args.get('phrase')
 
+	if not phrase:
+		return redirect(url_for('log.retrieve_logs'))
+
 	logs = db.session.query(Log).select_from(Log).join(Type).join(Module).filter(
 		or_(
 			Log.id.like('%' + phrase + '%'),

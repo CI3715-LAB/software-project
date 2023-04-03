@@ -64,12 +64,14 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 			lastname = form.find_element(By.NAME, "lastname").get_attribute("value")
 			role = form.find_element(By.NAME, "role").get_attribute("value")
 			project = form.find_element(By.NAME, "project").get_attribute("value")
+			department = form.find_element(By.NAME, "department").get_attribute("value")
 			self.assertEqual(id, str(user.id))
 			self.assertEqual(username, user.username)
 			self.assertEqual(name, user.name)
 			self.assertEqual(lastname, user.lastname)
 			self.assertEqual(role, str(user.role))
 			self.assertEqual(project, str(user.project))
+			self.assertEqual(department, str(user.department))
 
 	@login_user
 	def test_user_register(self):
@@ -80,6 +82,7 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 		lastname = self.driver.find_element(By.NAME, "lastname")
 		role = self.driver.find_element(By.NAME, "role")
 		project = self.driver.find_element(By.NAME, "project")
+		department = self.driver.find_element(By.NAME, "department")
 		submit = self.driver.find_element(By.ID, "submit")
 
 		# register a new user
@@ -91,6 +94,8 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 		role.find_element(By.XPATH, f"//option[@value = \"{REGISTER_USER['project']}\"]").click()
 		project.click()
 		project.find_element(By.XPATH, f"//option[@value = \"{REGISTER_USER['project']}\"]").click()
+		department.click()
+		department.find_element(By.XPATH, f"//option[@value = \"{REGISTER_USER['department']}\"]").click()
 		submit.click()
 
 		# assert that the user is registered
@@ -103,12 +108,14 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 		lastname = form.find_element(By.NAME, "lastname").get_attribute("value")
 		role = form.find_element(By.NAME, "role").get_attribute("value")
 		project = form.find_element(By.NAME, "project").get_attribute("value")
+		department = form.find_element(By.NAME, "department").get_attribute("value")
 		self.assertEqual(id, str(user.id))
 		self.assertEqual(username, user.username)
 		self.assertEqual(name, user.name)
 		self.assertEqual(lastname, user.lastname)
 		self.assertEqual(role, str(user.role))
 		self.assertEqual(project, str(user.project))
+		self.assertEqual(department, str(user.department))
 
 	@login_user
 	def test_user_reset(self):
@@ -166,12 +173,14 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 		lastname = form.find_element(By.NAME, "lastname").get_attribute("value")
 		role = form.find_element(By.NAME, "role").get_attribute("value")
 		project = form.find_element(By.NAME, "project").get_attribute("value")
+		department = form.find_element(By.NAME, "department").get_attribute("value")
 		self.assertEqual(id, str(user.id))
 		self.assertEqual(username, user.username)
 		self.assertEqual(name, "new_name")
 		self.assertEqual(lastname, "new_lastname")
 		self.assertEqual(role, str(user.role))
 		self.assertEqual(project, str(user.project))
+		self.assertEqual(department, str(user.department))
 
 	@login_user
 	def test_user_delete(self):

@@ -1,0 +1,1 @@
+-- Script que inicializa la base de datos de testing.db

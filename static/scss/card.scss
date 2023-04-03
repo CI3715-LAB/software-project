@@ -236,6 +236,26 @@ $card-element-width: 110px;
             }
         }
 
+        &.departments {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                grid-template-rows: auto;
+            }
+
+            .fields {
+                div {
+                    width: 150px;
+                }
+            }
+    
+            .values {
+                button, input, select {
+                    width: 150px;
+                }
+            }
+        }
+
         &.clients {
             .fields, .values {
                 display: grid;
@@ -271,7 +291,7 @@ $card-element-width: 110px;
 
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(7,1fr);
+                grid-template-columns: repeat(8,1fr);
                 grid-template-rows: auto;
             }
 

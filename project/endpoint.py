@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, redirect, url_for, session
-from sqlalchemy import or_, select
+from sqlalchemy import or_
 from datetime import datetime
 from config.setup import db, logger
 from log.utils import LogType, LogModule
@@ -16,9 +16,6 @@ project_blueprint = Blueprint('project', __name__)
 def retrieve_projects():
     # return all projects with an id different than 0
     projects = Project.query.filter(Project.id != 0).all()
-
-    # description = "Busqueda de proyectos"
-    # logger.catch(session['user']['username'], LogType.SEARCH.value, LogModule.PROJECTS.value, description)
 
     return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
@@ -145,7 +142,7 @@ def delete_project():
         db.session.delete(project)
         db.session.commit()
 
-    description = f"Eliminado de proyecto \"{project.description}\""
+    description = f"Eliminado proyecto \"{project.description}\""
     logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.PROJECTS.value, description)
 
     return redirect(url_for('project.retrieve_projects'))
@@ -154,13 +151,18 @@ def delete_project():
 @login_required
 def search_project():
     phrase = request.args.get('phrase')
+
+    if not phrase:
+        return redirect(url_for('project.retrieve_projects'))
+
     projects = db.session.query(Project).select_from(Project).join(User).filter(
         or_(
             Project.id.like('%' + phrase + '%'),
             Project.description.like('%' + phrase + '%'),
             Project.open_date.like('%' + phrase + '%'),
             Project.close_date.like('%' + phrase + '%'),
-            User.name.like('%' + phrase + '%')
+            User.name.like('%' + phrase + '%'),
+            User.username.like('%' + phrase + '%'),
         )
     ).filter(id != 0)
 
