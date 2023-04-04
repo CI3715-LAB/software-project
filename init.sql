@@ -15,26 +15,45 @@ DELETE from app_department;
 -- Default roles
 Insert into app_role (name) values('admin');
 Insert into app_role (name) values('gerente de operaciones');
-Insert into app_role (name) values('supervisor de mecanica');
-Insert into app_role (name) values('supervisor de latoneria y pintura');
-Insert into app_role (name) values('especialista en mecanica');
+Insert into app_role (name) values('supervisor de mecánica');
+Insert into app_role (name) values('supervisor de latonería y pintura');
+Insert into app_role (name) values('especialista en mecánica');
 Insert into app_role (name) values('especialista en electronica');
 Insert into app_role (name) values('especialista en electricidad');
 
 -- Default departments
 Insert into app_department (id, name) values(0, 'Undefined');
-Insert into app_department (name) values('Mecanica');
+Insert into app_department (name) values('Mecánica');
 Insert into app_department (name) values('Estructura');
 Insert into app_department (name) values ('Revestimiento');
 Insert into app_department (name) values ('Electricidad');
 Insert into app_department (name) values ('Electronica');
 
 -- Default modules
+Insert into app_module (id, name) values(0, 'Undefined');
 Insert into app_module (name) values('Usuarios');
 Insert into app_module (name) values('Proyectos');
 Insert into app_module (name) values('Clientes');
-Insert into app_module (name) values('Vehiculos');
+Insert into app_module (name) values('Vehículos');
 Insert into app_module (name) values('Departamentos');
+
+-- Default permissions
+Insert into app_permission (id, type, module_id) values(0, 0, 0);
+Insert into app_permission (type, module_id) values(0, 1);
+Insert into app_permission (type, module_id) values(0, 2);
+Insert into app_permission (type, module_id) values(0, 3);
+Insert into app_permission (type, module_id) values(0, 4);
+Insert into app_permission (type, module_id) values(0, 5);
+Insert into app_permission (type, module_id) values(1, 1);
+Insert into app_permission (type, module_id) values(1, 2);
+Insert into app_permission (type, module_id) values(1, 3);
+Insert into app_permission (type, module_id) values(1, 4);
+Insert into app_permission (type, module_id) values(1, 5);
+Insert into app_permission (type, module_id) values(2, 1);
+Insert into app_permission (type, module_id) values(2, 2);
+Insert into app_permission (type, module_id) values(2, 3);
+Insert into app_permission (type, module_id) values(2, 4);
+Insert into app_permission (type, module_id) values(2, 5);
 
 -- Default types
 Insert into app_type (name) values('Agregar');
@@ -78,10 +97,10 @@ Insert into app_client (ci, name, lastname, birth_date, contact_number, email, a
 -- Default Vehicles
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234567', 1, 1, '2007', '123456781', '987654329', 1, 'Mantenimiento', 1);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234568', 1, 2, '2007', '123456782', '987654328', 2, 'Cambio cauchos', 1);
-Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234569', 2, 3, '2007', '123456783', '987654327', 3, 'Alineacion', 2);
+Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234569', 2, 3, '2007', '123456783', '987654327', 3, 'Alineación', 2);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234560', 2, 4, '2007', '123456784', '987654326', 4, 'Aire acondicionado', 2);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234561', 3, 5, '2007', '123456785', '987654325', 5, 'Cambio cauchos', 3);
-Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234562', 3, 6, '2007', '123456786', '987654324', 6, 'Alineacion', 3);
+Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234562', 3, 6, '2007', '123456786', '987654324', 6, 'Alineación', 3);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234563', 4, 7, '2007', '123456787', '987654323', 7, 'Aire acondicionado', 4);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234564', 4, 8, '2007', '123456788', '987654322', 9, 'Mantenimiento', 4);
 

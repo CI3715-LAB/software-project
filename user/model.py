@@ -4,14 +4,41 @@ from werkzeug.security import generate_password_hash, check_password_hash
  
 from config.setup import db
 
+# Permission model
+class Permission (db.Model):
+    __tablename__ = "app_permission"
+
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.Integer, nullable=False)
+    module_id = db.Column(db.Integer, db.ForeignKey('app_module.id'), nullable=False)
+
+    def __init__(self, name, type, module_id):
+        self.name = name
+        self.type = type
+        self.module_id = module_id
+
+    def __repr__(self):
+        return f'{self.name}'
+
+
+# Intermediate table role_permission
+role_permission = db.Table('role_permission',
+        db.Column('role_id', db.Integer, db.ForeignKey('app_role.id')),
+        db.Column('permission_id', db.Integer, db.ForeignKey('app_permission.id'))
+    )
+
+
 # Role model
 class Role (db.Model):
     __tablename__ = "app_role"
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False, unique=True)
+    
     # one to many relationship with user
     users = db.relationship('User', backref='role', lazy=True)
+    # many to many relationship with permission
+    permission = db.relationship('Permission', secondary=role_permission, backref='roles')
 
     def __init__(self, name):
         self.name = name
@@ -19,6 +46,8 @@ class Role (db.Model):
     def __repr__(self):
         return f'{self.name}'
 
+
+# User model
 class User (db.Model):
     __tablename__ = "app_user"
     
@@ -28,6 +57,7 @@ class User (db.Model):
     name = db.Column(db.String(100), nullable=False)
     lastname = db.Column(db.String(100), nullable=False)
     date_joined = db.Column(db.Date, default=datetime.utcnow)
+   
     # foreign key to role
     role_id = db.Column(db.Integer, db.ForeignKey('app_role.id'), nullable=False)
     # foreign key to project
