@@ -9,6 +9,8 @@ class Department(db.Model):
 	name = db.Column(db.String(100), nullable=False)
 	# one to many relationship with user
 	users = db.relationship('User', backref='department', lazy=True)
+	# one to many relationship with project
+	projects = db.relationship('Project', backref='department', lazy=True)
 
 	def __init__(self, name):
 		self.name = name
