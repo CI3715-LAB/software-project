@@ -15,7 +15,7 @@ class Project (db.Model):
 	department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False)
 	solution = db.Column(db.String(100), nullable=True)
 	amount = db.Column(db.Float, nullable=True)
-	observations = db.Column(db.String(100), nullable=True)
+	observation = db.Column(db.String(100), nullable=True)
 	
 	# one to many relationship with user
 	users = db.relationship('User', backref='project', lazy=True)
