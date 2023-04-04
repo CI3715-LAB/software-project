@@ -23,11 +23,16 @@ class Project (db.Model):
 	vehicle = db.relationship('Vehicle', backref='project', lazy=True)
 		
 
-	def __init__(self, description, open_date, close_date, enabled):
+	def __init__(self, description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation):
 		self.description = description
 		self.open_date = open_date
 		self.close_date = close_date
 		self.enabled = enabled
+		self.vehicle_id = vehicle_id
+		self.department_id = department_id
+		self.solution = solution
+		self.amount = amount
+		self.observation = observation
 
 	def __repr__(self):
 		return self.description
