@@ -11,16 +11,26 @@ class Project (db.Model):
 	open_date = db.Column(db.Date, default=datetime.utcnow)
 	close_date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
 	enabled = db.Column(db.Boolean(), default=True)
+	vehicle_id = db.Column(db.Integer, db.ForeignKey('app_vehicle.id'), nullable=False)
+	department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False)
+	solution = db.Column(db.String(1024), nullable=True)
+	amount = db.Column(db.Float, nullable=True)
+	observation = db.Column(db.String(1024), nullable=True)
 	# many to many relationship with user
 	# users = db.relationship('User', secondary='app_user_project', backref='projects')
 	# one to many relationship with user
 	users = db.relationship('User', backref='project', lazy=True)
 
-	def __init__(self, description, open_date, close_date, enabled):
+	def __init__(self, description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation):
 		self.description = description
 		self.open_date = open_date
 		self.close_date = close_date
 		self.enabled = enabled
+		self.vehicle_id = vehicle_id
+		self.department_id = department_id
+		self.solution = solution
+		self.amount = amount
+		self.observation = observation
 
 	def __repr__(self):
 		return self.description

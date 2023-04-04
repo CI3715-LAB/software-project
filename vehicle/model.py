@@ -58,6 +58,7 @@ class Vehicle(db.Model):
     color_id = db.Column(db.Integer, db.ForeignKey('app_vehicle_color.id'), nullable=False)
     problem = db.Column(db.String(1024), nullable=False)
     client_id = db.Column(db.Integer, db.ForeignKey('app_client.id'), nullable=False)
+    projects = db.relationship('Project', backref='vehicle', lazy=True)
 
     def __init__(self, plate, brand, model, year, chasis_serial, motor_serial, color, problem, client_id):
         self.plate = plate
