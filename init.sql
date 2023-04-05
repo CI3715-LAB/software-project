@@ -123,7 +123,8 @@ Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_s
 -- Insert into app_role_permission(role_id, permissions_id) values(1, 13)
 -- Insert into app_role_permission(role_id, permissions_id) values(1, 14)
 -- Insert into app_role_permission(role_id, permissions_id) values(1, 15)
-Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 1, 0);
+Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 0, 0);
+Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('gerente', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'gerente', 'gerente', 3, 0, 0);
 
 -- 4 random projects
 insert into app_project (id, description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0, 1, 1,'Recalentamiento', 'Cambio de aceite', 33.25, 'Aceite 15-40');

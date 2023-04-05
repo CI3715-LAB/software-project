@@ -17,12 +17,13 @@
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                     </form>
-            
-                    <form id="form-add" action='/project/add' method="GET">
-                        <button class="safe" id="add" form="form-add">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </form>
+                    {% if user.role == 'admin' %}
+                        <form id="form-add" action='/project/add' method="GET">
+                            <button class="safe" id="add" form="form-add">
+                                <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
             
@@ -73,8 +74,8 @@
                 {% endif %}
             {% for project in projects %}
             <form id="form-edit-{{ project.id }}" action='/project/update' method="POST">
+                {% if project.enabled %}
                 <div class="values">
-                    
                     {% if user.role == "admin" %}
                         <div {% if not project.enabled %} class="disabled" {% endif %}>
                             <input type="text" name="id"
@@ -156,22 +157,25 @@
                             <i class="fa-solid fa-pencil"></i>
                         </button>
     
-                        <button id="delete-for-{{project.id}}" class="danger" form="form-delete-{{ project.id }}">
-                            <i class="fa-solid fa-xmark"></i>
-                        </button>
-    
-                        {% if project.enabled %}
-                            <button id="toggle-for-{{project.id}}" class="normal" form="form-toggle-{{ project.id }}">
-                                <i class="fa-solid fa-ban"></i>
+                        {% if user.role == 'admin' %}
+                            <button id="delete-for-{{project.id}}" class="danger" form="form-delete-{{ project.id }}">
+                                <i class="fa-solid fa-xmark"></i>
                             </button>
-                            {% else %}
-                            <button id="toggle-for-{{project.id}}" class="warn" form="form-toggle-{{ project.id }}">
-                                <i class="fa-solid fa-play"></i>
-                            </button>
+        
+                            {% if project.enabled %}
+                                <button id="toggle-for-{{project.id}}" class="normal" form="form-toggle-{{ project.id }}">
+                                    <i class="fa-solid fa-ban"></i>
+                                </button>
+                                {% else %}
+                                <button id="toggle-for-{{project.id}}" class="warn" form="form-toggle-{{ project.id }}">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            {% endif %}
                         {% endif %}
                     </div>
                     
                 </div>
+                {% endif %}
             
             </form>
             <form class="hidden" id="form-delete-{{ project.id }}" 
