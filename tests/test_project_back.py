@@ -9,7 +9,7 @@ class TestProject(BaseTestCase):
 	def test_project_list(self):
 		response = self.client.get('/project/')
 		self.assert200(response)
-		self.assertIn(b'Test Department', response.data)
+		self.assertIn(b'Test Project', response.data)
 
 	@login_user
 	def test_project_list_empty(self):
