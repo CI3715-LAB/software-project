@@ -73,8 +73,6 @@ def create_app(test_config=None):
 			loggedIn = True
 			user = session['user']
 			
-			print(check_permission(session['user']['role'], LogModule.USERS.value, 1))
-			
 		return dict(user=user, loggedIn=loggedIn)
 
 
