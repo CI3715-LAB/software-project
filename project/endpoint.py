@@ -41,6 +41,13 @@ def add_project():
         open_date = request.form['open_date']
         close_date = request.form['close_date']
         enabled = request.form.get('enabled', False, bool)
+        # 'vehicle_id', 'department_id', 'solution', 'amount', and 'observation'
+        vehicle_id = request.form.get('vehicle_id', None, int)
+        department_id = request.form.get('department_id', None, int)
+        solution = request.form.get('solution', None, str)
+        amount = request.form.get('amount', 0.0, float)
+        observation = request.form.get('observation', None, str)
+
 
         # turn open date and close date into datetime objects
         open_date = datetime.strptime(open_date, '%Y-%m-%d')
@@ -57,7 +64,7 @@ def add_project():
             )
 
         # create a new project
-        project = Project(description, open_date, close_date, enabled)
+        project = Project(description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation)
         db.session.add(project)
         db.session.commit()
 

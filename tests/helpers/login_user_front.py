@@ -19,8 +19,5 @@ def login_user(fun):
 		password.send_keys(USER_LOGIN_DATA["password"])
 		submit = self.driver.find_element(By.ID, "submit")
 		submit.click()
-		# print("IMPRIMIENDO PAGE SOURCE")
-		# print(self.driver.current_url)
-		# print(self.driver.page_source)
 		return fun(*args, **kwargs)
 	return wrapper

@@ -92,7 +92,11 @@ class TestLog(BaseTestCase):
 			description='Test Project Added',
 			open_date='2023-01-01',
 			close_date='2023-01-01',
-			enabled=True
+			enabled=True,
+			vehicle_id=1,
+			department_id=1,
+			amount=1.23,
+			observation='Alguna observacion'
 		), follow_redirects=True)
 		self.assert200(response)
 

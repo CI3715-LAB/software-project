@@ -5,6 +5,7 @@ from project.model import Project
 from vehicle.model import VehicleBrand, VehicleModel, VehicleColor, Vehicle
 from client.model import Client
 from datetime import datetime
+from time import sleep
 
 USER_LOGIN_DATA = {
 	'id': 1,
@@ -52,9 +53,6 @@ FIXED_TABLES = {
 	'role': [
 		'admin', 'test role1', 'test role2'
 	],
-	'permission': [
-		(i,j) for i in range(3) for j in range(1, 6)
-	],
 	'vehicleBrand': {
 		'Toyota': ['Yaris', 'Prado'],
 		'Chevrolet': ['Cruze', 'Aveo'],
@@ -89,7 +87,7 @@ TEST_TABLES = {
 		('45678901', 'testNameClient4', 'testLastNameClient4', '2020-04-14', '44444444444', 'example4@example.com', 'dir4'),
 	],
 	'project': [
-		('Proyecto 1', '2023-01-01', '2023-12-31', 1, 2, 2, 'Limpieza de inyectores', 10.15, 'Modelo 16344'),
+		('Test Project', '2023-01-01', '2023-12-31', 1, 2, 2, 'Limpieza de inyectores', 10.15, 'Modelo 16344'),
 		('Proyecto 2', '2023-01-02', '2023-12-31', 1, 3, 3, 'Alineación y balanceo', 25.00, ''),
 		('Proyecto 3', '2023-01-03', '2023-12-31', 0, 4, 4, 'Cambio de correa de tiempos', 20.00, 'Modelo 1314'),
 		('Proyecto 4', '2023-01-04', '2023-12-31', 0, 5, 5, 'Cambio de pila de bomba de gasolina', 12.24, 'Modelo R2D2'),
@@ -99,91 +97,65 @@ TEST_TABLES = {
 
 def init_database(self, db):
 	self.test_user_data = TEST_USER_DATA
-	db.drop_all()
-	db.create_all()
-	db.session.commit()
-
 	# MODULE
 	undefined_module = Module('Undefined')
 	undefined_module.id = 0
 	db.session.add(undefined_module)
-	db.session.commit()
 	for name in FIXED_TABLES['module']:
 		db.session.add(Module(name))
-		db.session.commit()
 		
 	# TYPE
 	for name in FIXED_TABLES['type']:
 		db.session.add(Type(name))
-		db.session.commit()
 
 	# ROLE
 	for name in FIXED_TABLES['role']:
 		db.session.add(Role(name))
-		db.session.commit()
-
-	# PERMISSION
-	no_permission = Permission('00', 0, 0)
-	no_permission.id = 0
-	db.session.add(no_permission)
-	db.session.commit()
-	for i,j in FIXED_TABLES['permission']:
-		db.session.add(Permission(str(i)+str(j), i, j))
-		db.session.commit()
-
-	# VEHICLE BRAND AND MODEL
-	brand_id = 0
-	for brand in FIXED_TABLES['vehicleBrand']:
-		vehicleBrand = VehicleBrand(brand)
-		db.session.add(vehicleBrand)
-		db.session.commit()
-		brand_id += 1
-		for model in FIXED_TABLES['vehicleBrand'][brand]:
-			db.session.add(VehicleModel(model, brand_id))
-			db.session.commit()
-
-	# VEHICLE COLOR
-	for color in FIXED_TABLES['vehicleColor']:
-		db.session.add(VehicleColor(color))
-		db.session.commit()
-
-	# VEHICLE
-	for vehicle in TEST_TABLES['vehicle']:
-		db.session.add(Vehicle(*vehicle))
-		db.session.commit()
-
-	# DEPARTMENT
-	undefined_department = Department('Undefined')
-	undefined_department.id = 0
-	db.session.add(undefined_department)
-	db.session.commit()
-	for department in TEST_TABLES['department']:
-		db.session.add(Department(department))
-		db.session.commit()
 
 	# CLIENT
 	for client in TEST_TABLES['client']:
 		client_data = list(client)
 		client_data[3] = datetime.fromisoformat(client_data[3])
 		db.session.add(Client(*client_data))
-		db.session.commit()
+
+	# VEHICLE BRAND AND MODEL
+	brand_id = 0
+	for brand in FIXED_TABLES['vehicleBrand']:
+		vehicleBrand = VehicleBrand(brand)
+		db.session.add(vehicleBrand)
+		brand_id += 1
+		for model in FIXED_TABLES['vehicleBrand'][brand]:
+			db.session.add(VehicleModel(model, brand_id))
+
+	# VEHICLE COLOR
+	for color in FIXED_TABLES['vehicleColor']:
+		db.session.add(VehicleColor(color))
+
+	# VEHICLE
+	for vehicle in TEST_TABLES['vehicle']:
+		db.session.add(Vehicle(*vehicle))
+
+	# DEPARTMENT
+	undefined_department = Department('Undefined')
+	undefined_department.id = 0
+	db.session.add(undefined_department)
+	for department in TEST_TABLES['department']:
+		db.session.add(Department(department))
 
 	# PROJECT
 	data_undef_proj = ('Undefined', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-12-31'), 0, 1, 1, 'Undefined ', 33.25, 'Aceite 15-40')
 	undefined_project = Project(*data_undef_proj)
 	undefined_project.id = 0
 	db.session.add(undefined_project)
-	db.session.commit()
 	for project in TEST_TABLES['project']:
 		project_data = list(project)
 		project_data[1] = datetime.fromisoformat(project_data[1])
 		project_data[2] = datetime.fromisoformat(project_data[2])
 		db.session.add(Project(*project_data))
-		db.session.commit()
 
 	# USER
 	for user in TEST_USER_DATA['valid'].values():
 		db.session.add(user)
-		db.session.commit()
 
 	db.session.commit()
+	sleep(1)

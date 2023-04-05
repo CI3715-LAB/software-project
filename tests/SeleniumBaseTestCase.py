@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append("../proyecto")
 from app import db, create_app
 from helpers.init_database import init_database
 
@@ -17,8 +17,7 @@ class SeleniumBaseTestCase(LiveServerTestCase):
 
 	def setUp(self):
 		# Database
-		with self.app.app_context():
-			init_database(self, db)
+		init_database(self, db)
 
 		# Selenium
 		chromedriver_autoinstaller.install()
