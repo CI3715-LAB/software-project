@@ -158,4 +158,3 @@ def init_database(self, db):
 		db.session.add(user)
 
 	db.session.commit()
-	sleep(1)
