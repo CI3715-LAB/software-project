@@ -106,7 +106,22 @@ Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_s
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234563', 4, 7, '2007', '123456787', '987654323', 7, 'Aire acondicionado', 4);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234564', 4, 8, '2007', '123456788', '987654322', 9, 'Mantenimiento', 4);
 
--- admin user
+-- Admin permissions and user
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 1)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 2)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 3)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 4)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 5)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 6)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 7)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 8)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 9)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 10)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 11)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 12)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 13)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 14)
+-- Insert into app_role_permission(role_id, permissions_id) values(1, 15)
 Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 1, 0);
 
 -- 4 random projects

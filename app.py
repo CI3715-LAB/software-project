@@ -3,6 +3,7 @@ from flask_assets import Environment, Bundle
 from sqlalchemy import text
 
 from config.setup import db, SECRET_KEY
+from config.init_db import init_roles_permissions
 from user.endpoint import user_blueprint
 from project.endpoint import project_blueprint
 from client.endpoint import client_blueprint
@@ -10,6 +11,9 @@ from vehicle.endpoint import vehicle_blueprint
 from log.endpoint import log_blueprint
 from department.endpoint import department_blueprint
 from log.model import Log
+from log.utils import LogModule
+
+from user.model import Role
 
 def create_app(test_config=None):
 	# create and configure the app
@@ -43,7 +47,10 @@ def create_app(test_config=None):
 			with open('init.sql') as f:
 				for line in f:
 					db.session.execute(text(line))
+					
 			db.session.commit()
+
+			init_roles_permissions()
 
 	# Blueprints Registration (Endpoints)
 	from user.endpoint import user_blueprint
@@ -66,18 +73,10 @@ def create_app(test_config=None):
 			loggedIn = True
 			user = session['user']
 			
-		return dict(user=user, loggedIn=loggedIn)
-	
-	@app.context_processor
-	def inject_user_from_session():
-		loggedIn = False
-		user = None
-			
-		if 'user' in session:
-			loggedIn = True
-			user = session['user']
+			print(check_permission(session['user']['role'], LogModule.USERS.value, 1))
 			
 		return dict(user=user, loggedIn=loggedIn)
+
 
 	# Home route
 	@app.route('/')

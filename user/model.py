@@ -18,7 +18,7 @@ class Permission (db.Model):
         self.module_id = module_id
 
     def __repr__(self):
-        return f'{self.name}'
+        return f'{self.type}, {self.module.name}'
 
 
 # Intermediate table role_permission
@@ -38,7 +38,7 @@ class Role (db.Model):
     # one to many relationship with user
     users = db.relationship('User', backref='role', lazy=True)
     # many to many relationship with permission
-    permission = db.relationship('Permission', secondary=app_role_permission, backref='roles')
+    permissions = db.relationship('Permission', secondary=app_role_permission, backref='roles')
 
     def __init__(self, name):
         self.name = name
