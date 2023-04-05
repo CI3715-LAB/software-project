@@ -9,7 +9,7 @@ class TestProject(BaseTestCase):
 	def test_project_list(self):
 		response = self.client.get('/project/')
 		self.assert200(response)
-		self.assertIn(b'Test Project', response.data)
+		self.assertIn(b'Test Department', response.data)
 
 	@login_user
 	def test_project_list_empty(self):
@@ -27,7 +27,12 @@ class TestProject(BaseTestCase):
 			description='Test Project 2',
 			open_date='2023-01-01',
 			close_date='2023-01-01',
-			enabled=True
+			enabled=True,
+			department_id=1,
+			vehicle_id=1,
+			amount=1.23,
+			solution='No solution',
+			observation='No obs'
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Test Project 2', response.data)

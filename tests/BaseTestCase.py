@@ -9,6 +9,8 @@ class BaseTestCase(TestCase):
 		return create_app('config.setup.TestConfig')
 
 	def setUp(self):
+		db.drop_all()
+		db.create_all()
 		init_database(self, db)
 
 	def tearDown(self):

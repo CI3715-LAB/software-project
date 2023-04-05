@@ -17,6 +17,8 @@ class SeleniumBaseTestCase(LiveServerTestCase):
 
 	def setUp(self):
 		# Database
+		db.drop_all()
+		db.create_all()
 		init_database(self, db)
 
 		# Selenium
