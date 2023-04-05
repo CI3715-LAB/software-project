@@ -1,6 +1,7 @@
 import unittest
-from BaseTestCase import BaseTestCase, db, User
-from log.model import Type, Module, Log
+from BaseTestCase import BaseTestCase, db
+from user.model import User
+from log.model import Log
 
 from helpers.login_user_back import login_user
 
@@ -140,4 +141,6 @@ class TestLog(BaseTestCase):
 		self.assertEqual(log.description, 'Busqueda de proyectos por frase "test"')
 		response = self.client.get('/log/')
 		self.assert200(response)
-	
+
+if __name__ == '__main__':
+	unittest.main()

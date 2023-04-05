@@ -2,12 +2,9 @@ import unittest
 
 from flask import url_for
 from selenium.webdriver.common.by import By
-from SeleniumBaseTestCase import SeleniumBaseTestCase, Project, db
-from helpers.login_user_front import (
-	DELETE_USER, INVALID_USER,
-    INVALID_USER_PASSWORD, REGISTER_USER,
-	VALID_USER, login_user
-)
+from SeleniumBaseTestCase import SeleniumBaseTestCase, db
+from project.model import Project
+from helpers.login_user_front import login_user
 from datetime import date
 
 class TestFrontEndProject(SeleniumBaseTestCase):
@@ -168,3 +165,6 @@ class TestFrontEndProject(SeleniumBaseTestCase):
 		# assert that we are in the project list page and project was not found
 		self.assertIn(url_for('project.retrieve_projects'), self.driver.current_url)
 		self.assertIn("No hay proyectos", self.driver.page_source)
+
+if __name__ == "__main__":
+	unittest.main()

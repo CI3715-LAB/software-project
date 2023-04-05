@@ -1,7 +1,7 @@
 import unittest
 from flask import url_for
-from BaseTestCase import BaseTestCase, db, User
-from user.model import Role
+from BaseTestCase import BaseTestCase, db
+from user.model import User, Role
 
 from helpers.login_user_back import login_user
 
@@ -12,7 +12,7 @@ class TestUser(BaseTestCase):
 		self.assertEqual(response.request.path, url_for('user.user_login'))
 
 
-	def test_user_login_invalid(self):
+	def test_user_login_invalid_password(self):
 		response = self.client.post('/user/login', data=dict(
 				id=1,
 				username='testUser',
@@ -20,7 +20,8 @@ class TestUser(BaseTestCase):
 			), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Las credenciales suministradas no son validas', response.data)
-		
+
+	def test_user_login_invalid_username(self):	
 		response = self.client.post('/user/login', data=dict(
 				id=1,
 				username='testUserNotExists',
@@ -197,6 +198,7 @@ class TestUser(BaseTestCase):
 
 	@login_user
 	def test_user_delete(self):
+		response = None
 		for user in db.session.query(User).all():
 			response = self.client.post('/user/delete', data=dict(
 				id=user.id

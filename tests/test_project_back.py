@@ -1,5 +1,6 @@
 import unittest
-from BaseTestCase import BaseTestCase, db, Project
+from BaseTestCase import BaseTestCase, db
+from project.model import Project
 
 from helpers.login_user_back import login_user
 

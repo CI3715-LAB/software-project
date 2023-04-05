@@ -1,12 +1,7 @@
 import sys
 sys.path.append("../")
-import urllib.request as urllib2
 from app import db, create_app
-from project.model import Project
-from user.model import User, Role
-from department.model import Department
-from log.model import Log, Type, Module
-from datetime import datetime
+from helpers.init_database import init_database
 
 # Modules needed for selenium
 from selenium import webdriver
@@ -22,29 +17,8 @@ class SeleniumBaseTestCase(LiveServerTestCase):
 
 	def setUp(self):
 		# Database
-		db.session.commit()
-		db.drop_all()
-		db.create_all()
-		project_undefined = Project('Undefined', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True)
-		project_undefined.id = 0;
-		db.session.add(project_undefined)
-		db.session.add(Project('Test Project', datetime.fromisoformat('2023-01-01'), datetime.fromisoformat('2023-01-01'), True))
-		db.session.add(Role('admin'))
-		department_undefined = Department('Undefined')
-		department_undefined.id = 0
-		db.session.add(department_undefined)
-		db.session.add(Department('Test Department'))
-		db.session.add(User('testUser', 'test', 'testName', 'testLastName', 1, 1))
-		db.session.add(User('testUser2', 'test', 'testName2', 'testLastName2', 1, 1))
-		db.session.add(Type('Usuarios'))
-		db.session.add(Type('Proyectos'))
-		db.session.add(Type('Vehiculos'))
-		db.session.add(Type('Clientes'))
-		db.session.add(Module('Agregar'))
-		db.session.add(Module('Buscar'))
-		db.session.add(Module('Modificar'))
-		db.session.add(Module('Eliminar'))
-		db.session.commit()
+		with self.app.app_context():
+			init_database(self, db)
 
 		# Selenium
 		chromedriver_autoinstaller.install()
@@ -57,4 +31,5 @@ class SeleniumBaseTestCase(LiveServerTestCase):
 		db.session.remove()
 		db.session.close()
 		db.drop_all()
+		self.driver.close()
 		self.driver.quit()

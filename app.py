@@ -1,6 +1,6 @@
 from flask import Flask, render_template, session, redirect, url_for
 from flask_assets import Environment, Bundle
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 
 from config.setup import db, SECRET_KEY
 from user.endpoint import user_blueprint
@@ -21,6 +21,10 @@ def create_app(test_config=None):
 	else:
 		# load the test config if passed in
 		app.config.from_object(test_config)
+
+		import logging
+		log = logging.getLogger('werkzeug')
+		log.setLevel(logging.ERROR)
 	
 	# Assets Bundle initialization
 	assets = Environment(app)
@@ -34,11 +38,12 @@ def create_app(test_config=None):
 		db.drop_all()
 		db.create_all()
 
-		# Fill database with initial data
-		with open('init.sql', 'r') as f:
-			for line in f:
-				db.session.execute(text(line))
-		db.session.commit()
+		if test_config is None:
+			# Fill database with initial data
+			with open('init.sql') as f:
+				for line in f:
+					db.session.execute(text(line))
+			db.session.commit()
 
 	# Blueprints Registration (Endpoints)
 	from user.endpoint import user_blueprint
@@ -81,8 +86,8 @@ def create_app(test_config=None):
 
 	return app
 
-app = create_app()
 
 # Runner
 if __name__ == '__main__':
+	app = create_app()
 	app.run()

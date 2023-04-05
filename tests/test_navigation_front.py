@@ -1,7 +1,6 @@
 import unittest
 from flask import url_for
-from SeleniumBaseTestCase import SeleniumBaseTestCase, db, User
-from selenium.webdriver.common.keys import Keys
+from SeleniumBaseTestCase import SeleniumBaseTestCase
 from selenium.webdriver.common.by import By
 
 from helpers.login_user_front import TITLE, login_user
