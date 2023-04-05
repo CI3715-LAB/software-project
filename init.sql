@@ -11,6 +11,8 @@ DELETE FROM app_vehicle_color;
 DELETE FROM app_client;
 DELETE FROM app_vehicle;
 DELETE from app_department;
+DELETE from app_permission;
+DELETE from app_role_permission;
 
 -- Default roles
 Insert into app_role (name) values('admin');

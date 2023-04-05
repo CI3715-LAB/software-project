@@ -22,7 +22,7 @@ class Permission (db.Model):
 
 
 # Intermediate table role_permission
-role_permission = db.Table('role_permission',
+app_role_permission = db.Table('app_role_permission',
         db.Column('role_id', db.Integer, db.ForeignKey('app_role.id')),
         db.Column('permission_id', db.Integer, db.ForeignKey('app_permission.id'))
     )
@@ -38,7 +38,7 @@ class Role (db.Model):
     # one to many relationship with user
     users = db.relationship('User', backref='role', lazy=True)
     # many to many relationship with permission
-    permission = db.relationship('Permission', secondary=role_permission, backref='roles')
+    permission = db.relationship('Permission', secondary=app_role_permission, backref='roles')
 
     def __init__(self, name):
         self.name = name
