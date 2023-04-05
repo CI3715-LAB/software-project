@@ -216,22 +216,31 @@ $card-element-width: 110px;
             }
         }
 
-        &.projects {
+        &.projects-admin {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(5,1fr);
+                grid-template-columns: repeat(5,130px);
                 grid-template-rows: auto;
-            }
-
-            .fields {
-                div {
-                    width: 150px;
-                }
             }
     
             .values {
                 button, input, select {
-                    width: 150px;
+                    width:6.5rem;
+                }
+            }
+        }
+
+        &.projects-manager {
+            .fields, .values {
+                display: grid;
+                grid-template-columns: repeat(9,130px);
+                gap: 0.5rem 0.5rem;
+                grid-template-rows: auto;
+            }
+    
+            .values {
+                button, input, select {
+                    width: 6.5rem;
                 }
             }
         }
@@ -239,19 +248,14 @@ $card-element-width: 110px;
         &.departments {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(3,1fr);
+                grid-template-columns: repeat(3, 130px);
+                gap: 2rem 2rem;
                 grid-template-rows: auto;
-            }
-
-            .fields {
-                div {
-                    width: 150px;
-                }
             }
     
             .values {
                 button, input, select {
-                    width: 150px;
+                    width: 100%;
                 }
             }
         }
@@ -287,23 +291,18 @@ $card-element-width: 110px;
         }
 
         &.users {
-            max-width: 1075px;
+            /* max-width: 1075px; */
 
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(8,1fr);
+                grid-template-columns: repeat(8,150px);
+                gap: 0.5rem 0.5rem;
                 grid-template-rows: auto;
-            }
-
-            .fields {
-                div {
-                    width: 120px;
-                }
             }
     
             .values {
                 button, input, select {
-                    width: 120px;
+                    width: 8rem;
                 }
             }
         }

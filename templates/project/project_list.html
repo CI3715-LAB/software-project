@@ -7,7 +7,7 @@
     <div class="card">
         <h1>Proyectos</h1>
 
-        <div class="card-content projects">
+        <div class="card-content {% if user.role == 'admin' %} projects-admin {% else %} projects-manager {% endif %}">
             <div class="command">
                 <div class="actuator">
                     <form id="form-search" action='/project/search' method="GET">
@@ -51,39 +51,105 @@
                     </div>
                 </div>
             {% else %}
-            <div class="fields">
-                <div>Id</div>
-                <div>Descripción</div>
-                <div>Inicio</div> 
-                <div>Cierre</div>
-            </div>
+
+                {% if user.role == "admin" %}
+                    <div class="fields">
+                        <div>Id</div>
+                        <div>Descripción</div>
+                        <div>Inicio</div> 
+                        <div>Cierre</div>
+                    </div>
+                {% else %}
+                    <div class="fields">
+                        <div>Id</div>
+                        <div>Vehículo</div>
+                        <div>Departamento</div> 
+                        <div>Gerente</div>
+                        <div>Problema</div>
+                        <div>Solución</div>
+                        <div>Monto ($)</div>
+                        <div>Observaciones</div>
+                    </div>
+                {% endif %}
             {% for project in projects %}
             <form id="form-edit-{{ project.id }}" action='/project/update' method="POST">
                 <div class="values">
                     
-                    <div {% if not project.enabled %} class="disabled" {% endif %}>
-                        <input type="text" name="id"
-                            value="{{ project.id }}" 
-                            form="form-edit-{{ project.id }}" readonly/>
-                    </div>
+                    {% if user.role == "admin" %}
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="id"
+                                value="{{ project.id }}" 
+                                form="form-edit-{{ project.id }}" readonly/>
+                        </div>
 
-                    <div {% if not project.enabled %} class="disabled" {% endif %}>
-                        <input type="text" name="description"
-                            value="{{ project.description }}" 
-                            form="form-edit-{{ project.id }}" />
-                    </div>
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="description"
+                                value="{{ project.description }}" 
+                                form="form-edit-{{ project.id }}" />
+                        </div>
 
-                    <div {% if not project.enabled %} class="disabled" {% endif %}>
-                        <input type="date" name="open_date" 
-                            value="{{ project.open_date }}"
-                            form="form-edit-{{ project.id }}" />
-                    </div>
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="date" name="open_date" 
+                                value="{{ project.open_date }}"
+                                form="form-edit-{{ project.id }}" />
+                        </div>
 
-                    <div {% if not project.enabled %} class="disabled" {% endif %}>
-                        <input type="date" name="close_date" 
-                            value="{{ project.close_date }}"
-                            form="form-edit-{{ project.id }}" />
-                    </div>
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="date" name="close_date" 
+                                value="{{ project.close_date }}"
+                                form="form-edit-{{ project.id }}" />
+                        </div>
+
+                    {% else %}
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="id"
+                                value="{{ project.id }}" 
+                                form="form-edit-{{ project.id }}" readonly/>
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="vehicle"
+                                value="{{ project.vehicle.plate }}" 
+                                form="form-edit-{{ project.vehicle }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="department"
+                                value="{{ project.department.name }}" 
+                                form="form-edit-{{ project.department }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="manager"
+                                value="{{ user.username }}" 
+                                form="form-edit-{{ project.department }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="problem"
+                                value="{{ project.problem }}" 
+                                form="form-edit-{{ project.problem }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="solution"
+                                value="{{ project.solution }}" 
+                                form="form-edit-{{ project.solution }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="amount"
+                                value="{{ project.amount }}" 
+                                form="form-edit-{{ project.amount }}" />
+                        </div>
+
+                        <div {% if not project.enabled %} class="disabled" {% endif %}>
+                            <input type="text" name="observation"
+                                value="{{ project.observation }}" 
+                                form="form-edit-{{ project.observation }}" />
+                        </div>
+
+                    {% endif %}
 
                     <div class="callbacks">
                         <button id="edit-for-{{project.id}}" class="warn" form="form-edit-{{ project.id }}">
@@ -104,6 +170,7 @@
                             </button>
                         {% endif %}
                     </div>
+                    
                 </div>
             
             </form>

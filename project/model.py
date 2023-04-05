@@ -13,6 +13,7 @@ class Project (db.Model):
 	enabled = db.Column(db.Boolean(), default=True)
 	vehicle_id = db.Column(db.Integer, db.ForeignKey('app_vehicle.id'), nullable=False)
 	department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False)
+	problem = db.Column(db.String(100), nullable=True)
 	solution = db.Column(db.String(100), nullable=True)
 	amount = db.Column(db.Float, nullable=True)
 	observation = db.Column(db.String(100), nullable=True)

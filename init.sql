@@ -17,6 +17,7 @@ DELETE from app_role_permission;
 -- Default roles
 Insert into app_role (name) values('admin');
 Insert into app_role (name) values('gerente de operaciones');
+Insert into app_role (name) values('gerente de proyectos');
 Insert into app_role (name) values('supervisor de mecánica');
 Insert into app_role (name) values('supervisor de latonería y pintura');
 Insert into app_role (name) values('especialista en mecánica');
@@ -125,11 +126,11 @@ Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_s
 Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 1, 0);
 
 -- 4 random projects
-insert into app_project (id, description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0, 1, 1, 'Cambio de aceite', 33.25, 'Aceite 15-40');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation) values ('Proyecto 1', '2023-01-01', '2023-12-31', 1, 2, 2, 'Limpieza de inyectores', 10.15, 'Modelo 16344');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation) values ('Proyecto 2', '2023-01-02', '2023-12-31', 1, 3, 3, 'Alineación y balanceo', 25.00, '');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation) values ('Proyecto 3', '2023-01-03', '2023-12-31', 0, 4, 4, 'Cambio de correa de tiempos', 20.00, 'Modelo 1314');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation) values ('Proyecto 4', '2023-01-04', '2023-12-31', 0, 5, 5, 'Cambio de pila de bomba de gasolina', 12.24, 'Modelo R2D2');
+insert into app_project (id, description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0, 1, 1,'Recalentamiento', 'Cambio de aceite', 33.25, 'Aceite 15-40');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 1', '2023-01-01', '2023-12-31', 1, 2, 2,'Fallo de encendido', 'Limpieza de inyectores', 10.15, 'Modelo 16344');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 2', '2023-01-02', '2023-12-31', 1, 3, 3,'Ruedas no alineadas', 'Alineación y balanceo', 25.00, '');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 3', '2023-01-03', '2023-12-31', 0, 4, 4,'Ruptura de correa de tiempos', 'Cambio de correa de tiempos', 20.00, 'Modelo 1314');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 4', '2023-01-04', '2023-12-31', 0, 5, 5,'No bombea gasolina', 'Cambio de pila de bomba de gasolina', 12.24, 'Modelo R2D2');
 
 -- 4 random users
 insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('alejandra', '123', 'Alejandra', 'Perez', 2, 2, 2);
