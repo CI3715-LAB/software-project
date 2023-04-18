@@ -23,14 +23,14 @@ class Project (db.Model):
 	# one to one relationship with vehicle
 	vehicle = db.relationship('Vehicle', backref='project', lazy=True)
 		
-
-	def __init__(self, description, open_date, close_date, enabled, vehicle_id, department_id, solution, amount, observation):
+	def __init__(self, description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation):
 		self.description = description
 		self.open_date = open_date
 		self.close_date = close_date
 		self.enabled = enabled
 		self.vehicle_id = vehicle_id
 		self.department_id = department_id
+		self.problem = problem
 		self.solution = solution
 		self.amount = amount
 		self.observation = observation

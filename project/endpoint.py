@@ -4,10 +4,12 @@ from datetime import datetime
 from config.setup import db, logger
 from log.utils import LogType, LogModule
 from .model import Project
-from user.model import User
+from user.model import User, Role
 from werkzeug.exceptions import BadRequest
 
 from user.utils import login_required
+from vehicle.model import Vehicle
+from department.model import Department
 
 project_blueprint = Blueprint('project', __name__)
 
@@ -16,31 +18,56 @@ project_blueprint = Blueprint('project', __name__)
 def retrieve_projects():
     # return all projects with an id different than 0
     projects = Project.query.filter(Project.id != 0).all()
+    departments = Department.query.all()
 
     return render_template('/project/project_list.html',
         projects=projects, loggedIn= 'user' in session,
+        departments=departments,
         user=session.get('user')
     )
     
-
 @project_blueprint.route('/add', methods=['GET', 'POST'])
 @login_required
 def add_project():
-    # get today's date
-    today = datetime.today().strftime('%Y-%m-%d')
-    
+    today = datetime.today().strftime('%Y-%m-%d') # get today's date
+    vehicles = Vehicle.query.all()
+    departments = Department.query.all()
+    manager_role = Role.query.filter_by(name = 'gerente de proyectos').first()
+    managers = User.query.filter_by(role_id =  manager_role.id)
+
     if request.method == 'GET':
+
         return render_template('/project/project_add.html',
-            today=today, loggedIn= 'user' in session,
+            today=today, loggedIn= 'user' in session, 
+            vehicles=vehicles,
+            managers=managers,
+            departments=departments,
             user=session.get('user')                       
         )
 
     if request.method == 'POST':
+        if not 'user' in session or not session['user']['admin']:
+            return render_template('/project/project_add.html',
+                error="No tienes los permisos necesarios para crear proyectos",
+                today=today, loggedIn= 'user' in session, 
+                vehicles=vehicles,
+                managers=managers,
+                departments=departments,
+                user=session.get('user')              
+            )
+
         # get description, open date and close date
         description = request.form['description']
         open_date = request.form['open_date']
         close_date = request.form['close_date']
         enabled = request.form.get('enabled', False, bool)
+        vehicle = request.form['vehicle']
+        department = request.form['department']
+        manager = request.form['manager']
+        # problem =  request.form['problem']
+        # solution = request.form['solution']
+        # amount = request.form['amount']
+        # observation = request.form['observation']
 
         # turn open date and close date into datetime objects
         open_date = datetime.strptime(open_date, '%Y-%m-%d')
@@ -57,7 +84,7 @@ def add_project():
             )
 
         # create a new project
-        project = Project(description, open_date, close_date, enabled)
+        project = Project(description, open_date, close_date, enabled, vehicle, department, None, None, None, None)
         db.session.add(project)
         db.session.commit()
 
@@ -71,15 +98,19 @@ def add_project():
 @login_required
 def update_project():
     # get description, open date and close date
-    id = request.form['id']
-    description = request.form['description']
-    open_date = request.form['open_date']
-    close_date = request.form['close_date']
-    enabled = request.form.get('enabled', False, bool)
 
-    # turn open date and close date into datetime objects
-    open_date = datetime.strptime(open_date, '%Y-%m-%d')
-    close_date = datetime.strptime(close_date, '%Y-%m-%d')
+    id = request.form.get('id', None)
+    description = request.form.get('description', None)
+    open_date = request.form.get('open_date', None)
+    close_date = request.form.get('close_date', None)
+    enabled = request.form.get('enabled', None, bool)
+    vehicle = request.form.get('vehicle', None)
+    department = request.form.get('department', None)
+    manager = request.form.get('manager', None)
+    problem =  request.form.get('problem', None)
+    solution = request.form.get('solution', None)
+    amount = request.form.get('amount', None)
+    observation = request.form.get('observation', None)
 
     # Project exists
     project = Project.query.filter_by(id = id).first()
@@ -87,18 +118,30 @@ def update_project():
         error = "El proyecto suministrado no existe en la base de datos"
         return redirect('/project')
 
-    # make sure open date is before close date
-    if open_date > close_date:
-        return render_template('/project/project_list.html',
-            error="Open date must be before close date",
-            user=session.get('user')
-        )
+    if open_date != None:
+        # turn open date and close date into datetime objects
+        open_date = datetime.strptime(open_date, '%Y-%m-%d')
+        close_date = datetime.strptime(close_date, '%Y-%m-%d')
+
+        # make sure open date is before close date
+        if open_date > close_date:
+            return render_template('/project/project_list.html',
+                error="Open date must be before close date",
+                user=session.get('user')
+            )
 
     # update project
-    project.description = description
-    project.open_date = open_date
-    project.close_date = close_date
-    project.enabled = enabled
+    if description != None: project.description = description
+    if open_date != None: project.open_date = open_date
+    if close_date != None: project.close_date = close_date
+    if enabled != None: project.enabled = enabled
+    if vehicle != None: project.vehicle_id = vehicle
+    if department != None: project.department_id = department
+    if problem != None: project.problem = problem
+    if solution != None: project.solution = solution
+    if amount != None: project.amount = amount
+    if observation != None: project.observation = observation
+
     db.session.commit()
 
     description = f"Modificación de proyecto \"{project.description}\""

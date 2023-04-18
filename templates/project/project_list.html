@@ -5,7 +5,7 @@
 
 <div class="box centered">
     <div class="card">
-        <h1>Proyectos</h1>
+        <h1>Proyecto</h1>
 
         <div class="card-content {% if user.role == 'admin' %} projects-admin {% else %} projects-manager {% endif %}">
             <div class="command">
@@ -74,7 +74,6 @@
                 {% endif %}
             {% for project in projects %}
             <form id="form-edit-{{ project.id }}" action='/project/update' method="POST">
-                {% if project.enabled %}
                 <div class="values">
                     {% if user.role == "admin" %}
                         <div {% if not project.enabled %} class="disabled" {% endif %}>
@@ -102,62 +101,79 @@
                         </div>
 
                     {% else %}
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="id"
-                                value="{{ project.id }}" 
-                                form="form-edit-{{ project.id }}" readonly/>
-                        </div>
+                        {% if project.enabled %}
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="id"
+                                    value="{{ project.id }}" 
+                                    form="form-edit-{{ project.id }}" readonly/>
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="vehicle"
-                                value="{{ project.vehicle.plate }}" 
-                                form="form-edit-{{ project.vehicle }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="vehicle"
+                                    value="{{ project.vehicle.plate }}" 
+                                    form="form-edit-{{ project.vehicle }}" 
+                                    readonly />
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="department"
-                                value="{{ project.department.name }}" 
-                                form="form-edit-{{ project.department }}" />
-                        </div>
+                            <select {% if not project.enabled %} class="disabled" {% endif %}
+                                name="department" id="department"
+                                form="form-edit-{{ project.department }}"
+                                required >
+                            {% for department in departments %}
+                                {% if department.name == project.department.name %}
+                                    <option value={{department.id}} selected>{{department.name}}</option>
+                                {% else %}
+                                    <option value={{department.id}}>{{department.name}}</option>
+                                {% endif %}
+                            {% endfor %}
+                            </select>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="manager"
-                                value="{{ user.username }}" 
-                                form="form-edit-{{ project.department }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="manager"
+                                    value="{{ user.username }}" 
+                                    form="form-edit-{{ project.department }}" 
+                                    readonly />
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="problem"
-                                value="{{ project.problem }}" 
-                                form="form-edit-{{ project.problem }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="problem"
+                                    value="{{ project.problem }}" 
+                                    form="form-edit-{{ project.problem }}" />
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="solution"
-                                value="{{ project.solution }}" 
-                                form="form-edit-{{ project.solution }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="solution"
+                                    value="{{ project.solution }}" 
+                                    form="form-edit-{{ project.solution }}" />
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="amount"
-                                value="{{ project.amount }}" 
-                                form="form-edit-{{ project.amount }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="amount"
+                                    value="{{ project.amount }}" 
+                                    form="form-edit-{{ project.amount }}" />
+                            </div>
 
-                        <div {% if not project.enabled %} class="disabled" {% endif %}>
-                            <input type="text" name="observation"
-                                value="{{ project.observation }}" 
-                                form="form-edit-{{ project.observation }}" />
-                        </div>
+                            <div {% if not project.enabled %} class="disabled" {% endif %}>
+                                <input type="text" name="observation"
+                                    value="{{ project.observation }}" 
+                                    form="form-edit-{{ project.observation }}" />
+                            </div>
+                        {% endif %}
 
                     {% endif %}
 
                     <div class="callbacks">
-                        <button id="edit-for-{{project.id}}" class="warn" form="form-edit-{{ project.id }}">
-                            <i class="fa-solid fa-pencil"></i>
-                        </button>
+                        {% if project.enabled and user.role != 'admin' %}
+                            <button id="edit-for-{{project.id}}" class="warn" form="form-edit-{{ project.id }}">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                        {% endif %}
     
                         {% if user.role == 'admin' %}
+                            <button id="edit-for-{{project.id}}" class="warn" form="form-edit-{{ project.id }}">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+
                             <button id="delete-for-{{project.id}}" class="danger" form="form-delete-{{ project.id }}">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
@@ -175,7 +191,6 @@
                     </div>
                     
                 </div>
-                {% endif %}
             
             </form>
             <form class="hidden" id="form-delete-{{ project.id }}" 
