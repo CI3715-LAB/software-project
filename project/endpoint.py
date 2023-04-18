@@ -137,6 +137,7 @@ def update_project():
     if enabled != None: project.enabled = enabled
     if vehicle != None: project.vehicle_id = vehicle
     if department != None: project.department_id = department
+    if manager != None: project.manager_id = manager
     if problem != None: project.problem = problem
     if solution != None: project.solution = solution
     if amount != None: project.amount = amount
