@@ -16,6 +16,9 @@ DELETE from app_role_permission;
 DELETE from app_material;
 DELETE from app_unit;
 DELETE from app_category;
+DELETE from app_action;
+DELETE from app_activity;
+DELETE from app_plan;
 
 -- Default roles
 Insert into app_role (id, name) values(0, 'Undefined');
@@ -142,6 +145,28 @@ Insert into app_material (description, cost, unit_id, category_id) values ('Llav
 Insert into app_material (description, cost, unit_id, category_id) values ('Tuerca', 02.35, 3, 1);
 Insert into app_material (description, cost, unit_id, category_id) values ('Arandela', 1.5, 7, 1);
 Insert into app_material (description, cost, unit_id, category_id) values ('Cera', 3.99, 0, 1);
+
+-- Default Plans
+Insert into app_plan (id, start_date, end_date, hours, responsible, amount, personnel) values (0, '2022-01-01', '2022-12-31', 0, 0, 0.0, 0)
+Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-01-01', '2022-01-31', 24, 1, 30.00, 2)
+Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-02-01', '2022-2-31', 16, 4, 45.99, 3)
+Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-03-01', '2022-3-31', 8, 5, 27.50, 4)
+
+-- Default Actions
+Insert into app_action (id, name, plan_id) values(0, 'Undefined', 0);
+Insert into app_action (name, plan_id) values('Preparar superficie', 1);
+Insert into app_action (name, plan_id) values('Preparar carrocería', 2);
+Insert into app_action (name, plan_id) values('Cambiar frenos', 3);
+
+-- Default Activities
+Insert into app_activity (id, name, action_id) values(0, 'Undefined', 0);
+Insert into app_activity (name, action_id) values('Lijar superficie', 1);
+Insert into app_activity (name, action_id) values('Encerar superficie', 1);
+Insert into app_activity (name, action_id) values('Retirar carrocería', 2);
+Insert into app_activity (name, action_id) values('Soldar carrocería', 2);
+Insert into app_activity (name, action_id) values('Acoplar carrocería', 2);
+Insert into app_activity (name, action_id) values('Retirar frenos', 3);
+Insert into app_activity (name, action_id) values('Acoplar frenos', 3);
 
 -- Admin permissions and user
 Insert into app_user (id, username, password, name, lastname, role_id, project_id, department_id) values(0, 'default', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'default', 'default', 0, 0, 0);
