@@ -41,8 +41,11 @@ Insert into app_module (id, name) values(0, 'Undefined');
 Insert into app_module (name) values('Usuarios');
 Insert into app_module (name) values('Proyectos');
 Insert into app_module (name) values('Clientes');
-Insert into app_module (name) values('Vehiculos');
+Insert into app_module (name) values('Vehículos');
 Insert into app_module (name) values('Departamentos');
+Insert into app_module (name) values('Materiales');
+Insert into app_module (name) values('Unidades');
+Insert into app_module (name) values('Categorías');
 
 -- Default permissions
 Insert into app_permission (id, type, module_id) values(0, 0, 0);

@@ -80,17 +80,27 @@
                             form="form-edit-{{ material.id }}" />
                     </div>
 
-                    <div>
-                        <input type="text" name="unit"
-                            value="{{ material.unit }}" 
-                            form="form-edit-{{ material.id }}" />
-                    </div>
+                    <select name="unit" id="unit" required>
+                        <option value="0">Sin Unidad</option>
+                        {% for unit in units %}
+                            {% if unit.id == material.unit_id %}
+                                <option value={{unit.id}} selected>{{unit.name}}</option>
+                            {% else %}
+                                <option value={{unit.id}}>{{unit.name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
 
-                    <div>
-                        <input type="text" name="category"
-                            value="{{ material.category }}" 
-                            form="form-edit-{{ material.id }}" />
-                    </div>
+                    <select name="category" id="category" required>
+                        <option value="0">Sin Categoría</option>
+                        {% for category in categories %}
+                            {% if category.id == material.category_id %}
+                                <option value={{category.id}} selected>{{category.name}}</option>
+                            {% else %}
+                                <option value={{category.id}}>{{category.name}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
 
                     <div class="callbacks">
                         <button id="edit-for-{{material.id}}" class="warn" form="form-edit-{{ material.id }}">
