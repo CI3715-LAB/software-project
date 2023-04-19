@@ -13,8 +13,12 @@ DELETE FROM app_vehicle;
 DELETE from app_department;
 DELETE from app_permission;
 DELETE from app_role_permission;
+DELETE from app_material;
+DELETE from app_unit;
+DELETE from app_category;
 
 -- Default roles
+Insert into app_role (id, name) values(0, 'Undefined');
 Insert into app_role (name) values('admin');
 Insert into app_role (name) values('gerente de operaciones');
 Insert into app_role (name) values('gerente de proyectos');
@@ -65,12 +69,14 @@ Insert into app_type (name) values('Modificar');
 Insert into app_type (name) values('Eliminar');
 
 -- Default Vehicle Brands
+Insert into app_vehicle_brand (id, name) values(0, 'Undefined');
 Insert into app_vehicle_brand (name) values('Toyota');
 Insert into app_vehicle_brand (name) values('Chevrolet');
 Insert into app_vehicle_brand (name) values('Chery');
 Insert into app_vehicle_brand (name) values('Ford');
 
 -- Default Vehicle Models
+Insert into app_vehicle_model (brand_id, name) values(0, 'Undefined');
 Insert into app_vehicle_model (brand_id, name) values(1, 'Yaris');
 Insert into app_vehicle_model (brand_id, name) values(1, 'Prado');
 Insert into app_vehicle_model (brand_id, name) values(2, 'Cruze');
@@ -81,6 +87,7 @@ Insert into app_vehicle_model (brand_id, name) values(4, 'Bronco');
 Insert into app_vehicle_model (brand_id, name) values(4, 'Fiesta');
 
 -- Default Vehicle Colors
+Insert into app_vehicle_color (id, name) values(0, 'Undefined');
 Insert into app_vehicle_color (name) values('Azul');
 Insert into app_vehicle_color (name) values('Rojo');
 Insert into app_vehicle_color (name) values('Verde');
@@ -107,46 +114,46 @@ Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_s
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234563', 4, 7, '2007', '123456787', '987654323', 7, 'Aire acondicionado', 4);
 Insert into app_vehicle (plate, brand_id, model_id, year, chasis_serial, motor_serial, color_id, problem, client_id) values ('1234564', 4, 8, '2007', '123456788', '987654322', 9, 'Mantenimiento', 4);
 
+-- Default Units
+Insert into app_unit (id, name) values(0, 'Undefined');
+Insert into app_unit (name) values('8 pulgadas');
+Insert into app_unit (name) values('6 pulgadas');
+Insert into app_unit (name) values('4 pulgadas');
+Insert into app_unit (name) values('2 pulgadas');
+Insert into app_unit (name) values('1 pulgada');
+Insert into app_unit (name) values('1/2 pulgada');
+Insert into app_unit (name) values('1/4 pulgada');
+Insert into app_unit (name) values('1/6 pulgada');
+Insert into app_unit (name) values('1/8 pulgada');
+
+-- Default Categories
+Insert into app_category (id,name) values(0, 'Undefined');
+Insert into app_category (name) values('Insumo');
+Insert into app_category (name) values('Herramienta');
+Insert into app_category (name) values('Limpieza');
+Insert into app_category (name) values('Repuesto');
+
+-- Default Materials
+Insert into app_material (id, description, cost, unit_id, category_id) values (0, 'Undefined', 0.0, 0, 0);
+Insert into app_material (description, cost, unit_id, category_id) values ('Llave inglesa', 30.00, 1, 2);
+Insert into app_material (description, cost, unit_id, category_id) values ('Tuerca', 02.35, 3, 1);
+Insert into app_material (description, cost, unit_id, category_id) values ('Arandela', 1.5, 7, 1);
+Insert into app_material (description, cost, unit_id, category_id) values ('Cera', 3.99, 0, 1);
+
 -- Admin permissions and user
--- Insert into app_role_permission(role_id, permissions_id) values(1, 1)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 2)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 3)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 4)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 5)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 6)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 7)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 8)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 9)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 10)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 11)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 12)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 13)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 14)
--- Insert into app_role_permission(role_id, permissions_id) values(1, 15)
+Insert into app_user (id, username, password, name, lastname, role_id, project_id, department_id) values(0, 'default', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'default', 'default', 0, 0, 0);
 Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('admin', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'admin', 'admin', 1, 0, 0);
 Insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('gerente', 'pbkdf2:sha256:260000$M3v7eshrYq1Gh75f$d30f916145065b1bd5bf040f48251bc5c3ac3b1d9b5b09931b66892683281b0e', 'gerente', 'gerente', 3, 0, 0);
 
 -- 4 random projects
-insert into app_project (id, description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0, 1, 1,'Recalentamiento', 'Cambio de aceite', 33.25, 'Aceite 15-40');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 1', '2023-01-01', '2023-12-31', 1, 2, 2,'Fallo de encendido', 'Limpieza de inyectores', 10.15, 'Modelo 16344');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 2', '2023-01-02', '2023-12-31', 1, 3, 3,'Ruedas no alineadas', 'Alineación y balanceo', 25.00, '');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 3', '2023-01-03', '2023-12-31', 0, 4, 4,'Ruptura de correa de tiempos', 'Cambio de correa de tiempos', 20.00, 'Modelo 1314');
-insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, problem, solution, amount, observation) values ('Proyecto 4', '2023-01-04', '2023-12-31', 0, 5, 5,'No bombea gasolina', 'Cambio de pila de bomba de gasolina', 12.24, 'Modelo R2D2');
+insert into app_project (id, description, open_date, close_date, enabled, vehicle_id, department_id, manager_id, problem, solution, amount, observation) values (0, 'Undefined', '2023-01-01', '2023-12-31', 0, 1, 1, 2,'Recalentamiento', 'Cambio de aceite', 33.25, 'Aceite 15-40');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, manager_id, problem, solution, amount, observation) values ('Proyecto 1', '2023-01-01', '2023-12-31', 1, 2, 2, 2,'Fallo de encendido', 'Limpieza de inyectores', 10.15, 'Modelo 16344');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, manager_id, problem, solution, amount, observation) values ('Proyecto 2', '2023-01-02', '2023-12-31', 1, 3, 3, 2,'Ruedas no alineadas', 'Alineación y balanceo', 25.00, '');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, manager_id, problem, solution, amount, observation) values ('Proyecto 3', '2023-01-03', '2023-12-31', 0, 4, 4, 2,'Ruptura de correa de tiempos', 'Cambio de correa de tiempos', 20.00, 'Modelo 1314');
+insert into app_project (description, open_date, close_date, enabled, vehicle_id, department_id, manager_id, problem, solution, amount, observation) values ('Proyecto 4', '2023-01-04', '2023-12-31', 0, 5, 5, 2,'No bombea gasolina', 'Cambio de pila de bomba de gasolina', 12.24, 'Modelo R2D2');
 
 -- 4 random users
 insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('alejandra', '123', 'Alejandra', 'Perez', 2, 2, 2);
 insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('pedro', '123', 'Pedro', 'Rodriguez', 3, 3, 3);
 insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('carla', '123', 'Carla', 'Hernandez', 4, 4, 4);
 insert into app_user (username, password, name, lastname, role_id, project_id, department_id) values('juan', '123', 'Juan', 'Gonzalez', 5, 4, 1);
-
--- -- 10 random logs
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 1, 'Se creo el usuario alejandra', '2023-01-01', '10:05:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 2, 'Se busco el usuario pedro', '2023-01-02', '10:10:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 2, 1, 'Se creo el proyecto Project 1', '2023-01-03', '10:15:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 3, 'Se modifico el usuario carla', '2023-01-03', '10:20:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 2, 2, 'Se busco el proyecto Project 1', '2023-01-03', '10:25:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 2, 3, 'Se modifico el proyecto Project 1', '2023-01-03', '10:30:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 1, 'Se creo el usuario jose', '2023-01-04', '10:35:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 1, 4, 'Se elimino el usuario jose', '2023-01-04', '10:40:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 2, 1, 'Se creo el proyecto Project 5', '2023-01-04', '10:45:00');
--- insert into app_log (user_id, module_id, type_id, description, date, time) values(1, 2, 4, 'Se elimino el proyecto Project 5', '2023-01-05', '11:15:00');

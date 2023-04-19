@@ -57,17 +57,17 @@ def add_project():
             )
 
         # get description, open date and close date
-        description = request.form['description']
-        open_date = request.form['open_date']
-        close_date = request.form['close_date']
-        enabled = request.form.get('enabled', False, bool)
-        vehicle = request.form['vehicle']
-        department = request.form['department']
-        manager = request.form['manager']
-        # problem =  request.form['problem']
-        # solution = request.form['solution']
-        # amount = request.form['amount']
-        # observation = request.form['observation']
+        description = request.form.get('description', None)
+        open_date = request.form.get('open_date', None)
+        close_date = request.form.get('close_date', None)
+        enabled = request.form.get('enabled', None, bool)
+        vehicle = request.form.get('vehicle', None)
+        department = request.form.get('department', None)
+        manager = request.form.get('manager', None)
+        problem =  request.form.get('problem', None)
+        solution = request.form.get('solution', None)
+        amount = request.form.get('amount', None)
+        observation = request.form.get('observation', None)
 
         # turn open date and close date into datetime objects
         open_date = datetime.strptime(open_date, '%Y-%m-%d')
@@ -84,7 +84,7 @@ def add_project():
             )
 
         # create a new project
-        project = Project(description, open_date, close_date, enabled, vehicle, department, None, None, None, None)
+        project = Project(description, open_date, close_date, enabled, vehicle, department, manager, problem, solution, amount, observation)
         db.session.add(project)
         db.session.commit()
 
@@ -179,7 +179,9 @@ def delete_project():
     # Project exists
     project = db.session.get(Project, id)
     if project:
-        for user in project.users:
+        users = User.query.filter_by(project_id = project.id)
+
+        for user in users:
             user.project_id = 0
             user.project = Project.query.filter_by(id = 0).first()
             db.session.commit()

@@ -1,0 +1,131 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Materiales</h1>
+
+        <div class="card-content materials">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/material/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+            
+                    <form id="form-add" action='/material/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/material' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not materials  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay materiales</div>
+                    <div>
+                        <form id="form-retry" action='/material' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Descripción</div>
+                <div>Costo</div>
+                <div>Unidad</div>
+                <div>Categoría</div>
+            </div>
+            {% for material in materials %}
+            <form id="form-edit-{{ material.id }}" action='/material/update' method="POST">
+                <div class="values">
+                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ material.id }}" 
+                            form="form-edit-{{ material.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="description"
+                            value="{{ material.description }}" 
+                            form="form-edit-{{ material.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="cost"
+                            value="{{ material.cost }}" 
+                            form="form-edit-{{ material.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="unit"
+                            value="{{ material.unit }}" 
+                            form="form-edit-{{ material.id }}" />
+                    </div>
+
+                    <div>
+                        <input type="text" name="category"
+                            value="{{ material.category }}" 
+                            form="form-edit-{{ material.id }}" />
+                    </div>
+
+                    <div class="callbacks">
+                        <button id="edit-for-{{material.id}}" class="warn" form="form-edit-{{ material.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete-for-{{material.id}}" class="danger" form="form-delete-{{ material.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ material.id }}" 
+				action='/material/delete' method="POST">
+                <input type="text" name="id" value="{{ material.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay materiales</div>
+                <div>
+                    <form id="form-retry" action='/material' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

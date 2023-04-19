@@ -130,8 +130,8 @@
 
                             <div {% if not project.enabled %} class="disabled" {% endif %}>
                                 <input type="text" name="manager"
-                                    value="{{ user.username }}" 
-                                    form="form-edit-{{ project.department }}" 
+                                    value="{{ project.manager.username }}" 
+                                    form="form-edit-{{ project.manager }}" 
                                     readonly />
                             </div>
 

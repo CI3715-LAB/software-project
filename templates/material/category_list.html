@@ -1,0 +1,110 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Categorías</h1>
+
+        <div class="card-content categories">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" action='/category/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+            
+                    <form id="form-add" action='/category/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" action='/category' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not categories  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay categorías</div>
+                    <div>
+                        <form id="form-retry" action='/category' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Nombre</div>
+            </div>
+            {% for category in categories %}
+            <form id="form-edit-{{ category.id }}" action='/category/update' method="POST">
+                <div class="values">
+                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ category.id }}" 
+                            form="form-edit-{{ category.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="name"
+                            value="{{ category.name }}" 
+                            form="form-edit-{{ category.id }}" />
+                    </div>
+
+                    <div class="callbacks">
+                        <button id="edit-for-{{category.id}}" class="warn" form="form-edit-{{ category.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete-for-{{category.id}}" class="danger" form="form-delete-{{ category.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ category.id }}" 
+				action='/category/delete' method="POST">
+                <input type="text" name="id" value="{{ category.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay categorías</div>
+                <div>
+                    <form id="form-retry" action='/category' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
