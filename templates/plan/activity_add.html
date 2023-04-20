@@ -1,0 +1,46 @@
+{% extends 'layout.html' %} 
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Agregar un nueva actividad</h1>
+        <form id="activity_add" action="" method = "POST">
+            <div class="card-content centered base">
+                <div>
+                    {% if not error %}
+						<p>Nombre <br/><input type="text" name="name"/></p>
+
+                        <select name="action" id="action" required>
+                            <option value="0">Sin Acción</option>
+                            {% for action in actions %}
+                                <option value={{action.id}}>{{action.name}}</option>
+                            {% endfor %}
+                        </select>
+					{% else %}
+                        <p>Nombre <br/><input type="text" name="name"/></p>
+
+                        <select name="action" id="action" required>
+                            <option value="0">Sin Acción</option>
+                            {% for action in actions %}
+                                <option value={{action.id}}>{{action.name}}</option>
+                            {% endfor %}
+                        </select>
+					{% endif %}
+
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
+
+                    <div class="actions centered">
+                        <button class="safe" type="submit" id="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

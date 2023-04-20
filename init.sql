@@ -147,10 +147,15 @@ Insert into app_material (description, cost, unit_id, category_id) values ('Aran
 Insert into app_material (description, cost, unit_id, category_id) values ('Cera', 3.99, 0, 1);
 
 -- Default Plans
-Insert into app_plan (id, start_date, end_date, hours, responsible_id, amount, personnel, project_id) values (0, '2022-01-01', '2022-12-31', 0, 0, 0.0, 0, 0)
-Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-01-01', '2022-01-20', 24, 1, 30.00, 2, 1)
-Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-02-01', '2022-02-20', 16, 4, 45.99, 3, 2)
-Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-03-01', '2022-03-20', 8, 5, 27.50, 4, 3)
+-- Insert into app_plan (id, start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count,action_id, activity_id) values (0, '2022-01-01', '2022-01-20', 0, 0.00, 0, 0, 0, 0.00, 0, 0, 0, 0.00, 0, 0, 0, 0) 
+-- Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count,action_id, activity_id) values ('2022-01-01', '2022-01-20', 24, 0.00, 1, 1, 2, 0.00, 5, 16, 1, 0.00, 5, 5, 1, 1)
+-- Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count,action_id, activity_id) values ('2022-01-01', '2022-01-20', 24, 0.00, 2, 2, 2, 0.00, 5, 16, 2, 0.00, 5, 5, 2, 1)
+-- Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count,action_id, activity_id) values ('2022-01-01', '2022-01-20', 24, 0.00, 2, 3, 2, 0.00, 5, 16, 3, 0.00, 5, 5, 3, 1)
+
+Insert into app_plan (id, start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count) values (0, '2022-01-01', '2022-01-20', 0, 0.00, 0, 0, 0, 0.00, 0, 0, 0, 0.00, 0, 0) 
+Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count) values ('2022-01-01', '2022-01-20', 24, 0.00, 1, 1, 2, 0.00, 5, 16, 1, 0.00, 5, 5)
+Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count) values ('2022-01-01', '2022-01-20', 24, 0.00, 2, 2, 2, 0.00, 5, 16, 2, 0.00, 5, 5)
+Insert into app_plan (start_date, end_date, hours, amount, responsible_id, project_id, personnel_count, personnel_amount, personnel_cost, personnel_hours, material_id, material_amount, material_cost, material_count) values ('2022-01-01', '2022-01-20', 24, 0.00, 2, 3, 2, 0.00, 5, 16, 3, 0.00, 5, 5)
 
 -- Default Actions
 Insert into app_action (id, name, plan_id) values(0, 'Undefined', 0);

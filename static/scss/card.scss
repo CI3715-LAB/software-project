@@ -219,7 +219,7 @@ $card-element-width: 110px;
         &.projects-admin {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(5,130px);
+                grid-template-columns: repeat(4,130px) 250px;
                 grid-template-rows: auto;
             }
     
@@ -233,7 +233,7 @@ $card-element-width: 110px;
         &.projects-manager {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(9,130px);
+                grid-template-columns: repeat(8,130px) 130px;
                 gap: 0.5rem 0.5rem;
                 grid-template-rows: auto;
             }
@@ -353,7 +353,7 @@ $card-element-width: 110px;
         &.actions {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(3,1.6fr) 1fr;
+                grid-template-columns: repeat(3,1fr) 1fr;
                 gap: 0.5rem 0.5rem;
                 grid-template-rows: auto;
             }
@@ -368,7 +368,7 @@ $card-element-width: 110px;
         &.activities {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(3,1.6fr) 1fr;
+                grid-template-columns: repeat(3,1fr) 1fr;
                 gap: 0.5rem 0.5rem;
                 grid-template-rows: auto;
             }
@@ -383,7 +383,7 @@ $card-element-width: 110px;
         &.plans {
             .fields, .values {
                 display: grid;
-                grid-template-columns: repeat(8,1.6fr) 1fr;
+                grid-template-columns: repeat(8,1.6fr) 250px;
                 gap: 0.5rem 0.5rem;
                 grid-template-rows: auto;
             }

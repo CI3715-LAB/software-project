@@ -18,19 +18,11 @@
                         </button>
                     </form>
                     
-                    {% if fixed_client %}
-                    <form id="form-add" action='/action/add/{{fixed_client}}' method="GET">
+                    <form id="form-add" action='/action/add/{{id}}' method="GET">
                         <button class="safe" id="add" form="form-add">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </form>
-                    {% else %}
-                    <form id="form-add" action='/action/add' method="GET">
-                        <button class="safe" id="add" form="form-add">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </form>
-                    {% endif %}
 
                 </div>
             </div>
@@ -94,6 +86,12 @@
                     </select>
 
                     <div class="callbacks">
+                        <a href="/plan/{{ id }}">
+                            <button class="safe" id="info" form="form-info-{{ action.id }}">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                        </a>
+
                         <button id="edit" class="warn" form="form-edit-{{ action.id }}">
                             <i class="fa-solid fa-pencil"></i>
                         </button>

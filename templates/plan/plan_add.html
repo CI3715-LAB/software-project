@@ -1,0 +1,86 @@
+{% extends 'layout.html' %} 
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Agregar un nueva plan</h1>
+        <form id="plan_add" action="" method = "POST">
+            <div class="card-content centered base">
+                <div>
+                    {% if not error %}
+
+                        <p>Fecha Inicio <br/><input type="date" name="start_date" value="{{ start_date }}" required/></p>
+						<p>Fecha Cierre <br/><input type="date" name="end_date" value="{{ end_date }}" required/></p>
+                        
+                        <div>
+                            <select name="responsible">
+                                <option value="0">Sin responsable</option>
+                            {% for responsible in users %}
+                                <option value="{{responsible.id}}">{{responsible}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <p>Cantidad de Personal <br/><input type="number" step="1" min="1" max="30" name="personnel_count" /></p>
+                        <p>Costo del Personal <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="personnel_cost" /></p>
+
+                        <div>
+                            <select name="material">
+                                <option value="0">Sin material</option>
+                            {% for material in materials %}
+                                <option value="{{material.id}}">{{material}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <p>Cantidad de Material <br/><input type="number" step="1" min="1" max="30" name="material_count" /></p>
+                        <p>Costo del Material <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="material_cost" /></p>
+
+                    {% else %}
+
+                        <p>Fecha Inicio <br/><input type="date" name="start_date" value="{{ start_date }}" required/></p>
+						<p>Fecha Cierre <br/><input type="date" name="end_date" value="{{ end_date }}" required/></p>
+                        
+                        <div>
+                            <select name="responsible">
+                                <option value="0">Sin responsable</option>
+                            {% for responsible in users %}
+                                <option value="{{responsible.id}}">{{responsible}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <p>Cantidad de Personal <br/><input type="number" step="1" min="1" max="30" name="personnel_count" /></p>
+                        <p>Costo del Personal <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="personnel_cost" /></p>
+
+                        <div>
+                            <select name="material">
+                                <option value="0">Sin material</option>
+                            {% for material in materials %}
+                                <option value="{{material.id}}">{{material}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <p>Cantidad de Material <br/><input type="number" step="1" min="1" max="30" name="material_count" /></p>
+                        <p>Costo del Material <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="material_cost" /></p>
+
+					{% endif %}
+
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
+
+                    <div class="actions centered">
+                        <button class="safe" type="submit" id="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
