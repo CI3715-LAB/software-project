@@ -60,7 +60,7 @@ Eso requiere tener instalado docker y docker compose
 $ docker-compose up --build -d
 ```
 
-**Detener la aplicación*
+**Detener la aplicación**
 
 ```
 $ docker-compose down -v
