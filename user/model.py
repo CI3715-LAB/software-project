@@ -61,7 +61,7 @@ class User (db.Model):
     # foreign key to role
     role_id = db.Column(db.Integer, db.ForeignKey('app_role.id'), nullable=False)
     # foreign key to project
-    project_id = db.Column(db.Integer, db.ForeignKey('app_project.id'), nullable=False, default=0, use_alter=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('app_project.id', use_alter=True), nullable=True, default=0)
     # foreign key to department
     department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False, default=0)
 
