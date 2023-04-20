@@ -39,12 +39,12 @@ def create_app(test_config=None):
 		db.drop_all()
 		db.create_all()
 
-		if test_config is None:
+		# if test_config is None:
 			# Fill database with initial data
-			with open('init.sql') as f:
-				for line in f:
-					if line.strip() != '' and not line.strip().startswith('--'):
-						db.session.execute(text(line.strip()))
+		with open('init.sql') as f:
+			for line in f:
+				if line.strip() != '' and not line.strip().startswith('--'):
+					db.session.execute(text(line.strip()))
 					
 			db.session.commit()
 
