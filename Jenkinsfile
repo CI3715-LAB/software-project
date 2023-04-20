@@ -19,5 +19,11 @@ pipeline {
       }
     }
 
+    stage('Exit') {
+      steps {
+        sh 'docker compose down'
+      }
+    }
+
   }
 }
