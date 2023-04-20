@@ -16,6 +16,7 @@ pipeline {
 
     stage('Test') {
       steps {
+        sh 'pwd'
         sh 'python3 ./shortTests/test_user_back.py'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
