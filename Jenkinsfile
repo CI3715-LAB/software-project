@@ -13,8 +13,16 @@ pipeline {
       }
     }
 
+    stage('Test') {
+      steps {
+        sh 'python3 test_app.py'
+        input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+      }
+    }
+
     stage('Run') {
       steps {
+        echo "running the application"
         sh 'docker compose up -d'
       }
     }
@@ -24,6 +32,22 @@ pipeline {
         sh 'docker compose down'
       }
     }
+  }
+  
+  post {
+        always {
+            echo 'The pipeline completed'
+            junit allowEmptyResults: true, testResults:'**/test_reports/*.xml'
+        }
+        success {                   
+            echo "Flask Application Up and running!!"
+        }
+        failure {
+            echo 'Build stage failed'
+            error('Stopping early…')
+        }
+      }
+}
 
   }
 }
