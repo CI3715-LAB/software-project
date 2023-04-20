@@ -7,9 +7,9 @@ pipeline {
       }
     }
 
-    stage('Locate file') {
+    stage('Build') {
       steps {
-        sh 'ls'
+        sh 'docker compose -f docker-compose.yaml build'
       }
     }
 
