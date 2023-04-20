@@ -17,28 +17,21 @@ pipeline {
     stage('Test') {
       steps {
         sh 'python3 test_app.py'
-        input(id: 'DeployGate', message: "Deploy ${params.project_name}?", ok: 'Deploy')
+        input(id: 'DeployGate', message: "Deploy?", ok: 'Deploy')
       }
     }
 
-    stage('Run') {
+    stage('Deploy') {
       steps {
-        echo 'running the application'
+        echo 'deploying the application'
         sh 'docker compose up -d'
       }
     }
-
-    stage('Exit') {
-      steps {
-        sh 'docker compose down'
-      }
-    }
-
   }
   post {
     always {
       echo 'The pipeline completed'
-      archiveArtifacts artifacts: '**/test_reports/*.xml', fingerprint: true
+      archiveArtifacts artifacts: 'test_reports/*.xml', fingerprint: true
       junit(allowEmptyResults: true, testResults: '**/test_reports/*.xml')
     }
 
