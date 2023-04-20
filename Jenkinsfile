@@ -1,9 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('Checkout Code') {
+    stage('Compose up') {
       steps {
-        git(url: 'https://github.com/CI3715-LAB/software-project/', branch: 'jenkins')
+        sh 'docker compose up -d'
       }
     }
 
