@@ -16,7 +16,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'python3 -m unittest discover -s ./shortTests/test_user_back.py'
+        sh 'python3 ./shortTests/test_user_back.py'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
     }
@@ -25,12 +25,6 @@ pipeline {
       steps {
         echo 'deploying the application'
         sh 'docker compose up -d'
-      }
-    }
-
-    stage('Exit') {
-      steps {
-        sh 'docker compose down'
       }
     }
 
