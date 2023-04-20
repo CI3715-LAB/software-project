@@ -8,16 +8,28 @@ pipeline {
     }
 
     stage('Build') {
-      steps {
-        sh 'docker compose -f ./docker-compose.yml build'
-        sh 'pip install -r requirements.txt'
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'docker compose -f ./docker-compose.yml build'
+            sh 'pip install -r requirements.txt'
+          }
+        }
+
+        stage('Build Test') {
+          steps {
+            sh 'docker compose -f ./docker-compose.yml build test'
+            sh 'pip install -r requirements.txt'
+          }
+        }
+
       }
     }
 
     stage('Test') {
       steps {
         sh 'pwd'
-        sh 'python3 ./shortTests/test_user_back.py'
+        sh 'docker compose up test'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
     }
