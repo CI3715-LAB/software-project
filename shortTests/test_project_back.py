@@ -49,6 +49,18 @@ class TestProject(BaseTestCase):
 		self.assertIsNone(Project.query.filter_by(description='Test Project 2').first())
 
 	@login_user
+	def test_project_edit(self):
+		response = self.client.post('/project/update', data=dict(
+			id=1,
+			description='Test Project Modified',
+			open_date='2023-01-01',
+			close_date='2023-01-01',
+			enabled=True
+		), follow_redirects=True)
+		self.assert200(response)
+		self.assertIsNotNone(Project.query.filter_by(description='Test Project Modified').first())
+
+	@login_user
 	def test_project_edit_invalid(self):
 		response = self.client.post('/project/update', data=dict(
 			id=1,
@@ -59,6 +71,15 @@ class TestProject(BaseTestCase):
 		), follow_redirects=True)
 		self.assert200(response)
 		self.assertIn(b'Open date must be before close date', response.data)
+
+	@login_user
+	def test_project_toggle(self):
+		response = self.client.post('/project/toggle', data=dict(id=1),
+			follow_redirects=True
+		)
+		self.assert200(response)
+		project = db.session.query(Project).filter_by(id=1).first()
+		self.assertFalse(project.enabled)
 
 	@login_user
 	def test_project_delete(self):
