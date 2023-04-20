@@ -1,7 +1,7 @@
 pipeline {
   agent any
   stages {
-    stage('Test Compose up') {
+    stage('Clean') {
       steps {
         cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true)
       }
