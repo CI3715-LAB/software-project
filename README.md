@@ -1,10 +1,12 @@
-# Software Project
+# SAGTMA
 
-## Development
+Este proyecto describe la implementación del método de desarrollo de software XP por el equipo CDT para la gestión de un taller mecánico automotriz. Incluye junto con la descripción de este ciclo de vida iterativo e incremental para el proyecto, los artefactos o documentos con los que se gestionan las tareas de adquisición y suministro: requisitos, control y seguimiento del avance, así como las responsabilidades y compromisos de los participantes en el proyecto.
 
-### Using Flask
+## Desarrollo
 
-Add these files at root folder with the following content:
+### Flask
+
+Agregar el siguiente contenido:
 
 ```
 # .env
@@ -21,26 +23,26 @@ FLASK_RUN_HOST=0.0.0.0
 FLASK_RUN_PORT=5000
 ```
 
-**Run app**
+**Correr la aplicación**
 
 ```bash
 $ pip install -r requirements.txt
 $ flask run
 ```
 
-Remember to user a python virtual environment before installing.
+Se recomienda crear un entorno virtual de Python antes de ejecutar los pasos descritos.
 
-### Using Docker Compose
+### Docker Compose
 
-This requires to have docker and docker-compose installed
+Eso requiere tener instalado docker y docker compose
 
-**Run app**
+**Ejecutar la aplicación**
 
 ```
 $ docker-compose up --build -d
 ```
 
-**Stop app**
+**Detener la aplicación*
 
 ```
 $ docker-compose down -v
