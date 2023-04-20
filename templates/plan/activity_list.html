@@ -1,0 +1,132 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Actividades</h1>
+
+        <div class="card-content activities">
+            <div class="command">
+                <div class="actuator">
+                    <form id="form-search" activity='/activity/search' method="GET">
+                        <input type="text" name="phrase" form="form-search"
+                            value="{{ phrase }}" />
+                        <button class="normal" id="search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>
+                    
+                    {% if fixed_client %}
+                    <form id="form-add" activity='/activity/add/{{fixed_client}}' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                    {% else %}
+                    <form id="form-add" activity='/activity/add' method="GET">
+                        <button class="safe" id="add" form="form-add">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+            
+            {% if error %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>{{ error }}</div>
+                <div>
+                    <form id="form-retry" activity='/activity' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% elif not activities  %}
+                <div class="warning">
+                    <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                    <div>No hay Actividades</div>
+                    <div>
+                        <form id="form-retry" activity='/activity' method="GET">
+                            <button class="normal" id="retry" form="form-retry">
+                                Volver
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            {% else %}
+            <div class="fields">
+                <div>Id</div>
+                <div>Nombre</div>
+                <div>Acción</div>
+            </div>
+            {% for activity in activities %}
+            <form id="form-edit-{{ activity.id }}" activity='/activity/update' method="POST">
+                <div class="values">
+                    
+                    <div>
+                        <input type="text" name="id"
+                            value="{{ activity.id }}" 
+                            form="form-edit-{{ activity.id }}" readonly/>
+                    </div>
+
+                    <div>
+                        <input type="text" name="name"
+                            value="{{ activity.name }}" 
+                            form="form-edit-{{ activity.id }}" />
+                    </div>
+
+                    <select name="action" 
+                        id="action" form="form-edit-{{ activity.id }}">
+                        <option value="0">Sin Acción</option>
+                    {% for action in actions %}
+                        {% if action == activity.action %}
+                            <option value="{{action.id}}" selected>{{action}}</option>
+                        {% else %}
+                            <option value="{{action.id}}">{{action}}</option>
+                        {% endif %}
+                    {% endfor %}
+                    </select>
+
+                    <div class="callbacks">
+                        <button id="edit" class="warn" form="form-edit-{{ activity.id }}">
+                            <i class="fa-solid fa-pencil"></i>
+                        </button>
+    
+                        <button id="delete" class="danger" form="form-delete-{{ activity.id }}">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+            
+            </form>
+            <form class="hidden" id="form-delete-{{ activity.id }}" 
+				activity='/activity/delete' method="POST">
+                <input type="text" name="id" value="{{ activity.id }}"/>
+            </form>
+
+            {% else %}
+            <div class="warning">
+                <div><i class="fa-solid fa-warning fa-2xl"></i></div>
+                <div>No hay Actividades</div>
+                <div>
+                    <form id="form-retry" activity='/activity' method="GET">
+                        <button class="normal" id="retry" form="form-retry">
+                            Volver
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

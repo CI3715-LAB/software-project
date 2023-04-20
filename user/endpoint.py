@@ -19,7 +19,7 @@ def retrieve_users():
 	if not 'user' in session or not session['user']['admin']:
 		return redirect(url_for('home'))
 	
-	users = User.query.all()
+	users = User.query.filter(User.id != 0).all()
 	roles = Role.query.all()
 	projects = Project.query.all()
 	departments = Department.query.all()
@@ -136,6 +136,11 @@ def user_delete():
 	# User exists
 	user = User.query.filter_by(id = id).first()
 	if user:
+		projects = Project.query.filter_by(manager_id = user.id)
+		for project in projects:
+			project.manager_id = 0
+			project.manager = User.query.filter_by(id = 0).first()
+
 		db.session.delete(user)
 		db.session.commit()
 

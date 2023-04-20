@@ -3,17 +3,14 @@ from flask_assets import Environment, Bundle
 from sqlalchemy import text
 
 from config.setup import db, SECRET_KEY
-from config.init_db import init_roles_permissions
 from user.endpoint import user_blueprint
 from project.endpoint import project_blueprint
 from client.endpoint import client_blueprint
 from vehicle.endpoint import vehicle_blueprint
 from log.endpoint import log_blueprint
 from department.endpoint import department_blueprint
-from log.model import Log
-from log.utils import LogModule
-
-from user.model import Role
+from material.endpoint import material_blueprint, unit_blueprint, category_blueprint
+from plan.endpoint import plan_blueprint, action_blueprint, activity_blueprint
 
 def create_app(test_config=None):
 	# create and configure the app
@@ -50,19 +47,19 @@ def create_app(test_config=None):
 					
 			db.session.commit()
 
-			init_roles_permissions()
-
 	# Blueprints Registration (Endpoints)
-	from user.endpoint import user_blueprint
-	from project.endpoint import project_blueprint
-	from log.endpoint import log_blueprint
-
 	app.register_blueprint(user_blueprint, url_prefix='/user') # User endpoints
 	app.register_blueprint(project_blueprint, url_prefix='/project') # Project endpoints
 	app.register_blueprint(client_blueprint, url_prefix='/client') # Client endpoints
 	app.register_blueprint(vehicle_blueprint, url_prefix='/vehicle') # Vehicle endpoints
 	app.register_blueprint(log_blueprint, url_prefix='/log') # Log endpoints
-	app.register_blueprint(department_blueprint, url_prefix='/department') # Department endpoints
+	app.register_blueprint(department_blueprint, url_prefix='/department') # Department endpoints\
+	app.register_blueprint(material_blueprint, url_prefix='/material') # Material endpoints
+	app.register_blueprint(unit_blueprint, url_prefix='/unit') # Unit endpoints
+	app.register_blueprint(category_blueprint, url_prefix='/category') # Category endpoints
+	app.register_blueprint(plan_blueprint, url_prefix='/plan') # Plan endpoints
+	app.register_blueprint(action_blueprint, url_prefix='/action') # Action endpoints
+	app.register_blueprint(activity_blueprint, url_prefix='/activity') # Activity endpoints
 
 	@app.context_processor
 	def inject_user_from_session():
