@@ -16,7 +16,6 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'mkdir test-reports'
         sh 'python3 test_app.py'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
@@ -33,7 +32,6 @@ pipeline {
   post {
     always {
       echo 'The pipeline completed'
-      archiveArtifacts(artifacts: 'test_reports/*.xml', fingerprint: true)
       junit(allowEmptyResults: true, testResults: '**/test_reports/*.xml')
     }
 
