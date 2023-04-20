@@ -19,14 +19,14 @@ class TestConfig(object):
 	DEBUG = True
 	TESTING = True
 	WTF_CSRF_ENABLED = False
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing1.db'
 	SECRET_KEY = 'test'
 
 class SeleniumTestConfig(object):
 	DEBUG = True
 	TESTING = True
 	WTF_CSRF_ENABLED = False
-	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing.db'
+	SQLALCHEMY_DATABASE_URI = 'sqlite:///testing2.db'
 	SECRET_KEY = 'test'
 	LIVESERVER_PORT = 8000
 
