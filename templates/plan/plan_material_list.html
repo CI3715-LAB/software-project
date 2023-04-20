@@ -10,7 +10,7 @@
         <div class="card-content plans">
             <div class="command">
                 <div class="actuator">
-                    <form id="form-search" plan='/plan/search' method="GET">
+                    <form id="form-search" action='/plan/search' method="GET">
                         <input type="text" name="phrase" form="form-search"
                             value="{{ phrase }}" />
                         <button class="normal" id="search">
@@ -19,13 +19,13 @@
                     </form>
                     
                     {% if fixed_client %}
-                    <form id="form-add" plan='/plan/add/{{fixed_client}}' method="GET">
+                    <form id="form-add" action='/plan/add/{{fixed_client}}' method="GET">
                         <button class="safe" id="add" form="form-add">
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </form>
                     {% else %}
-                    <form id="form-add" plan='/plan/add' method="GET">
+                    <form id="form-add" action='/plan/add' method="GET">
                         <button class="safe" id="add" form="form-add">
                             <i class="fa-solid fa-plus"></i>
                         </button>
@@ -40,7 +40,7 @@
                 <div><i class="fa-solid fa-warning fa-2xl"></i></div>
                 <div>{{ error }}</div>
                 <div>
-                    <form id="form-retry" plan='/plan' method="GET">
+                    <form id="form-retry" action='/plan' method="GET">
                         <button class="normal" id="retry" form="form-retry">
                             Volver
                         </button>
@@ -52,7 +52,7 @@
                     <div><i class="fa-solid fa-warning fa-2xl"></i></div>
                     <div>No hay Planes</div>
                     <div>
-                        <form id="form-retry" plan='/plan' method="GET">
+                        <form id="form-retry" action='/plan' method="GET">
                             <button class="normal" id="retry" form="form-retry">
                                 Volver
                             </button>
@@ -71,7 +71,7 @@
                 <div>Monto</div>
             </div>
             {% for plan in plans %}
-            <form id="form-edit-{{ plan.id }}" plan='/plan/update' method="POST">
+            <form id="form-edit-{{ plan.id }}" action='/plan/update' method="POST">
                 <div class="values">
                     
                     <div>
@@ -171,7 +171,7 @@
             
             </form>
             <form class="hidden" id="form-delete-{{ plan.id }}" 
-				plan='/plan/delete' method="POST">
+				action='/plan/delete' method="POST">
                 <input type="text" name="id" value="{{ plan.id }}"/>
             </form>
 
@@ -180,7 +180,7 @@
                 <div><i class="fa-solid fa-warning fa-2xl"></i></div>
                 <div>No hay Planes</div>
                 <div>
-                    <form id="form-retry" plan='/plan' method="GET">
+                    <form id="form-retry" action='/plan' method="GET">
                         <button class="normal" id="retry" form="form-retry">
                             Volver
                         </button>
