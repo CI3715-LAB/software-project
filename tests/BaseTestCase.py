@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append("../software-project_master")
 from flask_testing import TestCase
 from app import db, create_app
 from sqlalchemy import text

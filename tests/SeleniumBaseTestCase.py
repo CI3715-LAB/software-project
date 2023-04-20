@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../proyecto")
+sys.path.append("../software-project_master")
 from app import db, create_app
 from sqlalchemy import text
 
