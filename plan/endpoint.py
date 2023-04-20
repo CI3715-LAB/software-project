@@ -68,6 +68,35 @@ def retrieve_plans(id):
         user=session.get('user')
     )
 
+@plan_blueprint.route('/delete', methods=['POST'])
+@login_required
+def delete_project():
+    id = request.form['id']
+
+    if id == '0':
+        raise BadRequest("Undefined plan cannot be deleted")
+
+    # Plan exists
+    plan = db.session.get(Plan, id)
+    project = None
+    if plan:
+        project=Project.query.filter_by(id = plan.project_id).first()
+        activities = db.session.query(Action).filter_by(plan_id = plan.id)
+
+        for activity in activities:
+            activity.plan_id = 0
+            activity.plan = Plan.query.filter_by(id = 0).first()
+            db.session.commit()
+        db.session.delete(plan)
+        db.session.commit()
+
+        description = f"Eliminado Plan {plan.id} del proyecto \"{project}\""
+        logger.catch(session['user']['username'], LogType.DELETE.value, LogModule.PLANS.value, description)
+    else:
+        raise BadRequest("Plan does not exist")
+
+    return redirect(url_for('plan.retrieve_plans', id=project.id))
+
 @plan_blueprint.route('/human/<int:id>', methods=['GET'])
 @login_required
 def retrieve_human_plans(id):
