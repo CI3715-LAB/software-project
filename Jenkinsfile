@@ -7,16 +7,15 @@ pipeline {
       }
     }
 
-    stage('Get info') {
-      steps {
-        sh 'pwd'
-        sh 'ls'
-      }
-    }
-
     stage('Build') {
       steps {
         sh 'docker compose -f ./docker-compose.yml build'
+      }
+    }
+
+    stage('Run') {
+      steps {
+        sh 'docker compose up -d'
       }
     }
 
