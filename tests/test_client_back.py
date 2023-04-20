@@ -9,5 +9,16 @@ class TestClient(BaseTestCase):
 		response = self.client.get('/client/')
 		self.assert200(response)
 
+	@login_user
+	def test_client_add(self):
+		response = self.client.get('/client/', follow_redirects=True)
+		self.assert200(response)
+
+	@login_user
+	def test_client_update(self):
+		response = self.client.get('/client/', follow_redirects=True)
+		self.assert200(response)
+
+
 if __name__ == "__main__":
 	unittest.main()

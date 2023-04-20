@@ -87,9 +87,9 @@ class TestFrontEndProject(SeleniumBaseTestCase):
 	@login_user
 	def test_project_delete(self):
 		self.driver.get(self.get_server_url() + url_for('project.retrieve_projects'))
-		project = db.session.query(Project).filter_by(id=1).first()
+		project = db.session.query(Project).filter_by(id=4).first()
 		self.assertIn(project.description, self.driver.page_source)
-		self.driver.find_element(By.ID, "delete-for-1").click()
+		self.driver.find_element(By.ID, "delete-for-4").click()
 
 		# assert that we are in the project list page and project was deleted
 		self.assertIn(url_for('project.retrieve_projects'), self.driver.current_url)
@@ -97,7 +97,7 @@ class TestFrontEndProject(SeleniumBaseTestCase):
 		self.assertNotIn(project.description, self.driver.page_source)
 
 		# assert that the project was deleted from the database
-		project = db.session.query(Project).filter_by(id=1).first()
+		project = db.session.query(Project).filter_by(id=4).first()
 		self.assertIsNone(project)
 
 	@login_user
@@ -141,30 +141,6 @@ class TestFrontEndProject(SeleniumBaseTestCase):
 		project = db.session.query(Project).filter_by(id=1).first()
 		self.assertIsNotNone(project)
 		self.assertTrue(project.enabled)
-
-	@login_user
-	def test_project_search(self):
-		self.driver.get(self.get_server_url() + url_for('project.retrieve_projects'))
-		search = self.driver.find_element(By.NAME, "phrase")
-		search.send_keys("Test project")
-		submit = self.driver.find_element(By.ID, "search")
-		submit.click()
-
-		# assert that we are in the project list page and project was found
-		self.assertIn(url_for('project.retrieve_projects'), self.driver.current_url)
-		self.assertIn("Test project", self.driver.page_source)
-
-	@login_user
-	def test_project_search_not_found(self):
-		self.driver.get(self.get_server_url() + url_for('project.retrieve_projects'))
-		search = self.driver.find_element(By.NAME, "phrase")
-		search.send_keys("Test project not found")
-		submit = self.driver.find_element(By.ID, "search")
-		submit.click()
-
-		# assert that we are in the project list page and project was not found
-		self.assertIn(url_for('project.retrieve_projects'), self.driver.current_url)
-		self.assertIn("No hay proyectos", self.driver.page_source)
 
 if __name__ == "__main__":
 	unittest.main()

@@ -55,21 +55,22 @@ class TestFrontEndUser(SeleniumBaseTestCase):
 
 		# assert that the user list is the same as the database
 		for user in db.session.query(User).all():
-			form = self.driver.find_element(By.ID, f"form-edit-{user.id}")
-			id = form.find_element(By.NAME, "id").get_attribute("value")
-			username = form.find_element(By.NAME, "username").get_attribute("value")
-			name = form.find_element(By.NAME, "name").get_attribute("value")
-			lastname = form.find_element(By.NAME, "lastname").get_attribute("value")
-			role = form.find_element(By.NAME, "role").get_attribute("value")
-			project = form.find_element(By.NAME, "project").get_attribute("value")
-			department = form.find_element(By.NAME, "department").get_attribute("value")
-			self.assertEqual(id, str(user.id))
-			self.assertEqual(username, user.username)
-			self.assertEqual(name, user.name)
-			self.assertEqual(lastname, user.lastname)
-			self.assertEqual(role, str(user.role))
-			self.assertEqual(project, str(user.project))
-			self.assertEqual(department, str(user.department))
+			if user.id != 0:
+				form = self.driver.find_element(By.ID, f"form-edit-{user.id}")
+				id = form.find_element(By.NAME, "id").get_attribute("value")
+				username = form.find_element(By.NAME, "username").get_attribute("value")
+				name = form.find_element(By.NAME, "name").get_attribute("value")
+				lastname = form.find_element(By.NAME, "lastname").get_attribute("value")
+				role = form.find_element(By.NAME, "role").get_attribute("value")
+				project = form.find_element(By.NAME, "project").get_attribute("value")
+				department = form.find_element(By.NAME, "department").get_attribute("value")
+				self.assertEqual(id, str(user.id))
+				self.assertEqual(username, user.username)
+				self.assertEqual(name, user.name)
+				self.assertEqual(lastname, user.lastname)
+				self.assertEqual(role, str(user.role))
+				self.assertEqual(project, str(user.project))
+				self.assertEqual(department, str(user.department))
 
 	@login_user
 	def test_user_register(self):

@@ -204,7 +204,7 @@ def user_search():
 	if not phrase:
 		return redirect(url_for('user.retrieve_users'))
 
-	search = db.session.query(User).select_from(User).join(Role).join(Project).join(Department).filter(
+	search = db.session.query(User).select_from(User).join(Role, onclause=(Role.id == User.role_id)).join(Project, onclause=(Project.id == User.project_id)).join(Department, onclause=(Department.id == User.department_id)).filter(
 		or_(
 			User.id.like('%' + phrase + '%'),
 			User.username.like('%' + phrase + '%'),
