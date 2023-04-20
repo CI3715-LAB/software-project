@@ -28,7 +28,6 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'pwd'
         sh 'docker compose up test'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
