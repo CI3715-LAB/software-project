@@ -29,6 +29,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'docker compose up test'
+        sh 'docker compose down'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
     }
