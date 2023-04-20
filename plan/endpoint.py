@@ -70,7 +70,7 @@ def retrieve_plans(id):
 
 @plan_blueprint.route('/delete', methods=['POST'])
 @login_required
-def delete_project():
+def delete_plan():
     id = request.form['id']
 
     if id == '0':
