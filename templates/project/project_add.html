@@ -17,16 +17,33 @@
                             <input type="checkbox" name="enabled" id="enabledCheckbox" checked><label for="enabledCheckbox">Habilitado?</label>
                         </p>
 
-                        <!--div>
-							<label for="brand">Marca</label><br/>
-							<select name="brand" id="brand" required>
-							{% for brand in brands %}
-								<option value={{brand.id}}>{{brand.name}}</option>
+                        <div>
+							<label for="vehicle">Vehículo</label><br/>
+							<select name="vehicle" id="vehicle" required>
+							{% for vehicle in vehicles %}
+								<option value={{vehicle.id}}>{{vehicle.plate}}</option>
 							{% endfor %}
 							</select>
 						</div>
 
-                        <p>Vehículo <br/><input type = "date" name ="close_date" value="{{ today }}" required/></p-->
+                        <div>
+							<label for="department">Departamento</label><br/>
+							<select name="department" id="department" required>
+							{% for department in departments %}
+								<option value={{department.id}}>{{department.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+                        <div>
+							<label for="manager">Gerente</label><br/>
+							<select name="manager" id="manager" required>
+							{% for manager in managers %}
+								<option value={{manager.id}}>{{manager.username}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
 					{% else %}
 						<p>Descripción <br/><textarea name="description" rows="4" cols="32" required>{{ description }}</textarea></p>
 						<p>Fecha Inicio <br/><input type = "date" name ="open_date" value="{{ open_date }}" required/></p>
@@ -39,6 +56,33 @@
 							{% endif %}
 							<label for="enabledCheckbox">Habilitado?</label>
 						</p>
+
+                        <div>
+							<label for="vehicle">Vehículo</label><br/>
+							<select name="vehicle" id="vehicle" required>
+							{% for vehicle in vehicles %}
+								<option value={{vehicle.id}}>{{vehicle.plate}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+                        <div>
+							<label for="department">Departamento</label><br/>
+							<select name="department" id="department" required>
+							{% for department in departments %}
+								<option value={{department.id}}>{{department.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+                        <div>
+							<label for="manager">Gerente</label><br/>
+							<select name="manager" id="manager" required>
+							{% for manager in managers %}
+								<option value={{manager.id}}>{{manager.username}}</option>
+							{% endfor %}
+							</select>
+						</div>
 					{% endif %}
 
                     {% if error %}

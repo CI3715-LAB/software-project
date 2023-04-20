@@ -65,6 +65,8 @@ class User (db.Model):
     # foreign key to department
     department_id = db.Column(db.Integer, db.ForeignKey('app_department.id'), nullable=False, default=0)
 
+    project = db.relationship('Project', backref='user', lazy=True, foreign_keys=[project_id])
+
     def generate_password(self, password):
         return generate_password_hash(password)
      

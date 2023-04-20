@@ -1,0 +1,75 @@
+{% extends 'layout.html' %} 
+
+
+{% block body %}
+
+<div class="box centered">
+    <div class="card">
+        <h1>Agregar un nuevo material</h1>
+        <form id="material_add" action="" method = "POST">
+            <div class="card-content centered base">
+                <div>
+                    {% if not error %}
+						<p>Descripción <br/><textarea name="description" rows="4" cols="32" required></textarea></p>
+                        <p>Costo <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="cost" /></p>
+
+                        <div>
+							<label for="unit">Unidad</label><br/>
+							<select name="unit" id="unit" required>
+                                <option value="0">Sin Unidad</option>
+							{% for unit in units %}
+								<option value={{unit.id}}>{{unit.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+                        <div>
+							<label for="category">Categoría</label><br/>
+							<select name="category" id="category" required>
+                                <option value="0">Sin Categoría</option>
+							{% for category in categories %}
+								<option value={{category.id}}>{{category.name}}</option>
+							{% endfor %}
+							</select>
+						</div>
+
+					{% else %}
+                        <p>Descripción <br/><textarea name="description" rows="4" cols="32" required></textarea></p>
+                        <p>Costo <br/><input type="number" step="0.01" min="0.00" max="1000000.00" name="cost" /></p>
+
+                        <div>
+                            <label for="unit">Unidad</label><br/>
+                            <select name="unit" id="unit" required>
+                                <option value="0">Sin Unidad</option>
+                            {% for unit in units %}
+                                <option value={{unit.id}}>{{unit.name}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="category">Categoría</label><br/>
+                            <select name="category" id="category" required>
+                                <option value="0">Sin Categoría</option>
+                            {% for category in categories %}
+                                <option value={{category.id}}>{{category.name}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+					{% endif %}
+
+                    {% if error %}
+                        <h4>{{error}}</h4>
+                    {% endif %}
+
+                    <div class="actions centered">
+                        <button class="safe" type="submit" id="submit">Enviar</button>
+                        <button class="normal" type="reset">Limpiar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
