@@ -9,13 +9,14 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'docker compose -f ./docker-compose.yml build --name flaskApp'
+        sh 'docker compose -f ./docker-compose.yml build'
+        sh 'pip install -r requirements.txt'
       }
     }
 
     stage('Test') {
       steps {
-        sh 'docker exec flaskApp tail python3 test_app.py'
+        sh 'python3 test_app.py'
         input(id: 'Deploy Gate', message: "Deploy ${params.project_name}?", ok: 'Deploy')
       }
     }
