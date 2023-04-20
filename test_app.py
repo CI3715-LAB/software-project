@@ -9,5 +9,5 @@ import xmlrunner
 
 if __name__ == '__main__':
 	unittest.main(
-		testRunner=xmlrunner.XMLTestRunner(output='test-reports'),
+		testRunner=xmlrunner.XMLTestRunner(output='./test-reports'),
 		failfast=False, buffer=False, catchbreak=False)
