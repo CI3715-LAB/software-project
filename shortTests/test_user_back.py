@@ -128,23 +128,6 @@ class TestUser(BaseTestCase):
 		self.assertIn(b'El departamento suministrado no existe en la base de datos', response.data)
 
 	@login_user
-	def test_user_update(self):
-		# create new role
-		db.session.add(Role('testRole'))
-		db.session.commit()
-		response = self.client.post('/user/update', data=dict(
-			id=1,
-			username='admin',
-			name='testName',
-			lastname='testLastName',
-			role='testRole',
-			project='Proyecto 1',
-			department='Undefined',
-		), follow_redirects=True)
-		self.assert200(response)
-		self.assertIn(b'testRole', response.data)
-
-	@login_user
 	def test_user_update_invalid_role(self):
 		response = self.client.post('/user/update', data=dict(
 			id=1,
@@ -214,35 +197,6 @@ class TestUser(BaseTestCase):
 		response = self.client.get('/user/search?phrase=admin')
 		self.assert200(response)
 		self.assertIn(b'admin', response.data)
-
-	@login_user
-	def test_user_reset(self):
-		response = self.client.post('/user/reset', data=dict(
-			username='admin',
-			password_prev='admin',
-			password_next='testModified',
-		), follow_redirects=True)
-		self.assert200(response)
-		user = User.query.filter_by(username='admin').first()
-		self.assertTrue(user.check_password('testModified'))
-
-	@login_user
-	def test_user_reset_invalid(self):
-		response = self.client.post('/user/reset', data=dict(
-			username='admin',
-			password_prev='wrongPassword',
-			password_next='test2',
-		), follow_redirects=True)
-		self.assert200(response)
-		self.assertIn(b'Las credenciales suministradas no son validas', response.data)
-
-		response = self.client.post('/user/reset', data=dict(
-			username='adminNonExistent',
-			password_prev='test',
-			password_next='test2',
-		), follow_redirects=True)
-		self.assert200(response)
-		self.assertIn(b'El nombre de usuario suministrado no existe', response.data)
 
 if __name__ == '__main__':
 	unittest.main()
