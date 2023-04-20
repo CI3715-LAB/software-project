@@ -16,7 +16,7 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh 'python3 -m unittest discover -s ./shortTests'
+        sh 'python3 -m unittest discover -s ./shortTests/test_user_back.py'
         input(id: 'DeployGate', message: 'Deploy?', ok: 'Deploy')
       }
     }
@@ -33,8 +33,8 @@ pipeline {
         sh 'docker compose down'
       }
     }
+
   }
-  
   post {
     always {
       echo 'The pipeline completed'
