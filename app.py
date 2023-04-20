@@ -43,7 +43,8 @@ def create_app(test_config=None):
 			# Fill database with initial data
 			with open('init.sql') as f:
 				for line in f:
-					db.session.execute(text(line))
+					if line.strip() != '' and not line.strip().startswith('--'):
+						db.session.execute(text(line.strip()))
 					
 			db.session.commit()
 
