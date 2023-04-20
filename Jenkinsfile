@@ -37,6 +37,7 @@ pipeline {
   post {
         always {
             echo 'The pipeline completed'
+            archiveArtifacts artifacts: '**/test_reports/*.xml', fingerprint: true
             junit allowEmptyResults: true, testResults:'**/test_reports/*.xml'
         }
         success {                   
