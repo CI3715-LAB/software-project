@@ -36,3 +36,6 @@ class LogModule(Enum):
     MATERIALS = "Materiales"
     UNITS = "Unidades"
     CATEGORIES = "Categorías"
+    ACTIONS = "Acciones"
+    ACTIVITIES = "Actividades"
+    PLANS = "Planes"

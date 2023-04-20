@@ -147,10 +147,10 @@ Insert into app_material (description, cost, unit_id, category_id) values ('Aran
 Insert into app_material (description, cost, unit_id, category_id) values ('Cera', 3.99, 0, 1);
 
 -- Default Plans
-Insert into app_plan (id, start_date, end_date, hours, responsible, amount, personnel) values (0, '2022-01-01', '2022-12-31', 0, 0, 0.0, 0)
-Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-01-01', '2022-01-31', 24, 1, 30.00, 2)
-Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-02-01', '2022-2-31', 16, 4, 45.99, 3)
-Insert into app_plan (start_date, end_date, hours, responsible, amount, personnel) values ('2022-03-01', '2022-3-31', 8, 5, 27.50, 4)
+Insert into app_plan (id, start_date, end_date, hours, responsible_id, amount, personnel, project_id) values (0, '2022-01-01', '2022-12-31', 0, 0, 0.0, 0, 0)
+Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-01-01', '2022-01-20', 24, 1, 30.00, 2, 1)
+Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-02-01', '2022-02-20', 16, 4, 45.99, 3, 2)
+Insert into app_plan (start_date, end_date, hours, responsible_id, amount, personnel, project_id) values ('2022-03-01', '2022-03-20', 8, 5, 27.50, 4, 3)
 
 -- Default Actions
 Insert into app_action (id, name, plan_id) values(0, 'Undefined', 0);
