@@ -7,4 +7,3 @@ venv
 .flaskenv
 settings.json
 all.css
-test-reports/*
